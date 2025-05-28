@@ -66,7 +66,7 @@ public class BudgetCenterRecord  {
      * 
      */
     @JsonProperty("is_limit_quota")
-    private Object isLimitQuota;
+    private Integer isLimitQuota;
     /**
      * 在使用人数
      * 

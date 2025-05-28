@@ -68,7 +68,7 @@ public class test {
     config.setClientId("替换成自己的clientId");
     config.setClientSecret("替换成自己的clientSecret");
     config.setSignKey("替换成自己的signKey");
-    // 2. 构建客户端对象
+    // 2. 构建客户端对象（建议将此实例作为单例保存）
     ApiClient client = new ApiClient(config);
     // 3. 构建请求对象
     GetLegalEntityRequest request = new GetLegalEntityRequest();

@@ -106,7 +106,7 @@ public class V1 extends BaseService {
     }
     /**
     * 修改申请单(行前申请单)
-    * 修改申请单
+    * 
     * @param updateApprovalRequest  (required)
     * @return UpdateApprovalApiReply
     * @throws Exception if an error occurs while attempting to invoke the API
@@ -117,7 +117,7 @@ public class V1 extends BaseService {
     }
     /**
     * 修改[用车按日期]申请单(行前申请单)
-    * 修改用车按日期申请单
+    * 
     * @param updateApprovalBusinessByDateRequest  (required)
     * @return UpdateApprovalApiReply
     * @throws Exception if an error occurs while attempting to invoke the API
@@ -128,7 +128,7 @@ public class V1 extends BaseService {
     }
     /**
     * 修改[用车按次数]申请单(行前申请单)
-    * 修改按次数申请单
+    * 
     * @param updateApprovalBusinessByTimesRequest  (required)
     * @return UpdateApprovalApiReply
     * @throws Exception if an error occurs while attempting to invoke the API

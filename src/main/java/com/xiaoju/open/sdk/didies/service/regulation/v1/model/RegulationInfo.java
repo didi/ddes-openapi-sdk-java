@@ -51,7 +51,7 @@ public class RegulationInfo  {
      * 
      */
     @JsonProperty("scene_type")
-    private Object sceneType;
+    private String sceneType;
     /**
      * 是否使用个人限额，（0-不使用、1-使用），差旅制度默认返回不使用
      * 

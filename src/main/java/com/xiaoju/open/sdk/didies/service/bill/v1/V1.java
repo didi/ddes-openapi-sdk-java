@@ -340,7 +340,7 @@ public class V1 extends BaseService {
     }
     /**
     * 账单调整提交接口
-    * TODO 此接口涉及文件下载，暂不对接；   rpc BillDownload (BillDownloadRequest) returns (BillDownloadApiReply) {     option (google.api.http) &#x3D; {       get: \&quot;/river/Bill/download\&quot;     };     option(openapi.v3.operation) &#x3D; {       summary:\&quot;网约车、出租车账单下载\&quot;       deprecated: true     };   }
+    * 
     * @param updateAdjustBillDataRequest  (required)
     * @return UpdateAdjustBillDataApiReply
     * @throws Exception if an error occurs while attempting to invoke the API
