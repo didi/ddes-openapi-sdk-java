@@ -41,7 +41,7 @@ public class Config {
   /**
    * 调用超时时间
    */
-  private Long callTimeOut = 3000L;
+  private Long callTimeOut = 15000L;
   /**
    * 超时时间单位，默认毫秒
    */
