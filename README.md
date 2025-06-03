@@ -56,37 +56,43 @@
 ### 使用示例 [以查询公司主体为例]
 ```java
 
-import com.xiaoju.open.sdk.didies.core.Config;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.GetLegalEntityApiReply;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.GetLegalEntityRequest;
-
 public class test {
 
-  public static void main(String[] args) throws Exception {
-    // 1. 构建配置对象
-    Config config = new Config();
-    config.setClientId("替换成自己的clientId");
-    config.setClientSecret("替换成自己的clientSecret");
-    config.setSignKey("替换成自己的signKey");
-    // 2. 构建客户端对象（建议将此实例作为单例保存）
+  public static void main(String[] args) {
+    Config config = Config.builder()
+        .clientId("your_client_id")
+        .clientSecret("your_client_secret")
+        .signKey("your_sign_key")
+        .build();
+
     ApiClient client = new ApiClient(config);
-    // 3. 构建请求对象
-    GetLegalEntityRequest request = new GetLegalEntityRequest();
-    request.setCompanyId("替换成自己的companyId");
-    request.setLength(1);
-    request.setOffset(0);
-    // 4. 调用接口
-    GetLegalEntityApiReply legalEntity = client.legalentity().v1().getLegalEntity(request);
-    // 5. 处理响应
-    System.out.println(legalEntity);
+    getLegalEntityTest(client);
+  }
+
+  /**
+   * 公司主体查询
+   * <p>
+   * 说明： * 查询公司在滴滴侧的具体信息; * 通过获取的信息用于确认相关的配置信息，可以用于同步滴滴ES后台的信息; * 只返回有效的公司信息。不包含禁用和过期的公司主体信息。需要返回全部的，是不是需要重新封接口。
+   */
+  public static void getLegalEntityTest(ApiClient client) throws Exception {
+    GetLegalEntityRequest request = GetLegalEntityRequest.builder()
+        .companyId("替换成自己的companyId")
+        .legalEntityId("xxx")
+        .build();
+
+    GetLegalEntityApiReply response = client.legalentity().v1().getLegalEntity(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("getAdjustBillDataResultTest end");
   }
 }
 ```
 
 > 注意：
 1. 请替换代码中的`clientId`、`clientSecret`和`signKey`为实际的值，以及替换实际入参中的`companyId`
-2. 所有用例代码均在`test`包下
-3. 使用用例代码使用的是groovy编写，不需要额外安装环境，安装完依赖之后直接运行就行
+2. 所有用例代码均在`sample`module下
+
 
 ## SDK配置参数说明[`com.xiaoju.open.sdk.didies.core.Config`]
 
@@ -125,6 +131,8 @@ public class test {
 
    • `encryptType` 的具体值需根据 `EncryptTypeEnum` 枚举定义选择（如 `NORMAL` 表示不加密）。
 
+## 特殊说明
 
+1、接口中以obj结尾的字段均为SDK特有字段，在文档中无Obj结尾，文档中为字段类型为json-string，SDK中可直接使用对象，SDK自动完成对象转为json-string的过程。
 
 
