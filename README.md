@@ -37,7 +37,7 @@
 ```xml
 <dependency>
   <groupId>com.xiaoju.sdk</groupId>
-  <artifactId>ddes-openapi-sdk-java</artifactId>
+  <artifactId>ddes-open-sdk</artifactId>
   <version>1.0.0</version>
   <scope>compile</scope>
 </dependency>
@@ -124,3 +124,7 @@ public class test {
    • `logLevel` 仅在 `enableRequestLog=true` 时生效。
 
    • `encryptType` 的具体值需根据 `EncryptTypeEnum` 枚举定义选择（如 `NORMAL` 表示不加密）。
+
+
+
+
