@@ -26,7 +26,7 @@
 
 ---
 
-- JDK 1.8及以上
+- JDK 1.8
 
 ## 安装方法
 
@@ -123,7 +123,7 @@ public class test {
 3. 默认行为：  
    • `httpTransport` 未设置时，自动使用 `RestHttpTransport` 实现类。
 
-   • 加密默认关闭（`enableAES=false`），签名方法默认使用 `MD5`。
+   • 接口整体加密默认关闭（`enableAES=false`），签名方法默认使用 `MD5`。
 
 4. 超时配置：`connectTimeout` 和 `callTimeOut` 的单位由 `timeoutUnit` 统一控制，默认毫秒。
 5. 依赖关系：  
@@ -134,5 +134,83 @@ public class test {
 ## 特殊说明
 
 1、接口中以obj结尾的字段均为SDK特有字段，在文档中无Obj结尾，文档中为字段类型为json-string，SDK中可直接使用对象，SDK自动完成对象转为json-string的过程。
+
+如（仅保留了特殊处理的Obj字段及源字段信息）：
+```java
+public class CreateApprovalRequest extends BaseReq {
+  /**
+   * 扩展信息，扩展信息，自定义字段；最长不大于 500 字符；(必须为json字符串)；默认为空字符
+   */
+  @JsonProperty("extra_info")
+  private String extraInfo;
+  /**
+   * 扩展信息。转成json赋值给extra_info字段
+   */
+  @JsonProperty("extra_info__obj__")
+  private Map<String, String> extraInfoObj;
+  /**
+   * 扩展信息list，自定义字段，最长不大于 500 字符，将extend_field_list转为 json 字符串，三个字段仅作为备注性字段。详见extend_field_list
+   */
+  @JsonProperty("extend_field_list")
+  private String extendFieldList;
+  /**
+   * extendFieldListObj
+   */
+  @JsonProperty("extend_field_list__obj__")
+  private ExtendFieldList extendFieldListObj;
+
+  /**
+   * 差旅单行程信息，差旅单行程信息，将travel_detail的值转为 json 字符串，approval_type &#x3D; 1 时必传。
+   */
+  @JsonProperty("travel_detail")
+  private String travelDetail;
+  /**
+   * travelDetailObj
+   */
+  @JsonProperty("travel_detail__obj__")
+  private TravelDetail travelDetailObj;
+  /**
+   * 差旅预算总额，差旅预算控制，一个申请单对应一个总预算纬度，一次只能全部或者选择部分品类。
+   */
+  @JsonProperty("travel_budget")
+  private String travelBudget;
+  /**
+   * travelBudgetObj
+   */
+  @JsonProperty("travel_budget__obj__")
+  private TravelBudget travelBudgetObj;
+  /**
+   * 差旅管控，差旅管控，目前仅支持市内用车每日限额设置（为json字符串类型，具体看请求示例）
+   */
+  @JsonProperty("travel_management")
+  private String travelManagement;
+  /**
+   * travelManagementObj
+   */
+  @JsonProperty("travel_management__obj__")
+  private TravelManagement travelManagementObj;
+  /**
+   * 出行人信息，出行人信息，不传时默认出行人为申请人，将passenger_list 转为 json 数组字符串。详见passenger_list
+   */
+  @JsonProperty("passenger_list")
+  private String passengerList;
+  /**
+   * 出行人信息,可使用脚本将其转换为json后赋值给 passenger_list 字段
+   */
+  @JsonProperty("passenger_list__obj__")
+  private List<TripPassenger> passengerListObj;
+  /**
+   * 多成本中心(array)，序号1对应远成本中心字段，依然支持滴滴内部主键ID。使用部门CODE主键，和项目时名称和code作为主键。
+   */
+  @JsonProperty("budget_center_list")
+  private String budgetCenterList;
+  /**
+   * 差旅预算总额,可使用脚本将其转换为json后赋值给 budget_center_list 字段
+   */
+  @JsonProperty("budget_center_list__obj__")
+  private List<BudgetCenterListItem> budgetCenterListObj;
+}
+
+```
 
 
