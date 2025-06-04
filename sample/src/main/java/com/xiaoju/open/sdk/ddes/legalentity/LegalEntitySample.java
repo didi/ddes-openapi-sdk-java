@@ -15,7 +15,7 @@ import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 public class LegalEntitySample {
 
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     Config config = Config.builder()
         .clientId("your_client_id")
         .clientSecret("your_client_secret")
@@ -23,6 +23,11 @@ public class LegalEntitySample {
         .build();
 
     ApiClient client = new ApiClient(config);
+
+    createLegalEntity(client);
+    updateLegalEntityTest(client);
+    delLegalEntityTest(client);
+    getLegalEntityTest(client);
   }
 
   /**
