@@ -37,7 +37,7 @@
 ```xml
 
 <dependency>
-  <groupId>com.xiaoju.sdk</groupId>
+  <groupId>com.xiaojukeji.esapi</groupId>
   <artifactId>ddes-open-sdk</artifactId>
   <version>1.0.0</version>
   <scope>compile</scope>
