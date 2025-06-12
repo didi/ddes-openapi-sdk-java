@@ -115,10 +115,10 @@
 public class Test {
 
   public static void main(String[] args) {
-    Config config = Config.builder()
-        .clientId("your_client_id")
-        .clientSecret("your_client_secret")
-        .signKey("your_sign_key")
+    Config config = new Config()
+        .setClientId("your_client_id")
+        .setClientSecret("your_client_secret")
+        .setSignKey("your_sign_key")
         .signMethod(SignMethodEnum.MD5) // 默认使用MD5签名，可选SHA256签名，具体和对接人确认
         .build();
 
@@ -153,14 +153,13 @@ public class Test {
 public class EncryptTest {
 
   public static void main(String[] args) {
-    Config config = Config.builder()
-        .clientId("your_client_id")
-        .clientSecret("your_client_secret")
-        .signKey("your_sign_key")
-        .enableAES(true) // 启用整体加密[默认为false]
-        .aesKey("your_aes_key") // 设置AES密钥[enableAES为false的时候，该值无效]
-        .encryptType(EncryptTypeEnum.AES128) // 设置加密方式[enableAES为false的时候，该值无效]
-        .build();
+    Config config = new Config()
+        .setClientId("your_client_id")
+        .setClientSecret("your_client_secret")
+        .setSignKey("your_sign_key")
+        .setEnableAES(true) // 启用整体加密[默认为false]
+        .setAesKey("your_aes_key") // 设置AES密钥[enableAES为false的时候，该值无效]
+        .setEncryptType(EncryptTypeEnum.AES128); // 设置加密方式[enableAES为false的时候，该值无效]
 
     ApiClient client = new ApiClient(config);
     // 接口的调用不需要任何额外的操作，SDK会自动处理加密和解密
