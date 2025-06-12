@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 import java.util.concurrent.TimeUnit;
 
 @Data
-@Builder
+@Accessors(chain = true)
 @EqualsAndHashCode(exclude = {"httpTransport"})
 public class Config {
 

@@ -28,13 +28,10 @@ class BillTest extends Specification {
     Config config
 
     def setup() {
-        config = Config.builder()
-                .baseUrl("https://api.es.xiaojukeji.com")
-                .clientId("替换成自己的clientId")
-                .clientSecret("替换成自己的clientSecret")
-                .signKey("替换成自己的signKey")
-                .enableRequestLog(true)
-                .logLevel(LogLevelEnum.INFO).build()
+        config = new Config()
+                .setClientId("your_client_id")
+                .setClientSecret("your_client_secret")
+                .setSignKey("your_sign_key")
         ApiClient client = new ApiClient(config)
         api = client.bill()
     }

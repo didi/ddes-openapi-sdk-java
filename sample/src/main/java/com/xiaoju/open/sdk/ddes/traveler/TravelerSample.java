@@ -24,11 +24,10 @@ public class TravelerSample {
   private static final String signKey = "your_sign_key";
 
   public static void main(String[] args) throws Exception {
-    Config config = Config.builder()
-        .clientId("your_client_id")
-        .clientSecret("your_client_secret")
-        .signKey("your_sign_key")
-        .build();
+    Config config = new Config()
+        .setClientId("your_client_id")
+        .setClientSecret("your_client_secret")
+        .setSignKey("your_sign_key");
     ApiClient client = new ApiClient(config);
 
   }
