@@ -4,6 +4,14 @@ import com.xiaoju.open.sdk.didies.core.enums.EncryptTypeEnum;
 
 public class AesUtils {
 
+  /**
+   * 加密
+   *
+   * @param content     待加密内容
+   * @param key         密钥
+   * @param encryptType 加密类型
+   * @return 加密后内容
+   */
   public static String encrypt(String content, String key, EncryptTypeEnum encryptType) {
     switch (encryptType) {
       case AES256:
@@ -15,6 +23,14 @@ public class AesUtils {
     }
   }
 
+  /**
+   * 解密
+   *
+   * @param content     待解密内容
+   * @param key         密钥
+   * @param encryptType 加密类型
+   * @return 解密后内容
+   */
   public static String decrypt(String content, String key, EncryptTypeEnum encryptType) {
     switch (encryptType) {
       case AES256:

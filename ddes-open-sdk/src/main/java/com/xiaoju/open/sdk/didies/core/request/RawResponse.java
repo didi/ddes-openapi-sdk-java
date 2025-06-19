@@ -4,13 +4,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * 原始响应
+ */
+@Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@Data
 public class RawResponse extends Headers {
-    /**
-    * http 状态码
-    */
-    private int statusCode;
-    private String body;
+  /**
+   * http 状态码
+   */
+  private int statusCode;
+  /**
+   * 响应体
+   */
+  private String body;
 }

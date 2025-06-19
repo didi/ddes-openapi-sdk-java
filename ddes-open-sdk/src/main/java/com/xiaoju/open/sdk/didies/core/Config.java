@@ -6,22 +6,39 @@ import com.xiaoju.open.sdk.didies.core.enums.SignMethodEnum;
 import com.xiaoju.open.sdk.didies.core.request.IHttpTransport;
 import com.xiaoju.open.sdk.didies.core.request.RestHttpTransport;
 import com.xiaoju.open.sdk.didies.core.request.RestTemplates;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 应用配置信息
+ */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(exclude = {"httpTransport"})
 public class Config {
 
+  /**
+   * 应用ID
+   */
   private String clientId;
+  /**
+   * 应用密钥
+   */
   private String clientSecret;
+  /**
+   * 签名key
+   */
   private String signKey;
+  /**
+   * 基础URL
+   */
   private String baseUrl = "https://api.es.xiaojukeji.com";
+  /**
+   * grantType
+   */
   private String grantType = "client_credentials";
   /**
    * 因token失效接口请求重试次数
@@ -42,7 +59,7 @@ public class Config {
   /**
    * 调用超时时间
    */
-  private Long callTimeOut = 15000L;
+  private Long callTimeOut = 3000L;
   /**
    * 超时时间单位，默认毫秒
    */
@@ -76,6 +93,11 @@ public class Config {
    */
   private EncryptTypeEnum encryptType = EncryptTypeEnum.NORMAL;
 
+  /**
+   * 获取httpTransport
+   *
+   * @return httpTransport
+   */
   public IHttpTransport getHttpTransport() {
     if (httpTransport == null) {
       httpTransport = new RestHttpTransport(RestTemplates.noneUrlEncodeRestTemplate(this));

@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import java.util.Map;
 
+/**
+ * 请求
+ */
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)

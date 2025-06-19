@@ -1,5 +1,8 @@
 package com.xiaoju.open.sdk.didies.utils;
 
+import com.xiaoju.open.sdk.didies.core.exception.DataDecryptException;
+import com.xiaoju.open.sdk.didies.core.exception.DataEncryptException;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -9,7 +12,15 @@ public class AES256Utils {
 
   private static final String ALGORITHM = "AES/ECB/PKCS5Padding";
 
-  public static String encrypt(String data, String hexKey) {
+  /**
+   * 加密方法
+   *
+   * @param data   待加密的数据
+   * @param hexKey 十六进制密钥（256位）
+   * @return 加密后的数据
+   * @throws DataEncryptException 数据加密异常
+   */
+  public static String encrypt(String data, String hexKey) throws DataEncryptException {
     try {
       // 十六进制转字节数组
       byte[] keyBytes = hexToBytes(hexKey);
@@ -30,11 +41,19 @@ public class AES256Utils {
       // URL安全Base64编码
       return base64UrlEncode(encrypted);
     } catch (Exception e) {
-      throw new RuntimeException("Encryption failed", e);
+      throw new DataEncryptException("Encryption failed", e);
     }
   }
 
-  public static String decrypt(String encryptedData, String hexKey) {
+  /**
+   * 解密方法
+   *
+   * @param encryptedData 加密后的数据
+   * @param hexKey        十六进制密钥（256位）
+   * @return 解密后的数据
+   * @throws DataDecryptException 数据解密异常
+   */
+  public static String decrypt(String encryptedData, String hexKey) throws DataDecryptException {
     try {
       // 十六进制转字节数组
       byte[] keyBytes = hexToBytes(hexKey);
@@ -55,11 +74,16 @@ public class AES256Utils {
       byte[] decrypted = cipher.doFinal(decoded);
       return new String(decrypted, StandardCharsets.UTF_8).trim();
     } catch (Exception e) {
-      throw new RuntimeException("Decryption failed", e);
+      throw new DataDecryptException("Decryption failed", e);
     }
   }
 
-  // Java密钥处理（与PHP的hex2bin对应）
+  /**
+   * 十六进制转字节数组
+   *
+   * @param hex 十六进制字符串
+   * @return 字节数组
+   */
   public static byte[] hexToBytes(String hex) {
     if (hex.length() % 2 != 0) {
       throw new IllegalArgumentException();
@@ -71,13 +95,23 @@ public class AES256Utils {
     return bytes;
   }
 
-  // 编码：替换 +/ 为 -_，保留 =
+  /**
+   * Base64URL编码
+   *
+   * @param data 待编码的数据
+   * @return Base64URL编码后的字符串
+   */
   private static String base64UrlEncode(byte[] data) {
     String base64 = Base64.getEncoder().encodeToString(data);
     return base64.replace('+', '-').replace('/', '_');
   }
 
-  // 解码：替换 -_ 为 +/，自动补全 =
+  /**
+   * Base64URL解码
+   *
+   * @param input Base64URL编码的字符串
+   * @return 解码后的字节数组
+   */
   private static byte[] base64UrlDecode(String input) {
     String replaced = input.replace('-', '+').replace('_', '/');
     // 补全缺失的 = 号（兼容 Java 8）
@@ -87,19 +121,5 @@ public class AES256Utils {
       sb.append('=');
     }
     return Base64.getDecoder().decode(sb.toString());
-  }
-
-  public static void main(String[] args) {
-    // 测试用例
-    String hexKey = "0495ad3bc8f9e8e9d425fde24af5ca03225465ef37e242c6243df32baf79f48e";
-    String original = "ent=2&companyId=1125909874810584&company_id=1125909874810584&timestamp=1741774912437&offset=0&length=100";
-
-    // 加密
-    String encrypted = encrypt(original, hexKey);
-    System.out.println("加密结果: " + encrypted); // 例如：JzETiB6sW8R3wKwN...
-
-    // 解密
-    String decrypted = decrypt(encrypted, hexKey);
-    System.out.println("解密结果: " + decrypted); // 应与原始输入相同
   }
 }

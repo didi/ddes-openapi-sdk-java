@@ -1,4 +1,4 @@
-package com.xiaoju.open.sdk.didies.service.regulation.enums;
+package com.xiaoju.open.sdk.didies.service.workspace.enums;
 
 import lombok.Getter;
 

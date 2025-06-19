@@ -4,9 +4,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+
+/**
+ * 原始请求
+ */
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class RawRequest extends Request {
-    private String body;
+  /**
+   * 请求体
+   */
+  private String body;
 }

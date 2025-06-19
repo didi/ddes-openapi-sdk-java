@@ -9,8 +9,54 @@
     <version>1.0.0</version>
   </parent>
 
-  <groupId>com.xiaojukeji.esapi</groupId>
   <artifactId>ddes-open-sdk</artifactId>
+
+  <name>ddes-open-sdk</name>
+  <description>滴滴企业级开放平台接口 SDK</description>
+  <url>https://github.com/didi/ddes-openapi-sdk-java.git</url>
+
+  <!-- 许可证（必须） -->
+  <licenses>
+    <license>
+      <name>Apache License 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <!-- SCM 代码仓库地址 -->
+  <scm>
+    <url>https://github.com/didi/ddes-openapi-sdk-java.git</url>
+    <connection>scm:git:git@github.com:didi/ddes-openapi-sdk-java.git</connection>
+  </scm>
+
+  <distributionManagement>
+    <repository>
+      <id>central</id> <!-- 必须与 settings.xml 对应 -->
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>central</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+
+  <developers>
+    <developer>
+      <name>liqinglong</name>
+      <email>obalee20@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/didi/ddes-openapi-sdk-java/issues</url>
+  </issueManagement>
 
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
@@ -91,5 +137,65 @@
       <version>${slf4j.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.8.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 附带源码 jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 附带 javadoc jar -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
