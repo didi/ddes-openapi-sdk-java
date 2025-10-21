@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.regulation.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum RegulationStatusEnum {
 
   DISABLED(0, "停用"),
@@ -10,11 +12,12 @@ public enum RegulationStatusEnum {
   DELETED(2, "删除"),
   EXPIRED(3, "过期");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  RegulationStatusEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

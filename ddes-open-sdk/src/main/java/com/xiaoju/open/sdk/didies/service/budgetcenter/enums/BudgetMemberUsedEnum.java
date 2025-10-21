@@ -2,8 +2,10 @@ package com.xiaoju.open.sdk.didies.service.budgetcenter.enums;
 
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum BudgetMemberUsedEnum {
   /**
    * 使用范围，枚举值数字 type=2时生效，
@@ -14,11 +16,12 @@ public enum BudgetMemberUsedEnum {
   COMPANY(2, "公司主体内可见"),
   ;
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  BudgetMemberUsedEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

@@ -12,11 +12,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * JacksonUtils
+ *
+ * @author didi
+ */
 public class JacksonUtils {
 
+  /**
+   * 单例
+   */
   private static class ObjectMapperHandler {
+
+    /**
+     * objectMapper
+     */
     private static final ObjectMapper MAPPER = objectMapper();
 
+    /**
+     * objectMapper
+     */
     private static ObjectMapper objectMapper() {
       return new ObjectMapper()
           .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
@@ -24,8 +39,14 @@ public class JacksonUtils {
           .setSerializationInclusion(Include.NON_NULL);
     }
 
+    /**
+     * objectMapper
+     */
     private static final ObjectMapper MAPPER_WITH_NULL = objectMapperWithNull();
 
+    /**
+     * objectMapper
+     */
     private static ObjectMapper objectMapperWithNull() {
       return new ObjectMapper()
           .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
@@ -33,10 +54,20 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * 获取objectMapper
+   *
+   * @return ObjectMapper
+   */
   public static ObjectMapper getObjectMapper() {
     return ObjectMapperHandler.MAPPER;
   }
 
+  /**
+   * obj -> json string；不包含 null 值
+   *
+   * @return ObjectMapper
+   */
   public static String toJson(Object obj) {
     try {
       return ObjectMapperHandler.MAPPER.writeValueAsString(obj);
@@ -45,6 +76,11 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * obj -> json string 包含 null 值
+   *
+   * @return ObjectMapper
+   */
   public static String toJsonWithNull(Object obj) {
     try {
       return ObjectMapperHandler.MAPPER_WITH_NULL.writeValueAsString(obj);
@@ -53,6 +89,14 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * json -> obj
+   *
+   * @param json json string
+   * @param cls  class
+   * @param <T>  type
+   * @return <T> obj
+   */
   public static <T> T toObj(String json, Class<T> cls) {
     try {
       return ObjectMapperHandler.MAPPER.readValue(json, cls);
@@ -61,6 +105,14 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * to list
+   *
+   * @param json json string
+   * @param type class
+   * @param <T>  type
+   * @return <T> obj
+   */
   public static <T> List<T> parseList(String json, Class<T> clazz) {
     TypeFactory typeFactory = ObjectMapperHandler.MAPPER.getTypeFactory();
     try {
@@ -71,6 +123,14 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * to set
+   *
+   * @param json json string
+   * @param type class
+   * @param <T>  type
+   * @return <T> obj
+   */
   public static <T> Set<T> parseSet(String json, Class<T> clazz) {
     TypeFactory typeFactory = ObjectMapperHandler.MAPPER.getTypeFactory();
     try {
@@ -81,6 +141,14 @@ public class JacksonUtils {
     }
   }
 
+  /**
+   * to map
+   *
+   * @param json json string
+   * @param type class
+   * @param <T>  type
+   * @return <T> obj
+   */
   public static <T> Map<String, T> parseMap(String json, Class<T> clazz) {
     TypeFactory typeFactory = ObjectMapperHandler.MAPPER.getTypeFactory();
     try {

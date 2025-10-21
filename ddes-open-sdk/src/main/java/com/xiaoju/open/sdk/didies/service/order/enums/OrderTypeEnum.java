@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum OrderTypeEnum {
 
   ALL("all", "所有类别"),
@@ -13,11 +15,12 @@ public enum OrderTypeEnum {
   TRAIN("train", "火车票"),
   CAR("car", "用车");
 
+  /**
+   * 状态码
+   */
   private final String code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  OrderTypeEnum(String code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

@@ -11,25 +11,26 @@ import com.xiaoju.open.sdk.didies.core.model.BaseResp;
 import com.xiaoju.open.sdk.didies.core.request.IHttpTransport;
 import com.xiaoju.open.sdk.didies.core.request.RawRequest;
 import com.xiaoju.open.sdk.didies.core.request.RawResponse;
-import com.xiaoju.open.sdk.didies.utils.AesUtils;
-import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
-import com.xiaoju.open.sdk.didies.utils.Lists;
-import com.xiaoju.open.sdk.didies.utils.SignUtils;
-import com.xiaoju.open.sdk.didies.utils.StringUtils;
+import com.xiaoju.open.sdk.didies.utils.*;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+/**
+ * 基础服务类
+ */
 public abstract class BaseService {
 
+  /**
+   * 令牌
+   */
   protected ITokenHolder tokenHolder;
 
+  /**
+   * 配置
+   */
   protected Config config;
 
   /**
@@ -44,8 +45,6 @@ public abstract class BaseService {
    * @return 请求结果
    */
   protected <P, R extends BaseResp> R doPost(P req, String apiPath, Class<R> clazz, Integer retryTimes) {
-
-
     boolean isAuth = Constants.AUTH_URI.equals(apiPath);
     IHttpTransport httpTransport = config.getHttpTransport();
     String url = config.getBaseUrl() + apiPath;
@@ -105,6 +104,14 @@ public abstract class BaseService {
 
   /*================================================  private utils ================================================*/
 
+  /**
+   * 构建请求参数
+   *
+   * @param response 响应对象
+   * @param clazz    响应对象的类型
+   * @param <T>      响应结果的泛型参数
+   * @return 响应结果
+   */
   private <T extends BaseResp> T buildResult(RawResponse response, Class<T> clazz) {
     String result = null;
     if (response.getBody() != null) {
@@ -120,6 +127,14 @@ public abstract class BaseService {
     return null;
   }
 
+  /**
+   * 构建解密后的响应对象
+   *
+   * @param clazz        响应对象的类型
+   * @param responseBody 响应对象
+   * @param <T>          响应结果的泛型参数
+   * @return 响应结果
+   */
   private <T extends BaseResp> T setDecryptData(Class<T> clazz, T responseBody) {
     if (config.getEnableAES() && !EncryptTypeEnum.NORMAL.equals(config.getEncryptType())) {
       if (!StringUtils.isEmpty(responseBody.getEncryptData())) {
@@ -130,6 +145,12 @@ public abstract class BaseService {
     return responseBody;
   }
 
+  /**
+   * 对象转 map
+   *
+   * @param bean 对象
+   * @return map
+   */
   private Map<String, Object> beanToMap(Object bean) {
     if (bean == null) {
       return null;
@@ -137,6 +158,15 @@ public abstract class BaseService {
     return JacksonUtils.parseMap(JacksonUtils.toJson(bean), Object.class);
   }
 
+  /**
+   * 对参数签名并设置
+   *
+   * @param req          请求参数
+   * @param isQueryParam 是否是查询参数
+   * @param isAuth       是否是授权请求
+   * @param <P>          请求参数泛型参数
+   * @return 请求参数
+   */
   private <P> Map<String, Object> buildReqWithSign(P req, boolean isQueryParam, boolean isAuth) {
     Map<String, Object> signMap = convertMap(req);
 
@@ -166,6 +196,12 @@ public abstract class BaseService {
     return reqMap;
   }
 
+  /**
+   * 重置对象为json字符串
+   *
+   * @param signMap 签名串
+   * @param keySet  key集合
+   */
   private void resetObjToJson(Map<String, Object> signMap, Set<String> keySet) {
 
     List<String> removeKeys = new ArrayList<>();
@@ -190,6 +226,13 @@ public abstract class BaseService {
     }
   }
 
+  /**
+   * 将入参转换为ma
+   *
+   * @param 入参
+   * @param <P> 入参泛型参数
+   * @return
+   */
   private <P> Map<String, Object> convertMap(P req) {
     Map<String, Object> reqMap = new HashMap<>();
     if (req == null) {
@@ -205,6 +248,13 @@ public abstract class BaseService {
     return reqMap;
   }
 
+  /**
+   * 构建请求参数
+   *
+   * @param stringObjectMap 请求参数
+   * @param reqMap          请求参数
+   * @param clazz           类型
+   */
   private void buildReqMap(Map<String, Object> stringObjectMap, Map<String, Object> reqMap, Class<?> clazz) {
     Field[] superFields = clazz.getDeclaredFields();
     for (Field field : superFields) {
@@ -224,6 +274,12 @@ public abstract class BaseService {
     }
   }
 
+  /**
+   * url 编码
+   *
+   * @param params 参数
+   * @return 编码后的参数
+   */
   private Map<String, Object> urlEncoderParam(Map<String, Object> params) {
     try {
       Map<String, Object> encodeMap = new HashMap<>();
@@ -236,6 +292,13 @@ public abstract class BaseService {
     }
   }
 
+  /**
+   * 判断是否有 @JsonProperty 注解
+   *
+   * @param clazz     类型
+   * @param fieldName 字段名
+   * @return 是否有
+   */
   private boolean hasJsonPropertyAnnotation(Class<?> clazz, String fieldName) {
     boolean hasAnnotation = false;
     try {
@@ -246,6 +309,12 @@ public abstract class BaseService {
     return hasAnnotation;
   }
 
+  /**
+   * 获取重试次数
+   *
+   * @param retryTimes 重试次数
+   * @return 重试次数
+   */
   private Integer getRetryTimes(Integer retryTimes) {
     if (retryTimes == null) {
       retryTimes = 0;
@@ -264,14 +333,31 @@ public abstract class BaseService {
     return retryTimes + 1;
   }
 
+  /**
+   * 验证token是否失效
+   *
+   * @param resp 响应对象
+   * @return 是否失效
+   */
   private boolean isTokenInvalid(BaseResp resp) {
     return resp != null && Constants.INVALID_ACCESS_TOKEN_CODE.equals(resp.getErrno());
   }
 
+  /**
+   * 设置请求头
+   *
+   * @param request 请求对象
+   */
   private void setAgentHeader(RawRequest request) {
     request.getHeaders().put(Constants.USER_AGENT, Lists.newArrayList(Constants.DIDI_AGENT));
   }
 
+  /**
+   * 构建AES请求参数
+   *
+   * @param requestParam 请求参数
+   * @return AES请求参数
+   */
   private Map<String, Object> buildAesRequestParam(Map<String, Object> requestParam) {
     if (StringUtils.isEmpty(config.getAesKey())) {
       throw new SystemException("开启AES加密请先未配置aesKey!");
@@ -288,6 +374,12 @@ public abstract class BaseService {
     return aesBody;
   }
 
+  /**
+   * 构建加密内容
+   *
+   * @param requestBody 请求参数
+   * @return 加密内容
+   */
   private String buildEntContent(Map<String, Object> requestBody) {
     StringBuilder sb = new StringBuilder();
     Set<Map.Entry<String, Object>> entries = requestBody.entrySet();

@@ -3,12 +3,7 @@ package com.xiaoju.open.sdk.didies.service.workspace.v1;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.CreateWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.CreateWorkplaceRequest;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.DeleteWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.DeleteWorkplaceRequest;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.UpdateWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.UpdateWorkplaceRequest;
+import com.xiaoju.open.sdk.didies.service.workspace.v1.model.*;
 
 public class V1 extends BaseService {
 

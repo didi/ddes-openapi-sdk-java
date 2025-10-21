@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.flight;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum FlightCabinTypeEnum {
 
   UNCONFIGURED(0, "未配置"),
@@ -13,11 +15,12 @@ public enum FlightCabinTypeEnum {
   PREMIUM_ECONOMY(5, "经济舱精选"),
   ECONOMY_Y_CLASS(6, "经济舱y舱");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  FlightCabinTypeEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

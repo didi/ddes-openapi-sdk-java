@@ -3,12 +3,7 @@ package com.xiaoju.open.sdk.didies.service.traveler.v1;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.CreateTravelerApiReply;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.CreateTravelerRequest;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.DelTravelerApiReply;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.DelTravelerRequest;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.UpdateTravelerApiReply;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.UpdateTravelerRequest;
+import com.xiaoju.open.sdk.didies.service.traveler.v1.model.*;
 
 public class V1 extends BaseService {
 

@@ -11,8 +11,17 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * RestTemplate
+ */
 public class RestTemplates {
 
+  /**
+   * 无url编码的RestTemplate
+   *
+   * @param config 配置
+   * @return RestTemplate
+   */
   public static RestTemplate noneUrlEncodeRestTemplate(Config config) {
     OkHttp3ClientHttpRequestFactory factory = buildOkHttp3ClientHttpRequestFactory(config);
     RestTemplate restTemplate = new RestTemplate(factory);
@@ -32,6 +41,12 @@ public class RestTemplates {
     return restTemplate;
   }
 
+  /**
+   * 构建OkHttp3ClientHttpRequestFactory
+   *
+   * @param config 配置
+   * @return OkHttp3ClientHttpRequestFactory
+   */
   private static OkHttp3ClientHttpRequestFactory buildOkHttp3ClientHttpRequestFactory(Config config) {
 
     long connectTimeout = config.getConnectTimeout() == null || config.getConnectTimeout() == 0L ? 6000L : config.getConnectTimeout();

@@ -3,19 +3,7 @@ package com.xiaoju.open.sdk.ddes.city;
 import com.xiaoju.open.sdk.didies.ApiClient;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.service.city.enums.CityCountryLevelEnum;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListAirportCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListAirportCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCarCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCarCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCityParamObj;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCountryApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCountryRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListHotelCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListHotelCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListTrainCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListTrainCityRequest;
+import com.xiaoju.open.sdk.didies.service.city.v1.model.*;
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 
 public class CitySample {

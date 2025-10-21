@@ -3,22 +3,7 @@ package com.xiaoju.open.sdk.didies.service.approval.v1;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.ApprovalPassApiReply;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.ApprovalPassRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.CancelApprovalApiReply;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.CancelApprovalRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.CreateApprovalApiReply;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.CreateApprovalBusinessByDateRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.CreateApprovalBusinessByTimesRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.CreateApprovalRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.GetApprovalDetailApiReply;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.GetApprovalDetailRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.ListApprovalOrderApiReply;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.ListApprovalOrderRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.UpdateApprovalApiReply;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.UpdateApprovalBusinessByDateRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.UpdateApprovalBusinessByTimesRequest;
-import com.xiaoju.open.sdk.didies.service.approval.v1.model.UpdateApprovalRequest;
+import com.xiaoju.open.sdk.didies.service.approval.v1.model.*;
 
 public class V1 extends BaseService {
 

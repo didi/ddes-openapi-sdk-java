@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.bill.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum BillSplitTypeEnum {
 
   TRAVELER_DEPARTMENT(1, "按出行人部门拆分"),
@@ -13,11 +15,12 @@ public enum BillSplitTypeEnum {
   CUSTOM_FIELD(6, "按自定义字段拆分"),
   MULTI_DIMENSION(7, "多维拆帐");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  BillSplitTypeEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

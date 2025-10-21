@@ -2,13 +2,7 @@ package com.xiaoju.open.sdk.ddes.workspace;
 
 import com.xiaoju.open.sdk.didies.ApiClient;
 import com.xiaoju.open.sdk.didies.core.Config;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.CreateWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.CreateWorkplaceRequest;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.DeleteWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.DeleteWorkplaceRequest;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.UpdateWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.UpdateWorkplaceRequest;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.WorkplaceInfo;
+import com.xiaoju.open.sdk.didies.service.workspace.v1.model.*;
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 
 public class WorkspaceSample {

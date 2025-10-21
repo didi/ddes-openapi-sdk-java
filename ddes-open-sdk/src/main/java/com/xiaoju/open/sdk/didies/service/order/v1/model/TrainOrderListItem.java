@@ -1,26 +1,12 @@
 package com.xiaoju.open.sdk.didies.service.order.v1.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderChangeListItem;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderGrabInfo;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderInfo;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderPassengerListItem;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderPriceInfo;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderRcListItem;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderRefundListItem;
-import com.xiaoju.open.sdk.didies.service.order.v1.model.TrainOrderTicketListItem;
-import java.util.ArrayList;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 
 

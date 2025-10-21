@@ -5,11 +5,7 @@ import com.xiaoju.open.sdk.didies.core.enums.LogLevelEnum;
 import com.xiaoju.open.sdk.didies.core.exception.ServerTimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -19,12 +15,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * rest http transport
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class RestHttpTransport implements IHttpTransport {
 
+  /**
+   * rest template
+   */
   private final RestTemplate restTemplate;
 
+  /**
+   * get请求实现
+   *
+   * @param request request
+   * @return response
+   */
   @Override
   public RawResponse get(Request request) {
     try {
@@ -46,6 +54,12 @@ public class RestHttpTransport implements IHttpTransport {
     }
   }
 
+  /**
+   * post请求实现
+   *
+   * @param request request
+   * @return response
+   */
   @Override
   public RawResponse post(RawRequest request) {
     try {
@@ -67,6 +81,12 @@ public class RestHttpTransport implements IHttpTransport {
     }
   }
 
+  /**
+   * post请求实现
+   *
+   * @param request request
+   * @return response
+   */
   @Override
   public RawResponse post(FormRequest request) {
     try {
@@ -89,14 +109,33 @@ public class RestHttpTransport implements IHttpTransport {
     }
   }
 
+  /**
+   * 构建headers
+   *
+   * @param request request
+   * @return headers
+   */
   private HttpHeaders buildHeaders(Request request) {
     return buildHeaders(request, MediaType.APPLICATION_FORM_URLENCODED);
   }
 
+  /**
+   * 构建headers
+   *
+   * @param request request
+   * @return headers
+   */
   private HttpHeaders buildRawHeaders(RawRequest request) {
     return buildHeaders(request, MediaType.APPLICATION_JSON);
   }
 
+  /**
+   * 构建headers
+   *
+   * @param request            request
+   * @param defaultContentType defaultContentType
+   * @return headers
+   */
   private HttpHeaders buildHeaders(Headers headers, MediaType defaultContentType) {
     HttpHeaders httpHeaders = new HttpHeaders();
     if (headers.getHeaders() == null || headers.getHeaders().isEmpty()) {
@@ -114,6 +153,13 @@ public class RestHttpTransport implements IHttpTransport {
     return httpHeaders;
   }
 
+  /**
+   * 构建url
+   *
+   * @param url    url
+   * @param params params
+   * @return url
+   */
   private String buildUrl(String url, Map<String, Object> params) {
     if (params == null || params.isEmpty()) {
       return url;
@@ -129,6 +175,12 @@ public class RestHttpTransport implements IHttpTransport {
     return builder.build().toUriString();
   }
 
+  /**
+   * 构建表单请求体
+   *
+   * @param request request
+   * @return body
+   */
   private MultiValueMap<String, String> buildFormBody(FormRequest request) {
     if (request.getBody() == null) {
       return null;
@@ -144,6 +196,12 @@ public class RestHttpTransport implements IHttpTransport {
     return body;
   }
 
+  /**
+   * 构建原始响应
+   *
+   * @param responseEntity responseEntity
+   * @return rawResponse
+   */
   private RawResponse buildRawResponse(ResponseEntity<String> responseEntity) {
     RawResponse rawResponse = new RawResponse();
     HttpHeaders httpHeaders = responseEntity.getHeaders();
@@ -155,6 +213,13 @@ public class RestHttpTransport implements IHttpTransport {
     return rawResponse;
   }
 
+  /**
+   * 写请求日志
+   *
+   * @param request    request
+   * @param url        url
+   * @param httpEntity httpEntity
+   */
   private void writeRequestLog(Request request, String url, HttpEntity httpEntity) {
     if (request.getConfig() != null && Boolean.TRUE.equals(request.getConfig().getEnableRequestLog())) {
       Config config = request.getConfig();
@@ -168,6 +233,14 @@ public class RestHttpTransport implements IHttpTransport {
 
   }
 
+  /**
+   * 写响应日志
+   *
+   * @param request    request
+   * @param url        url
+   * @param httpEntity httpEntity
+   * @param response   response
+   */
   private void writeResponseLog(Request request, String url, HttpEntity httpEntity, ResponseEntity<String> response) {
     if (request.getConfig() != null && Boolean.TRUE.equals(request.getConfig().getEnableRequestLog())) {
       Config config = request.getConfig();

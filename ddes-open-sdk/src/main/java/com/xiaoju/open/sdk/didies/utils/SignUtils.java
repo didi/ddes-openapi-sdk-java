@@ -11,8 +11,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 签名工具类
+ *
+ * @author didi
+ */
 public class SignUtils {
 
+  /**
+   * 生成签名
+   *
+   * @param map        待签名的参数
+   * @param signMethod 签名方法
+   * @return 签名
+   */
   public static String mapToSign(Map<String, String> map, SignMethodEnum signMethod) {
 
     List<Map.Entry<String, String>> entries = new ArrayList<>(map.entrySet());
@@ -31,6 +43,14 @@ public class SignUtils {
     return sha256Hex(sb.toString());
   }
 
+  /**
+   * 生成签名
+   *
+   * @param params     待签名的参数
+   * @param signKey    签名key
+   * @param signMethod 签名方法
+   * @return 签名
+   */
   public static String mapParamsToSign(Map<String, Object> params, String signKey, SignMethodEnum signMethod) {
     Map<String, String> map = new HashMap<>();
     for (Map.Entry<String, Object> entry : params.entrySet()) {
@@ -39,17 +59,18 @@ public class SignUtils {
       if (StringUtils.isEmpty(k) || v == null) {
         continue;
       }
-      if (v instanceof String) {
-        map.put(k, (String) v);
-        continue;
-      }
-      map.put(k, JacksonUtils.toJson(v));
+      map.put(k, v.toString());
     }
     map.put("sign_key", signKey);
     return mapToSign(map, signMethod);
   }
 
-  //java md5算法
+  /**
+   * 生成md5
+   *
+   * @param plainText 明文
+   * @return 密文
+   */
   public static String md5(String plainText) {
     byte[] secretBytes;
     try {
@@ -69,7 +90,12 @@ public class SignUtils {
     return md5code.toString();
   }
 
-  //java sha256算法
+  /**
+   * 计算输入字符串的SHA-256哈希值
+   *
+   * @param input 输入字符串
+   * @return SHA-256哈希值的十六进制表示
+   */
   public static String sha256Hex(String input) {
     try {
       // 创建一个MessageDigest实例，并指定使用SHA-256算法

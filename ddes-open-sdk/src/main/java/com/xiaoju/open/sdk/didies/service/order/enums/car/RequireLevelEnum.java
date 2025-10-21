@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.car;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum RequireLevelEnum {
 
   COMFORT(100, "专车舒适型"),
@@ -40,11 +42,12 @@ public enum RequireLevelEnum {
   MULTI_CALL(2300, "同时呼叫"),
   CORPORATE_DISCOUNT_EXPRESS(40600, "企业特价快车");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  RequireLevelEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

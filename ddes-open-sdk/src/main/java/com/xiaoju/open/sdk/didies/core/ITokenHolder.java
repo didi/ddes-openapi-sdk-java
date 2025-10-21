@@ -1,5 +1,8 @@
 package com.xiaoju.open.sdk.didies.core;
 
+/**
+ * token缓存接口
+ */
 public interface ITokenHolder {
 
   /**

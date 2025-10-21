@@ -1,40 +1,45 @@
 package com.xiaoju.open.sdk.didies.service.member;
 
 
-
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.CreateMemberApiReply;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.CreateMemberRequest;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.DelMemberApiReply;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.DelMemberRequest;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.GetMemberDetailApiReply;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.GetMemberDetailRequest;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.GetMemberQuotaApiReply;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.GetMemberQuotaRequest;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.ListMemberApiReply;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.ListMemberRequest;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.UpdateMemberApiReply;
-import com.xiaoju.open.sdk.didies.service.member.v1.model.UpdateMemberRequest;
 import com.xiaoju.open.sdk.didies.service.member.v1.V1;
 
 public class Member extends BaseService {
+  /**
+   * 令牌持有者
+   */
+  protected final ITokenHolder tokenHolder;
+  /**
+   * 配置
+   */
+  protected final Config config;
 
-    protected final ITokenHolder tokenHolder;
+  /**
+   * V1
+   */
+  private final V1 v1;
 
-    protected final Config config;
+  /**
+   * 构造函数
+   *
+   * @param tokenHolder 令牌持有者
+   * @param config      配置
+   */
+  public Member(ITokenHolder tokenHolder, Config config) {
+      this.tokenHolder = tokenHolder;
+      this.config = config;
+      this.v1 = new V1(tokenHolder, config);
+  }
 
-    private final V1 v1;
-
-    public Member(ITokenHolder tokenHolder, Config config) {
-        this.tokenHolder = tokenHolder;
-        this.config = config;
-        this.v1 = new V1(tokenHolder, config);
-    }
-
-    public V1 v1() {
-        return this.v1;
-    }
+  /**
+   * 获取1.0.0
+   *
+   * @return 1.0.0
+   */
+  public V1 v1() {
+      return this.v1;
+  }
 }
 

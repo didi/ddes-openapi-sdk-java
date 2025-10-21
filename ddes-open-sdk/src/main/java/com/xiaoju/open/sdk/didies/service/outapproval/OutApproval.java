@@ -1,30 +1,45 @@
 package com.xiaoju.open.sdk.didies.service.outapproval;
 
 
-
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.outapproval.v1.model.UpdateOutApprovalStatusApiReply;
-import com.xiaoju.open.sdk.didies.service.outapproval.v1.model.UpdateOutApprovalStatusRequest;
 import com.xiaoju.open.sdk.didies.service.outapproval.v1.V1;
 
 public class OutApproval extends BaseService {
+  /**
+   * 令牌持有者
+   */
+  protected final ITokenHolder tokenHolder;
+  /**
+   * 配置
+   */
+  protected final Config config;
 
-    protected final ITokenHolder tokenHolder;
+  /**
+   * V1
+   */
+  private final V1 v1;
 
-    protected final Config config;
+  /**
+   * 构造函数
+   *
+   * @param tokenHolder 令牌持有者
+   * @param config      配置
+   */
+  public OutApproval(ITokenHolder tokenHolder, Config config) {
+      this.tokenHolder = tokenHolder;
+      this.config = config;
+      this.v1 = new V1(tokenHolder, config);
+  }
 
-    private final V1 v1;
-
-    public OutApproval(ITokenHolder tokenHolder, Config config) {
-        this.tokenHolder = tokenHolder;
-        this.config = config;
-        this.v1 = new V1(tokenHolder, config);
-    }
-
-    public V1 v1() {
-        return this.v1;
-    }
+  /**
+   * 获取1.0.0
+   *
+   * @return 1.0.0
+   */
+  public V1 v1() {
+      return this.v1;
+  }
 }
 

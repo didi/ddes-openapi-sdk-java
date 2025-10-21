@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.member.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum MemberIdCardTypeEnum {
 
   ID_CARD(1, "身份证"),
@@ -13,11 +15,12 @@ public enum MemberIdCardTypeEnum {
   HOME_RETURN(6, "回乡证"),
   FOREIGN_PERMANENT(7, "外国人永久居留身份证");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  MemberIdCardTypeEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

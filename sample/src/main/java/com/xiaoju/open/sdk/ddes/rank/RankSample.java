@@ -2,15 +2,7 @@ package com.xiaoju.open.sdk.ddes.rank;
 
 import com.xiaoju.open.sdk.didies.ApiClient;
 import com.xiaoju.open.sdk.didies.core.Config;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.CreateRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.CreateRankRequest;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.DelRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.DelRankRequest;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.ListRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.ListRankRequest;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.RankInfo;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.UpdateRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.UpdateRankRequest;
+import com.xiaoju.open.sdk.didies.service.rank.v1.model.*;
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 
 public class RankSample {

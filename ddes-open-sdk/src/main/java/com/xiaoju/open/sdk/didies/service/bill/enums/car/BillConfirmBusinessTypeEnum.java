@@ -1,17 +1,20 @@
 package com.xiaoju.open.sdk.didies.service.bill.enums.car;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum BillConfirmBusinessTypeEnum {
   RIDE_HAILING(0, "网约车"),
   BUSINESS_TRAVEL(1, "商旅");
 
-  private final int code;
+  /**
+   * 状态码
+   */
+  private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  BillConfirmBusinessTypeEnum(int code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

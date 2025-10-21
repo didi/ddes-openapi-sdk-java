@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.approval.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum ApprovalExecutiveRegulationTypeEnum {
 
   EXECUTIVE_APPLICATION(0, "执行申请人制度"),
@@ -11,11 +13,12 @@ public enum ApprovalExecutiveRegulationTypeEnum {
   EXECUTIVE_MULTI_PASSENGER(3, "执行多人多差标制度"),
   ;
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  ApprovalExecutiveRegulationTypeEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

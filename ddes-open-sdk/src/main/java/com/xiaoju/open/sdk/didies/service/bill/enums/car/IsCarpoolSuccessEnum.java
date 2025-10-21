@@ -1,17 +1,20 @@
 package com.xiaoju.open.sdk.didies.service.bill.enums.car;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum IsCarpoolSuccessEnum {
   YES(1, "是"),
   NO(0, "否");
 
-  private final int code;
+  /**
+   * 状态码
+   */
+  private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  IsCarpoolSuccessEnum(int code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

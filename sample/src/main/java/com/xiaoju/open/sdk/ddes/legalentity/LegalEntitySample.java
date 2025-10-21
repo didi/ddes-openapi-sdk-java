@@ -2,14 +2,7 @@ package com.xiaoju.open.sdk.ddes.legalentity;
 
 import com.xiaoju.open.sdk.didies.ApiClient;
 import com.xiaoju.open.sdk.didies.core.Config;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.CreateLegalEntityApiReply;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.CreateLegalEntityRequest;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.DelLegalEntityApiReply;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.DelLegalEntityRequest;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.GetLegalEntityApiReply;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.GetLegalEntityRequest;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.UpdateLegalEntityApiReply;
-import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.UpdateLegalEntityRequest;
+import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.*;
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 
 public class LegalEntitySample {

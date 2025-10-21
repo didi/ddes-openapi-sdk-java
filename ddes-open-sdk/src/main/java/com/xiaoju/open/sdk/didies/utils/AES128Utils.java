@@ -38,9 +38,9 @@ public class AES128Utils {
    * @param cipher 密文
    * @param key    密钥
    * @return 明文
-   * @throws Exception
+   * @throws DataDecryptException 数据解密异常
    */
-  public static String decrypt(String cipher, String key) {
+  public static String decrypt(String cipher, String key) throws DataDecryptException {
     try {
       SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
       Cipher decipher = Cipher.getInstance(ALGORITHM);
@@ -49,22 +49,6 @@ public class AES128Utils {
       return new String(decrypted, StandardCharsets.UTF_8).trim();
     } catch (Exception e) {
       throw new DataDecryptException("aes解密异常", e);
-    }
-  }
-
-
-  public static void main(String[] args) {
-    try {
-      String key = "g4hh9cc33a969b610b05ed0e004d4e52";
-      String originalText = "312984412739843123";
-
-      String encryptedText = encrypt(originalText, key);
-      System.out.println("Encrypted: " + encryptedText);
-
-      String decryptedText = decrypt(encryptedText, key);
-      System.out.println("Decrypted: " + decryptedText);
-    } catch (Exception e) {
-      e.printStackTrace();
     }
   }
 }

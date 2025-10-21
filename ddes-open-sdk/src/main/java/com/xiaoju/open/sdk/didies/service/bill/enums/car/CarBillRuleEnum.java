@@ -2,8 +2,10 @@ package com.xiaoju.open.sdk.didies.service.bill.enums.car;
 
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum CarBillRuleEnum {
   TAXI("出租车"),
   SPECIAL_CAR("专车"),
@@ -13,9 +15,8 @@ public enum CarBillRuleEnum {
   PRIVATE_CAR_FOR_PUBLIC("私车公用"),
   SIMULTANEOUS_CALL("同时呼叫");
 
-  private final String description;
-
-  CarBillRuleEnum(String description) {
-    this.description = description;
-  }
+  /**
+   * code
+   */
+  private final String code;
 }

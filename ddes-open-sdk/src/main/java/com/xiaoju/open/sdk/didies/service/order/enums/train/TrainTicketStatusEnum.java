@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.train;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum TrainTicketStatusEnum {
 
   HOLDING("Holding", "占座中"),
@@ -21,11 +23,12 @@ public enum TrainTicketStatusEnum {
   REFUNDED_AFTER_CHANGED_OTHER("Refoundedafterchagnedother", "其它平台退改"),
   UNKNOWN("Unknow", "未知");
 
+  /**
+   * 状态码
+   */
   private final String code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  TrainTicketStatusEnum(String code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

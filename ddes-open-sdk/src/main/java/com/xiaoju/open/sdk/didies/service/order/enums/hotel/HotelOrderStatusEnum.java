@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.hotel;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum HotelOrderStatusEnum {
 
   SUBMITTED("Submitted", "已提交"),
@@ -16,11 +18,12 @@ public enum HotelOrderStatusEnum {
   NO_SHOW("Noshow", "预订未到"),
   UNKNOWN("Unknow", "未知");
 
+  /**
+   * 状态码
+   */
   private final String code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  HotelOrderStatusEnum(String code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

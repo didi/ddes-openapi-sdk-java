@@ -3,14 +3,7 @@ package com.xiaoju.open.sdk.didies.service.rank.v1;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.CreateRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.CreateRankRequest;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.DelRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.DelRankRequest;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.ListRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.ListRankRequest;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.UpdateRankApiReply;
-import com.xiaoju.open.sdk.didies.service.rank.v1.model.UpdateRankRequest;
+import com.xiaoju.open.sdk.didies.service.rank.v1.model.*;
 
 public class V1 extends BaseService {
 

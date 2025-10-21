@@ -1,40 +1,45 @@
 package com.xiaoju.open.sdk.didies.service.city;
 
 
-
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListAirportCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListAirportCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCarCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCarCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCountryApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListCountryRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListHotelCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListHotelCityRequest;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListTrainCityApiReply;
-import com.xiaoju.open.sdk.didies.service.city.v1.model.ListTrainCityRequest;
 import com.xiaoju.open.sdk.didies.service.city.v1.V1;
 
 public class City extends BaseService {
+  /**
+   * 令牌持有者
+   */
+  protected final ITokenHolder tokenHolder;
+  /**
+   * 配置
+   */
+  protected final Config config;
 
-    protected final ITokenHolder tokenHolder;
+  /**
+   * V1
+   */
+  private final V1 v1;
 
-    protected final Config config;
+  /**
+   * 构造函数
+   *
+   * @param tokenHolder 令牌持有者
+   * @param config      配置
+   */
+  public City(ITokenHolder tokenHolder, Config config) {
+      this.tokenHolder = tokenHolder;
+      this.config = config;
+      this.v1 = new V1(tokenHolder, config);
+  }
 
-    private final V1 v1;
-
-    public City(ITokenHolder tokenHolder, Config config) {
-        this.tokenHolder = tokenHolder;
-        this.config = config;
-        this.v1 = new V1(tokenHolder, config);
-    }
-
-    public V1 v1() {
-        return this.v1;
-    }
+  /**
+   * 获取1.0.0
+   *
+   * @return 1.0.0
+   */
+  public V1 v1() {
+      return this.v1;
+  }
 }
 

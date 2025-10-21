@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.afterapproval;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum PaymentStatusEnum {
 
   PENDING(0, "待付款"),
@@ -10,11 +12,12 @@ public enum PaymentStatusEnum {
   CANCELLED(2, "已取消"),
   CREATION_FAILED(3, "创建失败");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  PaymentStatusEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

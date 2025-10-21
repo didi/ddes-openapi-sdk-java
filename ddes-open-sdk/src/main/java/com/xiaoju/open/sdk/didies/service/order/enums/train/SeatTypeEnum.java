@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.train;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum SeatTypeEnum {
 
   HARD_SEAT("1", "硬座"),
@@ -32,11 +34,12 @@ public enum SeatTypeEnum {
   MULTI_FUNCTION_SEAT("Q", "多功能座"),
   SECOND_PACKAGE_SEAT("S", "二等包座");
 
+  /**
+   * 状态码
+   */
   private final String code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  SeatTypeEnum(String code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

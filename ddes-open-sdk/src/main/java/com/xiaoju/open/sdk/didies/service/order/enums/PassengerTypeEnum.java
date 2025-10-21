@@ -1,19 +1,22 @@
 package com.xiaoju.open.sdk.didies.service.order.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum PassengerTypeEnum {
 
-    EMPLOYEE_NUMBER("employee_number", "工号"),
-    EMAIL("email", "邮箱"), 
-    PHONE("phone", "手机号");
+  EMPLOYEE_NUMBER("employee_number", "工号"),
+  EMAIL("email", "邮箱"),
+  PHONE("phone", "手机号");
 
-    private final String code;
-    private final String description;
-
-    PassengerTypeEnum(String code, String description) {
-        this.code = code;
-        this.description = description;
-    }
+  /**
+   * 状态码
+   */
+  private final String code;
+  /**
+   * 描述
+   */
+  private final String description;
 }

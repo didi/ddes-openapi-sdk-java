@@ -1,9 +1,11 @@
 package com.xiaoju.open.sdk.didies.service.bill.enums.car;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 
 @Getter
+@RequiredArgsConstructor
 public enum DeductionTypeNameEnum {
   ORDER_COMPANY_PAYMENT("订单企业支付扣款"),
   ORDER_COMPANY_REFUND("订单企业支付后退款"),
@@ -14,9 +16,8 @@ public enum DeductionTypeNameEnum {
   COMPANY_TO_PERSON_RECHARGE("企业支付转个人支付充值"),
   APPROVAL_REJECT_RECHARGE("行后审批驳回后充值");
 
-  private final String description;
-
-  DeductionTypeNameEnum(String description) {
-    this.description = description;
-  }
+  /**
+   * code
+   */
+  private final String code;
 }

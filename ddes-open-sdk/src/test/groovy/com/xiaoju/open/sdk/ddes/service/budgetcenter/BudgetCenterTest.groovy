@@ -4,7 +4,6 @@ import com.xiaoju.open.sdk.didies.ApiClient
 import com.xiaoju.open.sdk.didies.core.Config
 import com.xiaoju.open.sdk.didies.core.enums.LogLevelEnum
 import com.xiaoju.open.sdk.didies.service.budgetcenter.BudgetCenter
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.*
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils
 import spock.lang.Ignore
 import spock.lang.Specification

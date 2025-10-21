@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.bill.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum BusinessTypeEnum {
 
   RIDE_HAILING(0, "网约车"),
@@ -16,11 +18,12 @@ public enum BusinessTypeEnum {
   INTERNATIONAL_FLIGHT(205, "国际机票"),
   MANUAL_ORDER(531, "手工增值单");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  BusinessTypeEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

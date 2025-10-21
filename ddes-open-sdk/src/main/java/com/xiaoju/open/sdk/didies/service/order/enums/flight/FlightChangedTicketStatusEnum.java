@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.flight;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum FlightChangedTicketStatusEnum {
 
   OPEN_FOR_USE("OpenForUse", "客票有效未使用"),
@@ -17,11 +19,12 @@ public enum FlightChangedTicketStatusEnum {
   CPN_NOTE("CPN Note", "机场控制"),
   UNKNOWN("UnKnow", "未知");
 
+  /**
+   * 状态码
+   */
   private final String code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  FlightChangedTicketStatusEnum(String code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

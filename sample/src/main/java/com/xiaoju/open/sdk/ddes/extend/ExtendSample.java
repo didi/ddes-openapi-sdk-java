@@ -3,13 +3,7 @@ package com.xiaoju.open.sdk.ddes.extend;
 import com.xiaoju.open.sdk.didies.ApiClient;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.service.extend.enums.ExtendStatusEnum;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.CreateExtendBatchApiReply;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.CreateExtendBatchRequest;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.ExtendInfo;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.ListExtendApiReply;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.ListExtendRequest;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.UpdateExtendStatusApiReply;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.UpdateExtendStatusRequest;
+import com.xiaoju.open.sdk.didies.service.extend.v1.model.*;
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 
 import java.util.ArrayList;

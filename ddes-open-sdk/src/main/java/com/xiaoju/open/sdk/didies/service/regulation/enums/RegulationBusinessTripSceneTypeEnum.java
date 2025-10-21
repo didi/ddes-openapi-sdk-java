@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.regulation.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum RegulationBusinessTripSceneTypeEnum {
 
   PERSONAL_CAR(0, "个人用车"),
@@ -20,11 +22,12 @@ public enum RegulationBusinessTripSceneTypeEnum {
   PRE_TRIP_APPROVAL(96, "行前审批"),
   NO_APPROVAL_TRAVEL(104, "无需审批差旅制度");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  RegulationBusinessTripSceneTypeEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

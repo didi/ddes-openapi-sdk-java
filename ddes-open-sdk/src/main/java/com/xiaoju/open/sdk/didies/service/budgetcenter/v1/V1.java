@@ -3,14 +3,7 @@ package com.xiaoju.open.sdk.didies.service.budgetcenter.v1;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.CreateBudgetCenterApiReply;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.CreateBudgetCenterRequest;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.DelBudgetCenterApiReply;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.DelBudgetCenterRequest;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.GetBudgetCenterApiReply;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.GetBudgetCenterRequest;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.UpdateBudgetCenterApiReply;
-import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.UpdateBudgetCenterRequest;
+import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.*;
 
 public class V1 extends BaseService {
 

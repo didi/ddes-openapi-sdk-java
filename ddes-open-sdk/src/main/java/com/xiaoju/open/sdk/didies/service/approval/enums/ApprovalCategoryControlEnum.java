@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.approval.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum ApprovalCategoryControlEnum {
 
   CITY_CAR(3, "市内用车"),
@@ -13,11 +15,13 @@ public enum ApprovalCategoryControlEnum {
   INTERNATIONAL_FLIGHT(11, "国际机票服务"),
   INTERNATIONAL_HOTEL(12, "国际酒店服务");
 
-  private final Integer code;
-  private final String description;
 
-  ApprovalCategoryControlEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
+  /**
+   * 状态码
+   */
+  private final Integer code;
+  /**
+   * 描述
+   */
+  private final String description;
 }

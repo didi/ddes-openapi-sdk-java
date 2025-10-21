@@ -4,14 +4,7 @@ import com.xiaoju.open.sdk.didies.ApiClient;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.enums.EncryptTypeEnum;
 import com.xiaoju.open.sdk.didies.service.member.enums.MemberGenderEnum;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.CreateTravelerApiReply;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.CreateTravelerRequest;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.DelTravelerApiReply;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.DelTravelerRequest;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.TravelCardInfo;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.TravelerInfo;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.UpdateTravelerApiReply;
-import com.xiaoju.open.sdk.didies.service.traveler.v1.model.UpdateTravelerRequest;
+import com.xiaoju.open.sdk.didies.service.traveler.v1.model.*;
 import com.xiaoju.open.sdk.didies.utils.AesUtils;
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 

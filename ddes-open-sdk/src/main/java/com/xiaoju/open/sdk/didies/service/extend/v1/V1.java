@@ -3,12 +3,7 @@ package com.xiaoju.open.sdk.didies.service.extend.v1;
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.CreateExtendBatchApiReply;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.CreateExtendBatchRequest;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.ListExtendApiReply;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.ListExtendRequest;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.UpdateExtendStatusApiReply;
-import com.xiaoju.open.sdk.didies.service.extend.v1.model.UpdateExtendStatusRequest;
+import com.xiaoju.open.sdk.didies.service.extend.v1.model.*;
 
 public class V1 extends BaseService {
 

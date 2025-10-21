@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.approval.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum ApprovalPolicyTypeEnum {
 
   OUT_RANK_ID(1, "外部职级编号"),
@@ -11,11 +13,12 @@ public enum ApprovalPolicyTypeEnum {
   EMPLOYEE_EMAIL(4, "员工邮箱"),
   REGULATION_ID(5, "制度ID");
 
+  /**
+   * 状态码
+   */
   private final Integer code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  ApprovalPolicyTypeEnum(Integer code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }

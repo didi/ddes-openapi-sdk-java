@@ -1,34 +1,45 @@
 package com.xiaoju.open.sdk.didies.service.workspace;
 
 
-
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.CreateWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.CreateWorkplaceRequest;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.DeleteWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.DeleteWorkplaceRequest;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.UpdateWorkplaceApiReply;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.UpdateWorkplaceRequest;
 import com.xiaoju.open.sdk.didies.service.workspace.v1.V1;
 
 public class Workspace extends BaseService {
+  /**
+   * 令牌持有者
+   */
+  protected final ITokenHolder tokenHolder;
+  /**
+   * 配置
+   */
+  protected final Config config;
 
-    protected final ITokenHolder tokenHolder;
+  /**
+   * V1
+   */
+  private final V1 v1;
 
-    protected final Config config;
+  /**
+   * 构造函数
+   *
+   * @param tokenHolder 令牌持有者
+   * @param config      配置
+   */
+  public Workspace(ITokenHolder tokenHolder, Config config) {
+      this.tokenHolder = tokenHolder;
+      this.config = config;
+      this.v1 = new V1(tokenHolder, config);
+  }
 
-    private final V1 v1;
-
-    public Workspace(ITokenHolder tokenHolder, Config config) {
-        this.tokenHolder = tokenHolder;
-        this.config = config;
-        this.v1 = new V1(tokenHolder, config);
-    }
-
-    public V1 v1() {
-        return this.v1;
-    }
+  /**
+   * 获取1.0.0
+   *
+   * @return 1.0.0
+   */
+  public V1 v1() {
+      return this.v1;
+  }
 }
 

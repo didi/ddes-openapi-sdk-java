@@ -1,18 +1,21 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.train;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum IsSupportChooseSeatsEnum {
 
-    NO(0, "否"),
-    YES(1, "是");
+  NO(0, "否"),
+  YES(1, "是");
 
-    private final Integer code;
-    private final String description;
-
-    IsSupportChooseSeatsEnum(Integer code, String description) {
-        this.code = code;
-        this.description = description;
-    }
+  /**
+   * 状态码
+   */
+  private final Integer code;
+  /**
+   * 描述
+   */
+  private final String description;
 }

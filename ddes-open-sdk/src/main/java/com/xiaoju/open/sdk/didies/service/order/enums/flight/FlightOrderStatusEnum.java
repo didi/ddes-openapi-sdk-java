@@ -1,8 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.order.enums.flight;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum FlightOrderStatusEnum {
 
   TO_BE_PAID("Tobepaid", "待支付"),
@@ -19,11 +21,12 @@ public enum FlightOrderStatusEnum {
   CANCELLED("Cancelled", "已取消"),
   UNKNOWN("Unknow", "未知");
 
+  /**
+   * 状态码
+   */
   private final String code;
+  /**
+   * 描述
+   */
   private final String description;
-
-  FlightOrderStatusEnum(String code, String description) {
-    this.code = code;
-    this.description = description;
-  }
 }
