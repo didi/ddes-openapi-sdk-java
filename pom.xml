@@ -9,7 +9,7 @@
     <module>sample</module>
     <module>ddes-open-sdk</module>
   </modules>
-  <version>1.0.1</version>
+  <version>1.0.3</version>
 
   <description>管理API对接SDK（2024版）https://opendocs.xiaojukeji.com/version2024</description>
 
