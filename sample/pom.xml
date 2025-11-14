@@ -3,14 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.xiaoju.sdk</groupId>
-    <artifactId>ddes-openapi-sdk-java</artifactId>
-    <version>1.0.1</version>
-  </parent>
 
-  <groupId>com.xiaoju</groupId>
+  <groupId>com.xiaojukeji</groupId>
   <artifactId>sample</artifactId>
+  <version>1.0.1</version>
 
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
@@ -20,9 +16,24 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.xiaoju</groupId>
+      <groupId>com.xiaojukeji.esapi</groupId>
       <artifactId>ddes-open-sdk</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.3</version>
     </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://repo1.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+
 </project>
