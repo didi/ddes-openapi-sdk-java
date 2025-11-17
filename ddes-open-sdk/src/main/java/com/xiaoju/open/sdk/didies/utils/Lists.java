@@ -45,12 +45,12 @@ public class Lists {
     return newArrayList();
   }
 
+
   /**
    * 合并两个数组
-   *
-   * @param <E>      泛型
-   * @param elements 元素
-   * @return 集合
+   * @param fields 元素
+   * @param field 元素
+   * @return 合并后的数据
    */
   public static Field[] concat(Field[] fields, Field field) {
     Field[] result = new Field[fields.length + 1];

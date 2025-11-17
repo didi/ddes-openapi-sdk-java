@@ -91,7 +91,7 @@ public class Config {
   /**
    * AES加密长度，默认AES128
    */
-  private EncryptTypeEnum encryptType = EncryptTypeEnum.NORMAL;
+  final private EncryptTypeEnum encryptType = EncryptTypeEnum.NORMAL;
 
   /**
    * 获取httpTransport
