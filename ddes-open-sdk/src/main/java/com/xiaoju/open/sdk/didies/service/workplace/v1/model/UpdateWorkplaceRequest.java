@@ -1,4 +1,4 @@
-package com.xiaoju.open.sdk.didies.service.workspace.v1.model;
+package com.xiaoju.open.sdk.didies.service.workplace.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xiaoju.open.sdk.didies.core.model.BaseReq;
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateWorkplaceRequest extends BaseReq  {
+public class UpdateWorkplaceRequest extends BaseReq  {
 
     /**
      * 公司 ID

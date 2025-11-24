@@ -1,4 +1,4 @@
-package com.xiaoju.open.sdk.didies.service.workspace.v1.model;
+package com.xiaoju.open.sdk.didies.service.workplace.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xiaoju.open.sdk.didies.core.model.BaseResp;
@@ -16,13 +16,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeleteWorkplaceApiReply extends BaseResp  {
+public class CreateWorkplaceApiReply extends BaseResp  {
 
     /**
      * data
      * 
      */
     @JsonProperty("data")
-    private Object data;
+    private CreateWorkplaceReply data;
 }
 

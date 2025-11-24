@@ -35,7 +35,7 @@ public class PassengerInfo  {
      * 
      */
     @JsonProperty("passenger_type")
-    private String passengerType;
+    private Integer passengerType;
     /**
      * employeeNumber
      * 

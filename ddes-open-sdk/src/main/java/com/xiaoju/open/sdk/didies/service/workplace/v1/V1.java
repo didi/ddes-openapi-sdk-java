@@ -1,9 +1,9 @@
-package com.xiaoju.open.sdk.didies.service.workspace.v1;
+package com.xiaoju.open.sdk.didies.service.workplace.v1;
 
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.*;
+import com.xiaoju.open.sdk.didies.service.workplace.v1.model.*;
 
 public class V1 extends BaseService {
 

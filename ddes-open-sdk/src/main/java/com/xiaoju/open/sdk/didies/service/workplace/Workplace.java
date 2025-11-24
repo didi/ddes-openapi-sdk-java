@@ -1,12 +1,12 @@
-package com.xiaoju.open.sdk.didies.service.workspace;
+package com.xiaoju.open.sdk.didies.service.workplace;
 
 
 import com.xiaoju.open.sdk.didies.core.Config;
 import com.xiaoju.open.sdk.didies.core.ITokenHolder;
 import com.xiaoju.open.sdk.didies.service.BaseService;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.V1;
+import com.xiaoju.open.sdk.didies.service.workplace.v1.V1;
 
-public class Workspace extends BaseService {
+public class Workplace extends BaseService {
   /**
    * 令牌持有者
    */
@@ -27,7 +27,7 @@ public class Workspace extends BaseService {
    * @param tokenHolder 令牌持有者
    * @param config      配置
    */
-  public Workspace(ITokenHolder tokenHolder, Config config) {
+  public Workplace(ITokenHolder tokenHolder, Config config) {
       this.tokenHolder = tokenHolder;
       this.config = config;
       this.v1 = new V1(tokenHolder, config);

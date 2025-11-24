@@ -20,7 +20,7 @@ import com.xiaoju.open.sdk.didies.service.rank.Rank;
 import com.xiaoju.open.sdk.didies.service.regulation.Regulation;
 import com.xiaoju.open.sdk.didies.service.role.Role;
 import com.xiaoju.open.sdk.didies.service.traveler.Traveler;
-import com.xiaoju.open.sdk.didies.service.workspace.Workspace;
+import com.xiaoju.open.sdk.didies.service.workplace.Workplace;
 import lombok.Getter;
 
 /**
@@ -189,12 +189,12 @@ public class ApiClient {
         return new Traveler(tokenHolder, config);
     }
     /**
-    * 获取Workspace
+    * 获取Workplace
     *
-    * @return Workspace
+    * @return Workplace
     */
-    public Workspace workspace() {
-        return new Workspace(tokenHolder, config);
+    public Workplace workplace() {
+        return new Workplace(tokenHolder, config);
     }
 
 }

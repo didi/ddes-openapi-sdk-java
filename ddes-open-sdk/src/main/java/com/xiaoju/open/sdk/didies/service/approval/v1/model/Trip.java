@@ -72,5 +72,65 @@ public class Trip  {
      */
     @JsonProperty("is_return")
     private Integer isReturn;
+    /**
+     * 出发地维度 默认0; 1：国家；2：省；0：城市(包括县级市)
+     * 
+     */
+    @JsonProperty("departure_address_dimension")
+    private Integer departureAddressDimension;
+    /**
+     * 出发国家ID
+     * 
+     */
+    @JsonProperty("departure_country_id")
+    private Integer departureCountryId;
+    /**
+     * 出发国家名称
+     * 
+     */
+    @JsonProperty("departure_country_name")
+    private String departureCountryName;
+    /**
+     * 出发省ID
+     * 
+     */
+    @JsonProperty("departure_province_id")
+    private Integer departureProvinceId;
+    /**
+     * 出发省名称
+     * 
+     */
+    @JsonProperty("departure_province_name")
+    private String departureProvinceName;
+    /**
+     * 目的地维度 默认0; 1：国家；2：省；0：城市(包括县级市) 地址维度字段
+     * 
+     */
+    @JsonProperty("destination_address_dimension")
+    private Integer destinationAddressDimension;
+    /**
+     * 到达国家ID
+     * 
+     */
+    @JsonProperty("destination_country_id")
+    private Integer destinationCountryId;
+    /**
+     * 到达国家名称
+     * 
+     */
+    @JsonProperty("destination_country_name")
+    private String destinationCountryName;
+    /**
+     * 到达省ID
+     * 
+     */
+    @JsonProperty("destination_province_id")
+    private Integer destinationProvinceId;
+    /**
+     * 到达省名称
+     * 
+     */
+    @JsonProperty("destination_province_name")
+    private String destinationProvinceName;
 }
 

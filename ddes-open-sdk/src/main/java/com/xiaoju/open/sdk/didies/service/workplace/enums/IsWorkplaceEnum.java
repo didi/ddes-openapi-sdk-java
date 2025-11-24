@@ -1,11 +1,11 @@
-package com.xiaoju.open.sdk.didies.service.workspace.enums;
+package com.xiaoju.open.sdk.didies.service.workplace.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum IsWorkspaceEnum {
+public enum IsWorkplaceEnum {
 
   NO(0, "否"),
   YES(1, "是");
