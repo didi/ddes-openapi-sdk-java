@@ -41,8 +41,16 @@
 
   <developers>
     <developer>
-      <name>liqinglong</name>
-      <email>obalee20@gmail.com</email>
+      <name>cheshun</name>
+      <email>cheshun@didiglobal.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+    <developer>
+      <name>chenquan</name>
+      <email>chenquan@didiglobal.com</email>
       <roles>
         <role>Developer</role>
       </roles>
@@ -156,6 +164,8 @@
       <scope>test</scope>
     </dependency>
 
+
+
   </dependencies>
 
   <repositories>
@@ -225,30 +235,6 @@
             <goals>
               <goal>jar</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <configuration>
-              <dataFile>target/jacoco.exec</dataFile>
-              <outputDirectory>target/jacoco-ut</outputDirectory>
-            </configuration>
           </execution>
         </executions>
       </plugin>
