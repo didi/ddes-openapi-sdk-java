@@ -56,6 +56,14 @@
       </roles>
       <timezone>+8</timezone>
     </developer>
+    <developer>
+      <name>guoxiangjun</name>
+      <email>guoxiangjun@didiglobal.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
   </developers>
 
   <issueManagement>
