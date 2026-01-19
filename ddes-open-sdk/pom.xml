@@ -126,12 +126,33 @@
       <artifactId>spock-core</artifactId>
       <version>${spock.version}</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.junit.platform</groupId>
+          <artifactId>junit-platform-engine</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib-nodep</artifactId>
       <version>${cglib-nodep.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit 4 for Spock -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <version>2.2</version>
       <scope>test</scope>
     </dependency>
 
@@ -154,16 +175,6 @@
       <version>${slf4j.version}</version>
     </dependency>
 
-    <!-- ======= -->
-    <!-- 测试依赖 -->
-    <!-- ======= -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.2.0</version>
-      <scope>test</scope>
-    </dependency>
-
 
 
   </dependencies>
@@ -183,6 +194,46 @@
 
   <build>
     <plugins>
+      <!-- GMavenPlus plugin to compile Groovy test code -->
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>1.13.1</version>
+        <configuration>
+          <targetBytecode>1.8</targetBytecode>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>addTestSources</goal>
+              <goal>compileTests</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.5.14</version>
+            <type>pom</type>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <!-- Surefire plugin to run JUnit and Spock tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.2</version>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+            <include>**/*Test.groovy</include>
+            <include>**/*Spec.groovy</include>
+          </includes>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>

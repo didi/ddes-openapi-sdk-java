@@ -2,7 +2,7 @@ package com.xiaoju.open.sdk.ddes.workspace;
 
 import com.xiaoju.open.sdk.didies.ApiClient;
 import com.xiaoju.open.sdk.didies.core.Config;
-import com.xiaoju.open.sdk.didies.service.workspace.v1.model.*;
+import com.xiaoju.open.sdk.didies.service.workplace.v1.model.*;
 import com.xiaoju.open.sdk.didies.utils.JacksonUtils;
 
 public class WorkspaceSample {
@@ -33,7 +33,7 @@ public class WorkspaceSample {
             .build()
         ).build();
 
-    CreateWorkplaceApiReply response = client.workspace().v1().createWorkplace(request);
+    CreateWorkplaceApiReply response = client.workplace().v1().createWorkplace(request);
     if (response != null) {
       System.out.println(JacksonUtils.toJson(response));
     }
@@ -51,7 +51,7 @@ public class WorkspaceSample {
         .companyId("替换成自己的companyId")
         .paramJsonObj(WorkplaceInfo.builder().id("1125966909816132").build()).build();
 
-    DeleteWorkplaceApiReply response = client.workspace().v1().deleteWorkplace(request);
+    DeleteWorkplaceApiReply response = client.workplace().v1().deleteWorkplace(request);
     if (response != null) {
       System.out.println(JacksonUtils.toJson(response));
     }
@@ -78,7 +78,7 @@ public class WorkspaceSample {
                 .pointRange(1000)
                 .build())
         .build();
-    UpdateWorkplaceApiReply response = client.workspace().v1().updateWorkplace(request);
+    UpdateWorkplaceApiReply response = client.workplace().v1().updateWorkplace(request);
     if (response != null) {
       System.out.println(JacksonUtils.toJson(response));
     }
