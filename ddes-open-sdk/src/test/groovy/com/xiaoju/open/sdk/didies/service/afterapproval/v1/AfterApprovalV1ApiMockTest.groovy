@@ -1,7 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.afterapproval.v1
 
 import com.xiaoju.open.sdk.didies.mock.BaseMockTest
-import com.xiaoju.open.sdk.didies.service.afterapproval.v1.model.*
+import com.xiaoju.open.sdk.didies.service.afterapproval.v1.model.CreatePersonalReceiptApiReply
+import com.xiaoju.open.sdk.didies.service.afterapproval.v1.model.CreatePersonalReceiptRequest
+import com.xiaoju.open.sdk.didies.service.afterapproval.v1.model.GetPersonalReceiptOrderApiReply
+import com.xiaoju.open.sdk.didies.service.afterapproval.v1.model.GetPersonalReceiptOrderRequest
 import okhttp3.mockwebserver.RecordedRequest
 
 /**

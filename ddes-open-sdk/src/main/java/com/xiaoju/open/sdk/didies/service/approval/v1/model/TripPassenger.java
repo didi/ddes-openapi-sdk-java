@@ -78,5 +78,23 @@ public class TripPassenger  {
      */
     @JsonProperty("policy_type_value")
     private String policyTypeValue;
+    /**
+     * 英文姓，同lastname内外部人传了落地后不可修改，新建可以做新增，内部员工主数据对应更新。内部名字需要校验主数据一致性（空除外）
+     * 
+     */
+    @JsonProperty("passenger_english_surname")
+    private String passengerEnglishSurname;
+    /**
+     * 英文名，同firstname 有middlename时 english_name&#x3D;firstname middlename内外部人传了落地后不可修改，新建可以做新增，内部员工主数据对应更新。内部名字需要校验主数据一致性（空除外）
+     * 
+     */
+    @JsonProperty("passenger_english_name")
+    private String passengerEnglishName;
+    /**
+     * 外部出行人外部主键
+     * 
+     */
+    @JsonProperty("out_traveler_id")
+    private String outTravelerId;
 }
 

@@ -619,5 +619,83 @@ public class GetCarOrderDetailReply  {
      */
     @JsonProperty("stopover_points")
     private List<StopoverPoint> stopoverPoints;
+    /**
+     * 叫车人姓名，叫车人id所对应的员工姓名
+     * 
+     */
+    @JsonProperty("call_employee_name")
+    private String callEmployeeName;
+    /**
+     * 乘车人工号，注：若人员离职或删除，该字段不会返回
+     * 
+     */
+    @JsonProperty("passenger_employee_number")
+    private String passengerEmployeeNumber;
+    /**
+     * 部门编码，部门id对应的部门编码
+     * 
+     */
+    @JsonProperty("department_code")
+    private String departmentCode;
+    /**
+     * 车费金额，单位：元
+     * 
+     */
+    @JsonProperty("car_price")
+    private String carPrice;
+    /**
+     * 车牌号，脱敏车牌号（需白名单开启）
+     * 
+     */
+    @JsonProperty("driver_card")
+    private String driverCard;
+    /**
+     * 品类/3.0车型列表，如5000快车、5001特快、5002优享等
+     * 
+     */
+    @JsonProperty("product_category")
+    private Integer productCategory;
+    /**
+     * 实际出发地场景，1机场，2火车站，3其他
+     * 
+     */
+    @JsonProperty("actual_start_scene")
+    private String actualStartScene;
+    /**
+     * 实际目的地场景，1机场，2火车站，3其他
+     * 
+     */
+    @JsonProperty("actual_end_scene")
+    private String actualEndScene;
+    /**
+     * 企业级跨城单标记，0否，1是
+     * 
+     */
+    @JsonProperty("cross_flag")
+    private Integer crossFlag;
+    /**
+     * legalEntityInfo
+     * 
+     */
+    @JsonProperty("legal_entity_info")
+    private LegalEntityInfo legalEntityInfo;
+    /**
+     * 修改过的历史目的地信息，参考HistoryDestination对象
+     * 
+     */
+    @JsonProperty("history_destinations")
+    private List<HistoryDestination> historyDestinations;
+    /**
+     * 出行人对象，参考PassengerInfo对象
+     * 
+     */
+    @JsonProperty("passenger_list")
+    private List<OrderPassengerInfo> passengerList;
+    /**
+     * 管控信息，参考RcListItem对象
+     * 
+     */
+    @JsonProperty("rc_list")
+    private List<RcListItem> rcList;
 }
 

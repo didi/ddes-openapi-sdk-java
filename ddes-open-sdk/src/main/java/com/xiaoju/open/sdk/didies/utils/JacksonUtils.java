@@ -63,11 +63,10 @@ public class JacksonUtils {
     return ObjectMapperHandler.MAPPER;
   }
 
-
   /**
-   * obj 转 json string；不包含 null 值
-   * @param obj 对象
-   * @return 序列化后的字符串
+   * obj -> json string；不包含 null 值
+   *
+   * @return ObjectMapper
    */
   public static String toJson(Object obj) {
     try {
@@ -77,12 +76,11 @@ public class JacksonUtils {
     }
   }
 
-
-    /**
-     * obj 到 json string 包含 null 值
-     * @param obj 对象
-     * @return 序列化后的字符串
-     */
+  /**
+   * obj -> json string 包含 null 值
+   *
+   * @return ObjectMapper
+   */
   public static String toJsonWithNull(Object obj) {
     try {
       return ObjectMapperHandler.MAPPER_WITH_NULL.writeValueAsString(obj);
@@ -91,14 +89,14 @@ public class JacksonUtils {
     }
   }
 
-
-    /**
-     * json 到 obj
-     * @param json JSON字符串
-     * @param cls class类
-     * @return 对象
-     * @param <T> 泛型
-     */
+  /**
+   * json -> obj
+   *
+   * @param json json string
+   * @param cls  class
+   * @param <T>  type
+   * @return <T> obj
+   */
   public static <T> T toObj(String json, Class<T> cls) {
     try {
       return ObjectMapperHandler.MAPPER.readValue(json, cls);
@@ -109,10 +107,11 @@ public class JacksonUtils {
 
   /**
    * to list
-   * @param json  JSON字符串
-   * @param clazz class类
-   * @return 泛型
-   * @param <T> 泛型
+   *
+   * @param json json string
+   * @param type class
+   * @param <T>  type
+   * @return <T> obj
    */
   public static <T> List<T> parseList(String json, Class<T> clazz) {
     TypeFactory typeFactory = ObjectMapperHandler.MAPPER.getTypeFactory();
@@ -126,10 +125,11 @@ public class JacksonUtils {
 
   /**
    * to set
-   * @param json JSON字符串
-   * @param clazz class
-   * @return 对象
-   * @param <T> 泛型
+   *
+   * @param json json string
+   * @param type class
+   * @param <T>  type
+   * @return <T> obj
    */
   public static <T> Set<T> parseSet(String json, Class<T> clazz) {
     TypeFactory typeFactory = ObjectMapperHandler.MAPPER.getTypeFactory();
@@ -143,10 +143,11 @@ public class JacksonUtils {
 
   /**
    * to map
-   * @param json  JSON字符串
-   * @param clazz class
-   * @return 对象
-   * @param <T> 泛型
+   *
+   * @param json json string
+   * @param type class
+   * @param <T>  type
+   * @return <T> obj
    */
   public static <T> Map<String, T> parseMap(String json, Class<T> clazz) {
     TypeFactory typeFactory = ObjectMapperHandler.MAPPER.getTypeFactory();

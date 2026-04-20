@@ -1,6 +1,5 @@
 package com.xiaoju.open.sdk.didies.core.request;
 
-import com.xiaoju.open.sdk.didies.core.Config;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
 

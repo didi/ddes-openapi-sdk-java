@@ -1,7 +1,7 @@
 package com.xiaoju.open.sdk.didies.core.request
 
 import com.xiaoju.open.sdk.didies.core.Config
-import okhttp3.*
+import okhttp3.OkHttpClient
 import spock.lang.Specification
 
 class OkHttpTransportTest extends Specification {

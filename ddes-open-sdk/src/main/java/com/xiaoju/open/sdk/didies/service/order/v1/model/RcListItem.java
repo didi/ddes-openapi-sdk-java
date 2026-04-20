@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
 
 
 
@@ -16,19 +14,13 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetOrderReply  {
+public class RcListItem  {
 
     /**
-     * 此次查询符合条件的订单总数
+     * rcInfo
      * 
      */
-    @JsonProperty("total")
-    private Integer total;
-    /**
-     * 订单集合
-     * 
-     */
-    @JsonProperty("records")
-    private List<OrderRecord> records;
+    @JsonProperty("rc_info")
+    private RcInfo rcInfo;
 }
 

@@ -14,25 +14,31 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BudgetCenter  {
+public class RcInfo  {
 
     /**
-     * 成本中心类型，枚举值数字 ，1：部门；2：项目 type为1时，code有值。为2时code和name成对有值
+     * 超标类型
      * 
      */
-    @JsonProperty("type")
-    private Integer type;
+    @JsonProperty("rc_type")
+    private String rcType;
     /**
-     * 成本中心code
+     * 超标编码
      * 
      */
-    @JsonProperty("code")
-    private String code;
+    @JsonProperty("rc_code")
+    private String rcCode;
     /**
-     * 成本中心名称
+     * 超标原因
      * 
      */
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("rc_reason")
+    private String rcReason;
+    /**
+     * 超标备注
+     * 
+     */
+    @JsonProperty("rc_remark")
+    private String rcRemark;
 }
 

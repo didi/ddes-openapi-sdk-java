@@ -1,7 +1,10 @@
 package com.xiaoju.open.sdk.didies.service.regulation.v1
 
 import com.xiaoju.open.sdk.didies.mock.BaseMockTest
-import com.xiaoju.open.sdk.didies.service.regulation.v1.model.*
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationApiReply
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationRequest
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationApiReply
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationRequest
 import okhttp3.mockwebserver.RecordedRequest
 
 /**

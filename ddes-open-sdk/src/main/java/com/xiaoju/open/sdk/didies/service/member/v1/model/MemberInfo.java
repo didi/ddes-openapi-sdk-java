@@ -228,5 +228,23 @@ public class MemberInfo  {
      */
     @JsonProperty("card_list")
     private List<CardInfo> cardList;
+    /**
+     * 证件中文姓名，证件上的真实中文姓名，不超过50个字符
+     * 
+     */
+    @JsonProperty("cert_realname")
+    private String certRealname;
+    /**
+     * 证件英文姓，证件上的真实英文姓，不超过50个字符
+     * 
+     */
+    @JsonProperty("cert_english_surname")
+    private String certEnglishSurname;
+    /**
+     * 证件英文名，证件上的真实英文名，不超过50个字符
+     * 
+     */
+    @JsonProperty("cert_english_name")
+    private String certEnglishName;
 }
 

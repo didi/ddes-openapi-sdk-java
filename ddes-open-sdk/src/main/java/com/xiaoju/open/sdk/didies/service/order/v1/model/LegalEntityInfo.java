@@ -14,25 +14,25 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BudgetCenter  {
+public class LegalEntityInfo  {
 
     /**
-     * 成本中心类型，枚举值数字 ，1：部门；2：项目 type为1时，code有值。为2时code和name成对有值
+     * 叫车人所属公司id
      * 
      */
-    @JsonProperty("type")
-    private Integer type;
+    @JsonProperty("legal_entity_id")
+    private String legalEntityId;
     /**
-     * 成本中心code
+     * 叫车人所属公司业务编码
      * 
      */
-    @JsonProperty("code")
-    private String code;
+    @JsonProperty("out_legal_entity_id")
+    private String outLegalEntityId;
     /**
-     * 成本中心名称
+     * 叫车人所属公司名称
      * 
      */
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("legal_entity_name")
+    private String legalEntityName;
 }
 

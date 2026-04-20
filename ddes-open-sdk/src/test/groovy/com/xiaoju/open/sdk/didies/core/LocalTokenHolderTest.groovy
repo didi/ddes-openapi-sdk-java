@@ -1,12 +1,8 @@
 package com.xiaoju.open.sdk.didies.core
 
 import com.xiaoju.open.sdk.didies.ApiClient
-import com.xiaoju.open.sdk.didies.core.exception.AuthorizeException
 import com.xiaoju.open.sdk.didies.service.auth.v1.model.AuthorizeApiReply
-import com.xiaoju.open.sdk.didies.service.auth.v1.model.AuthorizeRequest
 import spock.lang.Specification
-
-import java.util.concurrent.TimeUnit
 
 class LocalTokenHolderTest extends Specification {
 

@@ -9,8 +9,6 @@ import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import java.util.HashMap
-
 class RestHttpTransportTest extends Specification {
 
     RestTemplate mockRestTemplate
