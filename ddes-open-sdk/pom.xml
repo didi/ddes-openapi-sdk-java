@@ -6,7 +6,7 @@
 
   <groupId>com.xiaojukeji.esapi</groupId>
   <artifactId>ddes-open-sdk</artifactId>
-  <version>1.0.3</version>
+  <version>1.1.0</version>
 
   <name>ddes-open-sdk</name>
   <description>滴滴企业级开放平台接口 SDK</description>
