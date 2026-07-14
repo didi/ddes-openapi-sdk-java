@@ -122,9 +122,63 @@ public class BudgetCenterRecord  {
     private String legalEntityId;
     /**
      * 项目拓展字段，仅项目有数据时返回
-     * 
+     *
      */
     @JsonProperty("budget_extra_info")
     private String budgetExtraInfo;
+    /**
+     * 状态，枚举值数字：1=启用中，2=停用，3=删除
+     *
+     */
+    @JsonProperty("status")
+    private String status;
+    /**
+     * 上级部门/项目外部编码
+     *
+     */
+    @JsonProperty("out_parent_id")
+    private String outParentId;
+    /**
+     * 限额规则列表
+     *
+     */
+    @JsonProperty("limit_rule_list")
+    private List<LimitRuleItem> limitRuleList;
+    /**
+     * 扩展字段列表，is_get_extend_fields=1时返回，仅type=2（项目）时有效
+     *
+     */
+    @JsonProperty("extend_field")
+    private List<ExtendFieldItem> extendField;
+    /**
+     * POI地点列表，is_get_poi=1时返回，仅type=2（项目）时有效
+     *
+     */
+    @JsonProperty("poi_list")
+    private List<PoiItem> poiList;
+    /**
+     * 项目所属公司主体外部编码，仅member_used=2时生效
+     *
+     */
+    @JsonProperty("out_legal_entity_id")
+    private String outLegalEntityId;
+    /**
+     * 滴滴侧部门ID，仅member_used=2时生效，多个部门用英文逗号分隔
+     *
+     */
+    @JsonProperty("department_id")
+    private String departmentId;
+    /**
+     * 部门编码，仅member_used=2时生效，多个部门用英文逗号分隔
+     *
+     */
+    @JsonProperty("out_department_id")
+    private String outDepartmentId;
+    /**
+     * 部门范围，枚举值英文：current_only=仅当前部门，include_sub=含下级部门，仅member_used=2时生效
+     *
+     */
+    @JsonProperty("scope")
+    private String scope;
 }
 

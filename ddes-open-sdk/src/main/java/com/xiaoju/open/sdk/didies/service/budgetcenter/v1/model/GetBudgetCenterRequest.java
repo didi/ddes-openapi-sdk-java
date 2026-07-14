@@ -62,9 +62,27 @@ public class GetBudgetCenterRequest extends BaseReq  {
     private String id;
     /**
      * type
-     * 
+     *
      */
     @JsonProperty("type")
     private Integer type;
+    /**
+     * 是否返回部门/项目限额规则列表，枚举值数字：0=不返回，1=返回，默认1
+     *
+     */
+    @JsonProperty("is_need_limit_rule")
+    private Integer isNeedLimitRule;
+    /**
+     * 是否返回POI信息，枚举值数字：0=不返回，1=返回，默认0
+     *
+     */
+    @JsonProperty("is_get_poi")
+    private Integer isGetPoi;
+    /**
+     * 是否返回扩展字段，枚举值数字：0=不返回，1=返回，默认0
+     *
+     */
+    @JsonProperty("is_get_extend_fields")
+    private Integer isGetExtendFields;
 }
 

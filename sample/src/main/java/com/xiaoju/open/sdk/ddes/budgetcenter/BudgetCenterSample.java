@@ -71,7 +71,10 @@ public class BudgetCenterSample {
     GetBudgetCenterRequest request = GetBudgetCenterRequest.builder()
         .companyId("替换成自己的companyId")
         .offset(0)
-        .length(1)
+        .length(100)
+        .isNeedLimitRule(1)
+        .isGetPoi(1)
+        .isGetExtendFields(1)
         .build();
     GetBudgetCenterApiReply response = client.budgetcenter().v1().getBudgetCenter(request);
     if (response != null) {

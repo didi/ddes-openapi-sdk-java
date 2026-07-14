@@ -13,7 +13,11 @@ public enum BudgetCycleEnum {
   NONE(0, "不限额"),
   MONTH(1, "自然月"),
   QUARTER(2, "自然季度"),
-  YEAR(2, "自然年"),
+  YEAR(3, "自然年"),
+  ONCE(4, "一次性"),
+  DAILY(5, "自然日"),
+  CUSTOM(6, "自定义"),
+  ORIGINAL_DEPT(7, "使用原部门周期"),
   ;
 
   /**

@@ -224,4 +224,170 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         body.contains("name")
         body.contains("Project Name")
     }
+
+    def "getBudgetCenter should deserialize limit_rule_list, extend_field and poi_list"() {
+        given: "A mock success response with full fields"
+        def responseData = """{
+            "total": 1,
+            "records": [{
+                "id": "6388733755640532997",
+                "name": "openapi_test",
+                "type": "2",
+                "status": "1",
+                "out_parent_id": "out_parent_001",
+                "out_legal_entity_id": "out_le_001",
+                "department_id": "dept_001,dept_002",
+                "out_department_id": "out_dept_001,out_dept_002",
+                "scope": "include_sub",
+                "budget_cycle": 4,
+                "out_budget_id": "out_bc_001",
+                "total_quota": "1000.00",
+                "is_limit_quota": 1,
+                "member_num": 10,
+                "available_quota": "800.00",
+                "freeze_quota": "200.00",
+                "leader_id": "leader_001",
+                "leader_item_list": [
+                    {"leader_id": "leader_001", "leader_name": "Zhang San", "leader_type": "major"}
+                ],
+                "parent_id": "parent_001",
+                "member_used": 2,
+                "start_date": "2026-01-01",
+                "expiry_date": "2026-12-31",
+                "legal_entity_id": "le_001",
+                "budget_extra_info": "{\\"test\\":\\"val\\"}",
+                "limit_rule_list": [
+                    {
+                        "rule_name": "成本中心限额（默认）",
+                        "budget_cycle": 4,
+                        "is_accumulative": 0,
+                        "total_quota": "100.99",
+                        "limit_management_scope": 0,
+                        "available_quota": "100.99",
+                        "freeze_quota": "0.00"
+                    }
+                ],
+                "extend_field": [
+                    {"id": 1, "code": "custom_field", "value": "custom_value"}
+                ],
+                "poi_list": [
+                    {"city": "北京", "city_id": 1, "city_adcode": "110000", "flat": 39.9, "flng": 116.4, "poi_range": 500, "label": "Office"}
+                ]
+            }]
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with new query params"
+        GetBudgetCenterRequest request = GetBudgetCenterRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .isNeedLimitRule(1)
+                .isGetPoi(1)
+                .isGetExtendFields(1)
+                .build()
+
+        when: "Call API"
+        GetBudgetCenterApiReply response = apiClient.budgetcenter().v1().getBudgetCenter(request)
+
+        then: "Response should be successful"
+        response.errno == 0
+        response.data != null
+        response.data.total == "1"
+        response.data.records != null
+        response.data.records.size() == 1
+
+        and: "New simple fields should be deserialized"
+        def record = response.data.records[0]
+        record.status == "1"
+        record.outParentId == "out_parent_001"
+        record.outLegalEntityId == "out_le_001"
+        record.departmentId == "dept_001,dept_002"
+        record.outDepartmentId == "out_dept_001,out_dept_002"
+        record.scope == "include_sub"
+
+        and: "limit_rule_list should be deserialized"
+        record.limitRuleList != null
+        record.limitRuleList.size() == 1
+        record.limitRuleList[0].ruleName == "成本中心限额（默认）"
+        record.limitRuleList[0].budgetCycle == 4
+        record.limitRuleList[0].isAccumulative == 0
+        record.limitRuleList[0].totalQuota == "100.99"
+        record.limitRuleList[0].limitManagementScope == 0
+        record.limitRuleList[0].availableQuota == "100.99"
+        record.limitRuleList[0].freezeQuota == "0.00"
+
+        and: "extend_field should be deserialized"
+        record.extendField != null
+        record.extendField.size() == 1
+        record.extendField[0].id == 1L
+        record.extendField[0].code == "custom_field"
+        record.extendField[0].value == "custom_value"
+
+        and: "poi_list should be deserialized"
+        record.poiList != null
+        record.poiList.size() == 1
+        record.poiList[0].city == "北京"
+        record.poiList[0].cityId == 1
+        record.poiList[0].cityAdcode == "110000"
+        record.poiList[0].flat == 39.9
+        record.poiList[0].flng == 116.4
+        record.poiList[0].poiRange == 500
+        record.poiList[0].label == "Office"
+    }
+
+    def "getBudgetCenter should pass new query params correctly"() {
+        given: "A mock success response"
+        def responseData = """{"total": 0, "records": []}"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with new query params"
+        GetBudgetCenterRequest request = GetBudgetCenterRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .isNeedLimitRule(1)
+                .isGetPoi(1)
+                .isGetExtendFields(1)
+                .build()
+
+        when: "Call API"
+        GetBudgetCenterApiReply response = apiClient.budgetcenter().v1().getBudgetCenter(request)
+
+        then: "Response should be successful"
+        response.errno == 0
+
+        and: "Query params should contain new fields"
+        RecordedRequest recordedRequest = getLastRequest()
+        def params = getQueryParams(recordedRequest)
+        params["is_need_limit_rule"] == "1"
+        params["is_get_poi"] == "1"
+        params["is_get_extend_fields"] == "1"
+    }
+
+    def "getBudgetCenter should not send null new query params"() {
+        given: "A mock success response"
+        def responseData = """{"total": 0, "records": []}"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request without new query params"
+        GetBudgetCenterRequest request = GetBudgetCenterRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .build()
+
+        when: "Call API"
+        GetBudgetCenterApiReply response = apiClient.budgetcenter().v1().getBudgetCenter(request)
+
+        then: "Response should be successful"
+        response.errno == 0
+
+        and: "Query params should not contain new fields when not set"
+        RecordedRequest recordedRequest = getLastRequest()
+        def params = getQueryParams(recordedRequest)
+        !params.containsKey("is_need_limit_rule")
+        !params.containsKey("is_get_poi")
+        !params.containsKey("is_get_extend_fields")
+    }
 }
