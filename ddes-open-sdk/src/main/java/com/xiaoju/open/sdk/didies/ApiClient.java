@@ -16,6 +16,7 @@ import com.xiaoju.open.sdk.didies.service.login.Login;
 import com.xiaoju.open.sdk.didies.service.member.Member;
 import com.xiaoju.open.sdk.didies.service.order.Order;
 import com.xiaoju.open.sdk.didies.service.outapproval.OutApproval;
+import com.xiaoju.open.sdk.didies.service.project.Project;
 import com.xiaoju.open.sdk.didies.service.rank.Rank;
 import com.xiaoju.open.sdk.didies.service.regulation.Regulation;
 import com.xiaoju.open.sdk.didies.service.role.Role;
@@ -155,6 +156,14 @@ public class ApiClient {
     */
     public OutApproval outapproval() {
         return new OutApproval(tokenHolder, config);
+    }
+    /**
+    * 获取Project
+    *
+    * @return Project
+    */
+    public Project project() {
+        return new Project(tokenHolder, config);
     }
     /**
     * 获取Rank

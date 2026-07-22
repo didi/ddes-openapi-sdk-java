@@ -48,5 +48,23 @@ public class DelBudgetCenterRequest extends BaseReq  {
      */
     @JsonProperty("out_budget_id")
     private String outBudgetId;
+    /**
+     * 归属企业名称（集团账户）
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号（集团账户）
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
+    /**
+     * 公司主体编码（集团账户）
+     *
+     */
+    @JsonProperty("out_legal_entity_id")
+    private String outLegalEntityId;
 }
 

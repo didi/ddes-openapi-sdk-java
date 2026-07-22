@@ -30,5 +30,11 @@ public class ListMemberReply  {
      */
     @JsonProperty("records")
     private List<MemberRecord> records;
+    /**
+     * 游标分页标志位，仅当请求传了last_id时返回
+     *
+     */
+    @JsonProperty("last_id")
+    private String lastId;
 }
 

@@ -228,5 +228,65 @@ public class MemberRecord  {
      */
     @JsonProperty("source")
     private String source;
+    /**
+     * 员工状态，枚举值数字：1 正常 4 离职 6 未绑定手机号
+     *
+     */
+    @JsonProperty("status")
+    private Integer status;
+    /**
+     * 常驻地列表
+     *
+     */
+    @JsonProperty("residents_list")
+    private List<ResidentsListInfo> residentsList;
+    /**
+     * 限额规则列表
+     *
+     */
+    @JsonProperty("limit_rule_list")
+    private List<LimitRuleInfo> limitRuleList;
+    /**
+     * 证件中文姓名
+     *
+     */
+    @JsonProperty("cert_realname")
+    private String certRealname;
+    /**
+     * 证件英文姓
+     *
+     */
+    @JsonProperty("cert_english_surname")
+    private String certEnglishSurname;
+    /**
+     * 证件英文名
+     *
+     */
+    @JsonProperty("cert_english_name")
+    private String certEnglishName;
+    /**
+     * 家庭住址
+     *
+     */
+    @JsonProperty("home_address")
+    private List<HomeAddressInfo> homeAddress;
+    /**
+     * 第三方用户ID
+     *
+     */
+    @JsonProperty("third_user_id")
+    private String thirdUserId;
+    /**
+     * 客人用车权限，枚举值数字 0
+     *
+     */
+    @JsonProperty("guest_car_right")
+    private Integer guestCarRight;
+    /**
+     * 每月配额，同 total_quota
+     *
+     */
+    @JsonProperty("month_quota")
+    private String monthQuota;
 }
 

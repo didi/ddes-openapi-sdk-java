@@ -334,4 +334,260 @@ class MemberV1ApiMockTest extends BaseMockTest {
         response.errno == 404
         response.errmsg == "Member not found"
     }
+
+    def "listMember should deserialize new MemberRecord fields and pass new query params"() {
+        given: "A mock success response with new nested fields"
+        def responseData = """{
+            "records": [{
+                "id": "mem_001",
+                "realname": "John Doe",
+                "phone": "13800138000",
+                "status": 1,
+                "third_user_id": "ext_user_001",
+                "guest_car_right": 0,
+                "month_quota": "1000.00",
+                "cert_realname": "张三",
+                "cert_english_surname": "Zhang",
+                "cert_english_name": "San",
+                "residents_list": [{"id": 100, "name": "北京", "adcode": "110000"}],
+                "limit_rule_list": [{
+                    "rule_name": "月度限额",
+                    "budget_cycle": 1,
+                    "is_accumulative": 1,
+                    "total_quota": 1000.00,
+                    "available_quota": 800.00,
+                    "freeze_quota": 50.00,
+                    "limit_management_scope": 1
+                }],
+                "home_address": [{
+                    "city": "北京",
+                    "city_id": 1,
+                    "city_adcode": "110100",
+                    "address_name": "海淀区xx路"
+                }]
+            }],
+            "total": 1,
+            "last_id": "cursor_001"
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with new group-account and pagination query params"
+        ListMemberRequest request = ListMemberRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .querySubCompany("1")
+                .nextToken("next_token_001")
+                .build()
+
+        when: "Call API"
+        ListMemberApiReply response = apiClient.member().v1().listMember(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "New query params should be passed"
+        RecordedRequest recordedRequest = getLastRequest()
+        def params = getQueryParams(recordedRequest)
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+        params["query_sub_company"] == "1"
+        params["next_token"] == "next_token_001"
+
+        and: "New MemberRecord fields should be deserialized"
+        def data = response.data
+        data != null
+        data.lastId == "cursor_001"
+        data.records != null
+        data.records.size() == 1
+        def record = data.records[0]
+        record.status == 1
+        record.thirdUserId == "ext_user_001"
+        record.guestCarRight == 0
+        record.monthQuota == "1000.00"
+        record.certRealname == "张三"
+        record.certEnglishSurname == "Zhang"
+        record.certEnglishName == "San"
+
+        and: "Nested residents_list should be deserialized"
+        record.residentsList != null
+        record.residentsList.size() == 1
+        record.residentsList[0].id == 100L
+        record.residentsList[0].name == "北京"
+        record.residentsList[0].adcode == "110000"
+
+        and: "Nested limit_rule_list should be deserialized"
+        record.limitRuleList != null
+        record.limitRuleList.size() == 1
+        def rule = record.limitRuleList[0]
+        rule.ruleName == "月度限额"
+        rule.budgetCycle == 1
+        rule.isAccumulative == 1
+        rule.totalQuota == 1000.00d
+        rule.availableQuota == 800.00d
+        rule.freezeQuota == 50.00d
+        rule.limitManagementScope == 1
+
+        and: "Nested home_address should be deserialized"
+        record.homeAddress != null
+        record.homeAddress.size() == 1
+        record.homeAddress[0].city == "北京"
+        record.homeAddress[0].cityId == 1
+        record.homeAddress[0].cityAdcode == "110100"
+        record.homeAddress[0].addressName == "海淀区xx路"
+    }
+
+    def "getMemberDetail should deserialize new nested fields and pass new query params"() {
+        given: "A mock success response with new nested fields"
+        def responseData = """{
+            "member_id": "mem_001",
+            "realname": "John Doe",
+            "phone": "13800138000",
+            "status": 1,
+            "cert_realname": "张三",
+            "cert_english_surname": "Zhang",
+            "cert_english_name": "San",
+            "residents_list": [{"id": 100, "name": "北京", "adcode": "110000"}],
+            "limit_rule_list": [{
+                "rule_name": "月度限额",
+                "budget_cycle": 1,
+                "is_accumulative": 1,
+                "total_quota": 1000.00,
+                "available_quota": 800.00,
+                "freeze_quota": 50.00,
+                "limit_management_scope": 1
+            }],
+            "home_address": [{
+                "city": "北京",
+                "city_id": 1,
+                "city_adcode": "110100",
+                "address_name": "海淀区xx路"
+            }]
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with new group-account query params"
+        GetMemberDetailRequest request = GetMemberDetailRequest.builder()
+                .companyId("company_001")
+                .phone("13800138000")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        GetMemberDetailApiReply response = apiClient.member().v1().getMemberDetail(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "New query params should be passed"
+        RecordedRequest recordedRequest = getLastRequest()
+        def params = getQueryParams(recordedRequest)
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+
+        and: "New detail fields should be deserialized"
+        def data = response.data
+        data != null
+        data.status == 1
+        data.certRealname == "张三"
+        data.certEnglishSurname == "Zhang"
+        data.certEnglishName == "San"
+
+        and: "Nested residents_list should be deserialized (id is Long)"
+        data.residentsList != null
+        data.residentsList.size() == 1
+        data.residentsList[0].id == 100L
+        data.residentsList[0].name == "北京"
+        data.residentsList[0].adcode == "110000"
+
+        and: "Nested limit_rule_list should be deserialized with Double quota fields"
+        data.limitRuleList != null
+        data.limitRuleList.size() == 1
+        def rule = data.limitRuleList[0]
+        rule.ruleName == "月度限额"
+        rule.budgetCycle == 1
+        rule.isAccumulative == 1
+        rule.totalQuota == 1000.00d
+        rule.availableQuota == 800.00d
+        rule.freezeQuota == 50.00d
+        rule.limitManagementScope == 1
+
+        and: "Nested home_address should be deserialized (city_id is Integer)"
+        data.homeAddress != null
+        data.homeAddress.size() == 1
+        data.homeAddress[0].city == "北京"
+        data.homeAddress[0].cityId == 1
+        data.homeAddress[0].cityAdcode == "110100"
+        data.homeAddress[0].addressName == "海淀区xx路"
+    }
+
+    def "getMemberDetail should handle null and empty nested lists without error"() {
+        given: "A mock response with null/empty nested lists"
+        def responseData = """{
+            "member_id": "mem_001",
+            "realname": "John Doe",
+            "status": 4,
+            "residents_list": null,
+            "limit_rule_list": [],
+            "home_address": []
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        GetMemberDetailRequest request = GetMemberDetailRequest.builder()
+                .companyId("company_001")
+                .memberId("mem_001")
+                .build()
+
+        when: "Call API"
+        GetMemberDetailApiReply response = apiClient.member().v1().getMemberDetail(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Null/empty lists should not cause errors"
+        def data = response.data
+        data != null
+        data.status == 4
+        data.residentsList == null
+        data.limitRuleList != null
+        data.limitRuleList.isEmpty()
+        data.homeAddress != null
+        data.homeAddress.isEmpty()
+    }
+
+    def "listMember should handle empty records array"() {
+        given: "A mock success response with empty records"
+        def responseData = """{
+            "records": [],
+            "total": 0,
+            "last_id": ""
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        ListMemberRequest request = ListMemberRequest.builder()
+                .companyId("company_001")
+                .length(100)
+                .offset(0)
+                .build()
+
+        when: "Call API"
+        ListMemberApiReply response = apiClient.member().v1().listMember(request)
+
+        then: "Response should be successful with empty records"
+        response != null
+        response.errno == 0
+        def data = response.data
+        data != null
+        data.records != null
+        data.records.isEmpty()
+        data.total == 0
+    }
 }

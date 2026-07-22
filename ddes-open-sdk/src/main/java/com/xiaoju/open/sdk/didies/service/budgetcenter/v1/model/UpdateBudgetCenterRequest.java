@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -128,5 +129,83 @@ public class UpdateBudgetCenterRequest extends BaseReq  {
      */
     @JsonProperty("budget_extra_info__obj__")
     private Map<String, String> budgetExtraInfoObj;
+    /**
+     * 仅member_used=2时生效，项目所属滴滴侧部门ID，多个逗号分隔，最多300个
+     *
+     */
+    @JsonProperty("department_id")
+    private String departmentId;
+    /**
+     * 仅member_used=2时生效，项目所属部门编码，多个逗号分隔，最多300个
+     *
+     */
+    @JsonProperty("out_department_id")
+    private String outDepartmentId;
+    /**
+     * 仅member_used=2时生效，current_only=仅当前部门(默认)，include_sub=含下级部门
+     *
+     */
+    @JsonProperty("scope")
+    private String scope;
+    /**
+     * 仅type=2时有效，扩展字段JSON数组字符串，需提前在管理后台配置扩展字段
+     *
+     */
+    @JsonProperty("extend_field")
+    private String extendField;
+    /**
+     * 扩展字段对象，实际使用的时候会自动转换为json字符串赋值到extend_field
+     *
+     */
+    @JsonProperty("extend_field__obj__")
+    private List<ExtendFieldItem> extendFieldObj;
+    /**
+     * 仅type=2时有效，POI地点JSON数组字符串，最多20个
+     *
+     */
+    @JsonProperty("poi_list")
+    private String poiList;
+    /**
+     * POI地点对象，实际使用的时候会自动转换为json字符串赋值到poi_list
+     *
+     */
+    @JsonProperty("poi_list__obj__")
+    private List<PoiItem> poiListObj;
+    /**
+     * 仅type=2时有效，外部出行人JSON数组字符串，最多500个
+     *
+     */
+    @JsonProperty("out_travelers")
+    private String outTravelers;
+    /**
+     * out_travelers操作方式：cover=覆盖，append=追加，remove=移除
+     *
+     */
+    @JsonProperty("operate_type")
+    private String operateType;
+    /**
+     * 外部出行人对象，实际使用的时候会自动转换为json字符串赋值到out_travelers
+     *
+     */
+    @JsonProperty("out_travelers__obj__")
+    private List<OutTravelerItem> outTravelersObj;
+    /**
+     * 归属企业名称（集团账户）
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号（集团账户）
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
+    /**
+     * 公司主体编码（集团账户）
+     *
+     */
+    @JsonProperty("out_legal_entity_id")
+    private String outLegalEntityId;
 }
 

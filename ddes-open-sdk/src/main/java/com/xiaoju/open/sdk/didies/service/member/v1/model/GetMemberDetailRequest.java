@@ -42,5 +42,17 @@ public class GetMemberDetailRequest extends BaseReq  {
      */
     @JsonProperty("employee_number")
     private String employeeNumber;
+    /**
+     * 归属企业名称（查询参数）
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号（查询参数）
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
 }
 

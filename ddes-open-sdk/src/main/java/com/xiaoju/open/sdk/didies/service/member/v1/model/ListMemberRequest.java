@@ -72,5 +72,29 @@ public class ListMemberRequest extends BaseReq  {
      */
     @JsonProperty("status")
     private String status;
+    /**
+     * 归属企业名称（查询参数）
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号（查询参数）
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
+    /**
+     * 是否查询子公司（查询参数）
+     *
+     */
+    @JsonProperty("query_sub_company")
+    private String querySubCompany;
+    /**
+     * 下一页token（查询参数）
+     *
+     */
+    @JsonProperty("next_token")
+    private String nextToken;
 }
 

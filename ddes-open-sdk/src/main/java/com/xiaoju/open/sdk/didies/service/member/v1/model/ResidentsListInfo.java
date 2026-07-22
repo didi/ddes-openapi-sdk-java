@@ -1,4 +1,4 @@
-package com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model;
+package com.xiaoju.open.sdk.didies.service.member.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -7,28 +7,30 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 
+
+
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExtendFieldItem  {
+public class ResidentsListInfo  {
 
     /**
-     * 扩展字段ID
+     * 常驻地ID
      *
      */
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
     /**
-     * 扩展字段编码
+     * 常驻地名称
      *
      */
-    @JsonProperty("code")
-    private String code;
+    @JsonProperty("name")
+    private String name;
     /**
-     * 扩展字段值
+     * 常驻地行政区划代码
      *
      */
-    @JsonProperty("value")
-    private String value;
+    @JsonProperty("adcode")
+    private String adcode;
 }
