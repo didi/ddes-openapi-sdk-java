@@ -23,7 +23,7 @@ public class ListAirportCityReply  {
      * 
      */
     @JsonProperty("city_id")
-    private Integer cityId;
+    private String cityId;
     /**
      * 城市中文名
      * 
@@ -59,7 +59,7 @@ public class ListAirportCityReply  {
      * 
      */
     @JsonProperty("country_id")
-    private Integer countryId;
+    private String countryId;
     /**
      * 国家二字代码
      * 

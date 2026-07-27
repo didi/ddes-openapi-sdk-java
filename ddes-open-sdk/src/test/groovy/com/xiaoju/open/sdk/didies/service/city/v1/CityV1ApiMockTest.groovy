@@ -254,4 +254,60 @@ class CityV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
     }
+
+    def "listAirportCity should deserialize large city_id/country_id as String without overflow"() {
+        given: "A mock response with city_id/country_id exceeding int32 range"
+        def responseData = """[{
+            "city_id": 9999999999,
+            "city_name": "北京",
+            "country_id": 9999999998,
+            "province_id": 1
+        }]"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        ListAirportCityRequest request = ListAirportCityRequest.builder()
+                .companyId("company_001")
+                .build()
+
+        when: "Call API"
+        ListAirportCityApiReply response = apiClient.city().v1().listAirportCity(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Large ids should deserialize as String without overflow"
+        response.data != null
+        response.data.size() == 1
+        response.data[0].cityId == "9999999999"
+        response.data[0].countryId == "9999999998"
+    }
+
+    def "listCountry should deserialize large country_id as String without overflow"() {
+        given: "A mock response with country_id exceeding int32 range"
+        def responseData = """[{
+            "country_id": 9999999999,
+            "country_name": "中国",
+            "country_code": "CN"
+        }]"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        ListCountryRequest request = ListCountryRequest.builder()
+                .companyId("company_001")
+                .build()
+
+        when: "Call API"
+        ListCountryApiReply response = apiClient.city().v1().listCountry(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Large country_id should deserialize as String without overflow"
+        response.data != null
+        response.data.size() == 1
+        response.data[0].countryId == "9999999999"
+    }
 }
