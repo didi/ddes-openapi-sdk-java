@@ -11,6 +11,17 @@
   </modules>
   <version>1.0.1</version>
 
+  <profiles>
+    <!-- integration profile：默认 inactive，激活时纳入回放子模块 integration。
+         普通 mvn install / mvn test 不构建回放模块，与现有 59 个 mock 测试完全隔离。 -->
+    <profile>
+      <id>integration</id>
+      <modules>
+        <module>integration</module>
+      </modules>
+    </profile>
+  </profiles>
+
   <description>管理API对接SDK（2024版）https://opendocs.xiaojukeji.com/version2024</description>
 
   <properties>

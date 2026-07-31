@@ -753,7 +753,7 @@ public class BillListItemOfWangYC  {
      * 
      */
     @JsonProperty("is_sensitive")
-    private BigDecimal isSensitive;
+    private String isSensitive;
     /**
      * isUnusual
      * 

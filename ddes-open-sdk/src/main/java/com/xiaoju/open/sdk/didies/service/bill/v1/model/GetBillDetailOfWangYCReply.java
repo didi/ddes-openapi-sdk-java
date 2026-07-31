@@ -35,7 +35,7 @@ public class GetBillDetailOfWangYCReply  {
      * 
      */
     @JsonProperty("last_id")
-    private Long lastId;
+    private String lastId;
     /**
      * 账单明细列表
      * 

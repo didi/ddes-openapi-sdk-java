@@ -25,6 +25,6 @@ public class DelMemberApiReply extends BaseResp  {
      * 
      */
     @JsonProperty("data")
-    private List<Long> data;
+    private List<String> data;
 }
 
