@@ -136,7 +136,7 @@ public abstract class BaseService {
    * @return 响应结果
    */
   private <T extends BaseResp> T setDecryptData(Class<T> clazz, T responseBody) {
-    if (config.getEnableAES() && !EncryptTypeEnum.NORMAL.equals(config.getEncryptType())) {
+    if (Boolean.TRUE.equals(config.getEnableAES()) && !EncryptTypeEnum.NORMAL.equals(config.getEncryptType())) {
       if (!StringUtils.isEmpty(responseBody.getEncryptData())) {
         String decryptJson = AesUtils.decrypt(responseBody.getEncryptData(), config.getAesKey(), config.getEncryptType());
         return JacksonUtils.toObj(decryptJson, clazz);

@@ -17,20 +17,25 @@ class ConfigTest extends Specification {
 
         then:
         config != null
-        // Lombok @Builder doesn't use field initialization defaults
+        // 无默认值的字段 builder 后仍为 null
         config.getClientId() == null
         config.getClientSecret() == null
-        config.getBaseUrl() == null
-        config.getGrantType() == null
-        config.getUnauthorizedRetryTimes() == null
-        config.getUnauthorizedRetryInterval() == null
-        config.getConnectTimeout() == null
-        config.getCallTimeOut() == null
-        config.getTimeoutUnit() == null
-        config.getSignMethod() == null
-        config.getEnableHoldToken() == null
-        config.getEnableAES() == null
-        config.getEncryptType() == null
+        config.getSignKey() == null
+        config.getEnableRequestLog() == null
+        config.getLogLevel() == null
+        config.getAesKey() == null
+        // @Builder.Default 使字段声明的默认值在 builder 构建时生效
+        config.getBaseUrl() == "https://api.es.xiaojukeji.com"
+        config.getGrantType() == "client_credentials"
+        config.getUnauthorizedRetryTimes() == 2
+        config.getUnauthorizedRetryInterval() == 1000
+        config.getConnectTimeout() == 3000L
+        config.getCallTimeOut() == 3000L
+        config.getTimeoutUnit() == TimeUnit.MILLISECONDS
+        config.getSignMethod() == SignMethodEnum.MD5
+        config.getEnableHoldToken() == true
+        config.getEnableAES() == false
+        config.getEncryptType() == EncryptTypeEnum.NORMAL
     }
 
     def "Config builder should set custom values"() {

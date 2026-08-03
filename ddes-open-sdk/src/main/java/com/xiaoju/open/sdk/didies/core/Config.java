@@ -35,18 +35,22 @@ public class Config {
   /**
    * 基础URL
    */
+  @Builder.Default
   private String baseUrl = "https://api.es.xiaojukeji.com";
   /**
    * grantType
    */
+  @Builder.Default
   private String grantType = "client_credentials";
   /**
    * 因token失效接口请求重试次数
    */
+  @Builder.Default
   private Integer unauthorizedRetryTimes = 2;
   /**
    * 因token失效接口请求重试间隔时间,单位为毫秒
    */
+  @Builder.Default
   private Integer unauthorizedRetryInterval = 1000;
   /**
    * 自定义http请求实现
@@ -55,22 +59,27 @@ public class Config {
   /**
    * 连接超时时间
    */
+  @Builder.Default
   private Long connectTimeout = 3000L;
   /**
    * 调用超时时间
    */
+  @Builder.Default
   private Long callTimeOut = 3000L;
   /**
    * 超时时间单位，默认毫秒
    */
+  @Builder.Default
   private TimeUnit timeoutUnit = TimeUnit.MILLISECONDS;
   /**
    * 签名方法;默认MD5
    */
+  @Builder.Default
   private SignMethodEnum signMethod = SignMethodEnum.MD5;
   /**
    * 是否开启自动换成token，默认开启
    */
+  @Builder.Default
   private Boolean enableHoldToken = true;
   /**
    * 是否开启请求日志打印
@@ -83,6 +92,7 @@ public class Config {
   /**
    * 是否开启AES加密，默认不开启
    */
+  @Builder.Default
   private Boolean enableAES = false;
   /**
    * AES加密key
@@ -91,6 +101,7 @@ public class Config {
   /**
    * AES加密长度，默认AES128
    */
+  @Builder.Default
   private EncryptTypeEnum encryptType = EncryptTypeEnum.NORMAL;
 
   /**
