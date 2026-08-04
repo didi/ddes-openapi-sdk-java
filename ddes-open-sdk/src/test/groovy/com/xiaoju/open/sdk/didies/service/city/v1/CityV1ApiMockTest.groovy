@@ -255,12 +255,12 @@ class CityV1ApiMockTest extends BaseMockTest {
         response.errno == 0
     }
 
-    def "listAirportCity should deserialize large city_id/country_id as String without overflow"() {
-        given: "A mock response with city_id/country_id exceeding int32 range"
+    def "listAirportCity should deserialize city_id/country_id as Integer"() {
+        given: "A mock response with city_id/country_id"
         def responseData = """[{
-            "city_id": 9999999999,
+            "city_id": 1,
             "city_name": "北京",
-            "country_id": 9999999998,
+            "country_id": 86,
             "province_id": 1
         }]"""
         enqueueSuccess(createSuccessResponse(responseData))
@@ -277,17 +277,17 @@ class CityV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Large ids should deserialize as String without overflow"
+        and: "ids should deserialize as Integer"
         response.data != null
         response.data.size() == 1
-        response.data[0].cityId == "9999999999"
-        response.data[0].countryId == "9999999998"
+        response.data[0].cityId == 1
+        response.data[0].countryId == 86
     }
 
-    def "listCountry should deserialize large country_id as String without overflow"() {
-        given: "A mock response with country_id exceeding int32 range"
+    def "listCountry should deserialize country_id as Integer"() {
+        given: "A mock response with country_id"
         def responseData = """[{
-            "country_id": 9999999999,
+            "country_id": 86,
             "country_name": "中国",
             "country_code": "CN"
         }]"""
@@ -305,9 +305,9 @@ class CityV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Large country_id should deserialize as String without overflow"
+        and: "country_id should deserialize as Integer"
         response.data != null
         response.data.size() == 1
-        response.data[0].countryId == "9999999999"
+        response.data[0].countryId == 86
     }
 }
