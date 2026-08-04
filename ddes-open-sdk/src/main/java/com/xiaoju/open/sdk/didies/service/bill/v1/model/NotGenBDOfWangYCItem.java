@@ -681,7 +681,7 @@ public class NotGenBDOfWangYCItem  {
      * 
      */
     @JsonProperty("is_sensitive")
-    private String isSensitive;
+    private Integer isSensitive;
     /**
      * 敏感订单原因
      * 

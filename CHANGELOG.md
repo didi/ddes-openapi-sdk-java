@@ -16,7 +16,6 @@
 |---|---|---|---|
 | `bill.BillListItemOfWangYC` | `isSensitive`（`is_sensitive`） | `BigDecimal` | `String` |
 | `bill.GetBillDetailOfWangYCReply` | `lastId`（`last_id`） | `Long` | `String` |
-| `bill.NotGenBDOfWangYCItem` | `isSensitive`（`is_sensitive`） | `Integer` | `String` |
 | `city.ListAirportCityReply` | `cityId`（`city_id`） | `Integer` | `String` |
 | `city.ListAirportCityReply` | `countryId`（`country_id`） | `Integer` | `String` |
 | `city.ListCountryReply` | `countryId`（`country_id`） | `Integer` | `String` |
