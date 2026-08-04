@@ -21,7 +21,7 @@ public class ListCountryReply  {
      * 
      */
     @JsonProperty("country_id")
-    private String countryId;
+    private Integer countryId;
     /**
      * 国家二次码
      * 
