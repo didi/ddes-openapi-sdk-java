@@ -1,6 +1,6 @@
 # integration — 真实脱敏流量回放验证
 
-本模块是 Go SDK `replay/` 在 Java 侧的等价落地，用**真实生产流量的脱敏 fixture**逐条喂 SDK 反序列化链路，并检测字段覆盖缺口（真实返回但 reply DTO 未接住的字段）。
+本模块使用**真实生产流量的脱敏 fixture**逐条喂 Java SDK 反序列化链路，并检测字段覆盖缺口（真实返回但 reply DTO 未接住的字段）。
 
 > **隔离**：本模块是独立 Maven 子模块，仅在 `integration` profile 激活时参与构建。普通 `mvn install` / `mvn test` **不构建**本模块，与 `ddes-open-sdk` 的 59 个 mock 测试完全隔离，且**不带** `central-publishing` / GPG / source / javadoc 插件，不发布到 Maven Central。
 
@@ -23,17 +23,11 @@ mvn test             # 现有 59 个 mock 测试不受影响
 
 ## fixtures 定位
 
-回放读取 **Go SDK 仓库**已生成的脱敏 fixture（`replay/testdata/replay/**/*.json`，含真实业务 PII，**不入库**，对齐 Go 不入库原则）。
+回放读取已生成的脱敏 fixture（`replay/testdata/replay/**/*.json`，含真实业务 PII，**不入库**）。
 
-路径由环境变量 `REPLAY_FIXTURES_DIR` 指定，未设时默认指向本机 Go 仓库相对路径：
+路径由环境变量 `REPLAY_FIXTURES_DIR` 指定；未设置时使用测试代码中的默认路径。
 
-```
-../../golang/ddes-openapi-sdk-go/replay/testdata/replay
-```
-
-（本机 Java / Go 双仓库并列布局 `code/java/...` 与 `code/golang/...`）
-
-**目录不存在或无 `*.json` 时 skip**（对齐 Go 的 CI 行为），测试标记为 skipped 而非 failed。
+**目录不存在或无 `*.json` 时 skip**，测试标记为 skipped 而非 failed。
 
 ```bash
 # 指定自定义路径
@@ -47,7 +41,7 @@ REPLAY_FIXTURES_DIR=/nonexistent mvn -Pintegration test
 
 | 变量 | 默认 | 说明 |
 |------|------|------|
-| `REPLAY_FIXTURES_DIR` | `../../golang/ddes-openapi-sdk-go/replay/testdata/replay` | fixtures 根目录；不存在则 skip |
+| `REPLAY_FIXTURES_DIR` | 测试代码中的默认路径 | fixtures 根目录；不存在则 skip |
 | `REPLAY_STRICT` | （未设） | 设为 `1` 时，字段覆盖缺口视为测试失败（倒逼补字段）；未设则仅 log |
 | `REPLAY_LIMIT_PER_URI` | `0`（全量） | 限制每个 URI 回放的 fixture 条数，`0` 表示全量；快速验证用（fixtures 数量大时建议设小值） |
 
@@ -90,19 +84,6 @@ integration/
 └── src/test/groovy/com/xiaoju/open/sdk/didies/replay/
     ├── ReplayBase.groovy    # Spock 基类：MockWebServer + auth mock + OkHttpTransport 注入
     ├── ReplayEngine.groovy  # 回放引擎：反射回填 + 类型适配 + reply 提取 + 字段覆盖
-    ├── ReplayMap.groovy     # URI → 接口元数据映射表（43 URI，对齐 Go replay_map.go）
+    ├── ReplayMap.groovy     # URI → 接口元数据映射表（43 URI）
     └── ReplayTest.groovy    # 主测试：逐条喂响应、字段覆盖、STRICT/limit
 ```
-
-## 与 Go 蓝本的对齐
-
-机制与行为对齐 Go `replay/`（`replay.go` / `replay_map.go` / `replay_test.go`）：
-
-- `mkRiver` 平铺字段反射 / `mkRequest` paramJson 字符串回填 / `mkFlat` 平铺反射
-- `extractReply` 反射提取 `ApiReply.errno` + `.data`
-- `fieldCoverage` 对比 `out.data` key 与 reply Data 的 tag（Java 读 `@JsonProperty`，Go 读 struct `json` tag）
-- `REPLAY_STRICT` / `REPLAY_LIMIT_PER_URI` / skip 语义
-
-**Java 独有差异**（见 design D4/D6）：
-- `JsonSlurper` 解析 fixture 数字可能是 `BigDecimal`/`Integer`/`String`，类型适配器比 Go 的 `adaptArg` 多接几种来源。
-- 字段覆盖读 `com.fasterxml.jackson.annotation.JsonProperty` 注解值（而非 Go struct tag），且须遍历父类（reply DTO 可能继承 `BaseResp`）。
