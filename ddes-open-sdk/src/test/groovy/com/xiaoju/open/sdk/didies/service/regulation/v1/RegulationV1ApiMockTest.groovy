@@ -258,7 +258,7 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         response.data.carRule == null
     }
 
-    def "listRegulation should pass group account and query_sub_company params"() {
+    def "listRegulation should pass group account params"() {
         given: "A mock success response with array data"
         def responseData = """[
             {"regulation_id": "reg_001", "regulation_name": "制度一"}
@@ -270,7 +270,6 @@ class RegulationV1ApiMockTest extends BaseMockTest {
                 .companyId("company_001")
                 .belongEnterpriseName("enterprise_001")
                 .taxpayerNo("tax_001")
-                .querySubCompany("true")
                 .build()
 
         when: "Call API"
@@ -286,6 +285,5 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         def params = getQueryParams(getLastRequest())
         params["belong_enterprise_name"] == "enterprise_001"
         params["taxpayer_no"] == "tax_001"
-        params["query_sub_company"] == "true"
     }
 }

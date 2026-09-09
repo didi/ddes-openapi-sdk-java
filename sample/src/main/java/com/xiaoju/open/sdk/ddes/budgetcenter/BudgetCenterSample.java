@@ -102,7 +102,7 @@ public class BudgetCenterSample {
   }
 
   /**
-   * 成本中心查询（集团账户分页参数 + next_token，展示集团账户场景翻页）
+   * 成本中心查询（集团账户参数）
    */
   public static void getBudgetCenterGroupTest(ApiClient client) throws Exception {
     GetBudgetCenterRequest request = GetBudgetCenterRequest.builder()
@@ -110,12 +110,10 @@ public class BudgetCenterSample {
         .offset(0)
         .length(100)
         .belongEnterpriseName("替换成归属企业名称")
-        .querySubCompany("true")
         .build();
     GetBudgetCenterApiReply response = client.budgetcenter().v1().getBudgetCenter(request);
     if (response != null) {
       System.out.println(JacksonUtils.toJson(response));
-      System.out.println("nextToken: " + response.getData().getNextToken());
     }
     System.out.println("getBudgetCenterGroupTest end");
   }

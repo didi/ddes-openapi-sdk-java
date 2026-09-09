@@ -36,11 +36,5 @@ public class ListMemberReply  {
      */
     @JsonProperty("last_id")
     private String lastId;
-    /**
-     * 下一页的token，集团账户【上级公司统一对接】场景使用，为空字符串或null说明没有下一页
-     *
-     */
-    @JsonProperty("next_token")
-    private String nextToken;
 }
 

@@ -194,7 +194,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         body.contains("out_le_001")
     }
 
-    def "getLegalEntity should deserialize out_parent_id and next_token and pass group params"() {
+    def "getLegalEntity should deserialize out_parent_id and pass group params"() {
         given: "A mock success response with 2025.06 new fields"
         def responseData = """{
             "total": 1,
@@ -204,8 +204,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
                 "parent_id": 112689,
                 "out_parent_id": "parent_out_001",
                 "out_legal_entity_id": "out_le_001"
-            }],
-            "next_token": "cursor_next_001"
+            }]
         }"""
         enqueueSuccess(createSuccessResponse(responseData))
 
@@ -216,7 +215,6 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
                 .length(10)
                 .belongEnterpriseName("enterprise_001")
                 .taxpayerNo("tax_001")
-                .querySubCompany("true")
                 .build()
 
         when: "Call API"
@@ -230,16 +228,12 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         def params = getQueryParams(getLastRequest())
         params["belong_enterprise_name"] == "enterprise_001"
         params["taxpayer_no"] == "tax_001"
-        params["query_sub_company"] == "true"
 
         and: "Response records should contain out_parent_id"
         def data = response.data
         data != null
         data.records.size() == 1
         data.records[0].outParentId == "parent_out_001"
-
-        and: "Response should contain next_token"
-        data.nextToken == "cursor_next_001"
     }
 
     def "createLegalEntity should serialize out_parent_id and belong_enterprise_name"() {

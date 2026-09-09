@@ -847,30 +847,4 @@ class MemberV1ApiMockTest extends BaseMockTest {
         !body.contains("employee_phone__obj__")
         !body.contains("employee_email__obj__")
     }
-
-    def "listMember should deserialize next_token from response data"() {
-        given: "A mock success response with next_token (group account scenario)"
-        def responseData = """{
-            "records": [],
-            "total": 100,
-            "next_token": "cursor_next_001"
-        }"""
-        enqueueSuccess(createSuccessResponse(responseData))
-
-        and: "Create request"
-        ListMemberRequest request = ListMemberRequest.builder()
-                .companyId("company_001")
-                .offset(0)
-                .length(100)
-                .build()
-
-        when: "Call API"
-        ListMemberApiReply response = apiClient.member().v1().listMember(request)
-
-        then: "Response should contain next_token"
-        response != null
-        response.errno == 0
-        response.data != null
-        response.data.nextToken == "cursor_next_001"
-    }
 }

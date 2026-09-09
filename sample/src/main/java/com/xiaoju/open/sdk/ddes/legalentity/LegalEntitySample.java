@@ -122,12 +122,10 @@ public class LegalEntitySample {
         .length(10)
         .outLegalEntityId("替换成自己的公司主体外部编号")
         .belongEnterpriseName("替换成归属企业名称")
-        .querySubCompany("true")
         .build();
     GetLegalEntityApiReply response = client.legalentity().v1().getLegalEntity(request);
     if (response != null) {
       System.out.println(JacksonUtils.toJson(response));
-      System.out.println("nextToken: " + response.getData().getNextToken());
     }
     System.out.println("getLegalEntityNewFieldsTest end");
   }
