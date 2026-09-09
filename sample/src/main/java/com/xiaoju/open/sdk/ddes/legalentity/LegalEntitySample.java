@@ -146,4 +146,23 @@ public class LegalEntitySample {
     }
     System.out.println("createLegalEntityOutParentTest end");
   }
+
+  /**
+   * 公司主体查询（集团账户专用路径，支持集团定位与 next_token 游标翻页）
+   */
+  public static void getLegalEntityForGroupTest(ApiClient client) throws Exception {
+    GetLegalEntityGroupRequest request = GetLegalEntityGroupRequest.builder()
+        .companyId("替换成集团companyId")
+        .offset(0)
+        .length(100)
+        .belongEnterpriseName("替换成归属企业名称")
+        .querySubCompany("1")
+        .build();
+    GetLegalEntityGroupApiReply response = client.legalentity().v1().getLegalEntityForGroup(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+      System.out.println("nextToken: " + response.getData().getNextToken());
+    }
+    System.out.println("getLegalEntityForGroupTest end");
+  }
 }

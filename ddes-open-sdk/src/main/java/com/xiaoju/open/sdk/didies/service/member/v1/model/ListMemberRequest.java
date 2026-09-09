@@ -87,13 +87,19 @@ public class ListMemberRequest extends BaseReq  {
     /**
      * 是否查询子公司（查询参数）
      *
+     * @deprecated 集团账户请使用 {@link com.xiaoju.open.sdk.didies.service.member.v1.V1#listMemberForGroup(ListMemberGroupRequest)}，
+     *             该字段仅在集团备用路径下生效，主路径不生效。
      */
+    @Deprecated
     @JsonProperty("query_sub_company")
     private String querySubCompany;
     /**
      * 下一页token（查询参数）
      *
+     * @deprecated 集团账户请使用 {@link com.xiaoju.open.sdk.didies.service.member.v1.V1#listMemberForGroup(ListMemberGroupRequest)}，
+     *             该字段仅在集团备用路径下生效，主路径不生效。
      */
+    @Deprecated
     @JsonProperty("next_token")
     private String nextToken;
 }

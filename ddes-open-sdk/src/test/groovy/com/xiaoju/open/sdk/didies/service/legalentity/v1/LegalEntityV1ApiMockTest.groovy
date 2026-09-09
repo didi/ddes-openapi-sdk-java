@@ -2,6 +2,7 @@ package com.xiaoju.open.sdk.didies.service.legalentity.v1
 
 import com.xiaoju.open.sdk.didies.mock.BaseMockTest
 import com.xiaoju.open.sdk.didies.service.legalentity.v1.model.*
+import java.net.URLDecoder
 import okhttp3.mockwebserver.RecordedRequest
 
 /**
@@ -310,5 +311,97 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         def body = getRequestBody(getLastRequest())
         body.contains("belong_enterprise_name")
         body.contains("taxpayer_no")
+    }
+
+    def "getLegalEntityForGroup - GET /open-apis/v2/legalEntity/get"() {
+        given: "A mock group-envelope success response"
+        def responseData = """{
+            "records": [{
+                "legal_entity_id": "4503599682991516",
+                "name": "集团子公司A",
+                "belong_enterprise_name": "集团企业名称",
+                "out_legal_entity_id": "out_le_001",
+                "parent_id": 0,
+                "out_parent_id": "",
+                "status": 1
+            }],
+            "next_token": "v1:cursor_abc",
+            "company_total": 1,
+            "company_list_has_change": false,
+            "progress": 1
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create group request with group params and pagination"
+        GetLegalEntityGroupRequest request = GetLegalEntityGroupRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(10)
+                .belongEnterpriseName("集团企业名称")
+                .querySubCompany("1")
+                .build()
+
+        when: "Call group API"
+        GetLegalEntityGroupApiReply response = apiClient.legalentity().v1().getLegalEntityForGroup(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request should hit group path with group params"
+        RecordedRequest recordedRequest = getLastRequest()
+        verifyPath(recordedRequest, "/open-apis/v2/legalEntity/get")
+        def params = getQueryParams(recordedRequest)
+        URLDecoder.decode(params["belong_enterprise_name"], "UTF-8") == "集团企业名称"
+        params["query_sub_company"] == "1"
+        params["offset"] == "0"
+        params["length"] == "10"
+
+        and: "Envelope fields should be deserialized"
+        response.data.nextToken == "v1:cursor_abc"
+        response.data.companyTotal == 1
+        response.data.companyListHasChange == false
+        response.data.progress == 1
+
+        and: "Record should use String legal_entity_id without precision loss"
+        response.data.records.size() == 1
+        def record = response.data.records[0]
+        record.legalEntityId == "4503599682991516"
+        record.legalEntityId instanceof String
+        record.belongEnterpriseName == "集团企业名称"
+    }
+
+    def "getLegalEntityForGroup should support next_token pagination and empty token means no more"() {
+        given: "A mock group response with empty next_token"
+        def responseData = """{
+            "records": [],
+            "next_token": "",
+            "company_total": 0,
+            "progress": 1
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create group request with next_token from previous page"
+        GetLegalEntityGroupRequest request = GetLegalEntityGroupRequest.builder()
+                .companyId("company_001")
+                .offset(10)
+                .length(10)
+                .taxpayerNo("tax_001")
+                .nextToken("v1:cursor_prev")
+                .build()
+
+        when: "Call group API"
+        GetLegalEntityGroupApiReply response = apiClient.legalentity().v1().getLegalEntityForGroup(request)
+
+        then: "Response should be successful with empty next_token"
+        response != null
+        response.errno == 0
+        response.data.nextToken == ""
+        response.data.records.isEmpty()
+
+        and: "next_token and taxpayer_no should be passed as query params"
+        def params = getQueryParams(getLastRequest())
+        URLDecoder.decode(params["next_token"], "UTF-8") == "v1:cursor_prev"
+        params["taxpayer_no"] == "tax_001"
     }
 }

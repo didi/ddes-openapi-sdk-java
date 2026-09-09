@@ -4,6 +4,8 @@ import com.xiaoju.open.sdk.didies.mock.BaseMockTest
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationApiReply
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationRequest
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationApiReply
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationGroupApiReply
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationGroupRequest
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationRequest
 import okhttp3.mockwebserver.RecordedRequest
 
@@ -285,5 +287,62 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         def params = getQueryParams(getLastRequest())
         params["belong_enterprise_name"] == "enterprise_001"
         params["taxpayer_no"] == "tax_001"
+    }
+
+    def "listRegulationForGroup - GET /open-apis/v2/regulation/get"() {
+        given: "A mock group-envelope success response"
+        def responseData = """{
+            "records": [{
+                "regulation_id": "4503599706321492",
+                "regulation_name": "行前按日期",
+                "belong_enterprise_name": "集团企业名称",
+                "regulation_status": "1",
+                "scene_type": "96",
+                "source": 1,
+                "is_approve": 1,
+                "is_use_quota": 0,
+                "city_type": 0,
+                "approval_type": 3,
+                "regulation_employee_name": "申请用车",
+                "regulation_employee_description": ""
+            }],
+            "next_token": "",
+            "company_total": 1,
+            "company_list_has_change": false,
+            "progress": 1
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create group request"
+        ListRegulationGroupRequest request = ListRegulationGroupRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .taxpayerNo("9653242523MQ46574")
+                .querySubCompany("1")
+                .build()
+
+        when: "Call group API"
+        ListRegulationGroupApiReply response = apiClient.regulation().v1().listRegulationForGroup(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request should hit group path with group params"
+        RecordedRequest recordedRequest = getLastRequest()
+        verifyPath(recordedRequest, "/open-apis/v2/regulation/get")
+        def params = getQueryParams(recordedRequest)
+        params["taxpayer_no"] == "9653242523MQ46574"
+        params["query_sub_company"] == "1"
+
+        and: "Envelope and records should be deserialized"
+        response.data.companyTotal == 1
+        response.data.progress == 1
+        response.data.records.size() == 1
+        def record = response.data.records[0]
+        record.belongEnterpriseName == "集团企业名称"
+        record.regulationStatus == "1"
+        record.regulationEmployeeName == "申请用车"
     }
 }

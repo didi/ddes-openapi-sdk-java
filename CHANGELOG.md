@@ -24,10 +24,21 @@
 - **集团账户「上级公司统一对接」参数**：18 个接口的请求模型新增 `belongEnterpriseName`/`taxpayerNo` 可选字段。`query_sub_company`/`next_token` 属 `/open-apis/v2/...` 备用路径专属参数，主路径不生效，本次未提供（member get 请求侧既有字段保持不动）。
 - **Sample**：7 个服务域示例类新增上述字段的用法示例。
 
+### 🚀 新增功能（集团账户专用路径）
+
+- **新增 4 个集团账户查询方法**（【上级公司统一对接】备用路径 `/open-apis/v2/...`）：
+  - `legalentity.v1.getLegalEntityForGroup` → `/open-apis/v2/legalEntity/get`
+  - `budgetcenter.v1.getBudgetCenterForGroup` → `/open-apis/v2/budgetCenter/get`
+  - `member.v1.listMemberForGroup` → `/open-apis/v2/member/get`
+  - `regulation.v1.listRegulationForGroup` → `/open-apis/v2/regulation/get`
+- 响应为统一信封（`records`/`nextToken`/`companyTotal`/`companyListHasChange`/`progress`，后三者为实测补充字段、文档暂未声明）；各域集团 Record 独立建模（legalentity 集团返回 `legal_entity_id` 为字符串）。
+- **注意**：`query_sub_company` 服务端按整数解析，请传 `"1"/"0"`（文档标注 boolean 有误，传 `"true"` 会报错）。
+- **废弃标记**：`member.ListMemberRequest.querySubCompany`/`nextToken` 标注 `@Deprecated`（主路径不生效），集团场景请迁移至 `listMemberForGroup`。
+
 ### 📝 备注
 
-- `/open-apis/v2/...` 集团账户备用路径本次未实现（路径保持主路径），如需支持另行立项。
-- regulation get 集团场景响应 `next_token` 因文档未明确 data 结构（当前为数值）暂未建模，待文档澄清。
+- 集团账户备用路径已随 1.3.0 落地（见上方"集团账户专用路径"）；信封中 `company_total`/`company_list_has_change`/`progress` 为实测补充字段，官方语义待文档补全。
+- Go SDK 侧集团路径与 bug 修复未同步，另立 change。
 
 ## [1.2.0] - 2026-08-03
 

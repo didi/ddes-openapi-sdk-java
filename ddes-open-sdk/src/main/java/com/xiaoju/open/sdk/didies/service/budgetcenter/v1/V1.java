@@ -56,5 +56,16 @@ public class V1 extends BaseService {
         
         return doPost(updateBudgetCenterRequest, "/river/BudgetCenter/edit", UpdateBudgetCenterApiReply.class, 0);
     }
+
+    /**
+    * 成本中心/项目查询（集团账户）
+    * 说明： * 集团账户【上级公司统一对接】专用路径，支持集团定位与下级公司数据查询、next_token 游标翻页。
+    * @param getBudgetCenterGroupRequest  (required)
+    * @return GetBudgetCenterGroupApiReply
+    * @throws Exception if an error occurs while attempting to invoke the API
+    */
+    public GetBudgetCenterGroupApiReply getBudgetCenterForGroup(GetBudgetCenterGroupRequest getBudgetCenterGroupRequest) throws Exception {
+        return doGet(getBudgetCenterGroupRequest, "/open-apis/v2/budgetCenter/get", GetBudgetCenterGroupApiReply.class, 0);
+    }
 }
 

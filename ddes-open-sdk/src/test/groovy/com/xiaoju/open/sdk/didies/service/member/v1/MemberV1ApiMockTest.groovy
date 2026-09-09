@@ -2,6 +2,7 @@ package com.xiaoju.open.sdk.didies.service.member.v1
 
 import com.xiaoju.open.sdk.didies.mock.BaseMockTest
 import com.xiaoju.open.sdk.didies.service.member.v1.model.*
+import java.net.URLDecoder
 import okhttp3.mockwebserver.RecordedRequest
 
 /**
@@ -846,5 +847,78 @@ class MemberV1ApiMockTest extends BaseMockTest {
         body.contains("taxpayer_no")
         !body.contains("employee_phone__obj__")
         !body.contains("employee_email__obj__")
+    }
+
+    def "listMemberForGroup - GET /open-apis/v2/member/get"() {
+        given: "A mock group-envelope success response"
+        def responseData = """{
+            "records": [{
+                "id": "mem_group_001",
+                "realname": "集团员工",
+                "belong_enterprise_name": "集团企业名称",
+                "status": 1
+            }],
+            "next_token": "v1:cursor_next",
+            "company_total": 3,
+            "company_list_has_change": false,
+            "progress": 1
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create group request"
+        ListMemberGroupRequest request = ListMemberGroupRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .belongEnterpriseName("集团企业名称")
+                .querySubCompany("1")
+                .build()
+
+        when: "Call group API"
+        ListMemberGroupApiReply response = apiClient.member().v1().listMemberForGroup(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request should hit group path with group params"
+        RecordedRequest recordedRequest = getLastRequest()
+        verifyPath(recordedRequest, "/open-apis/v2/member/get")
+        def params = getQueryParams(recordedRequest)
+        URLDecoder.decode(params["belong_enterprise_name"], "UTF-8") == "集团企业名称"
+        params["query_sub_company"] == "1"
+
+        and: "Envelope and records should be deserialized"
+        response.data.nextToken == "v1:cursor_next"
+        response.data.companyTotal == 3
+        response.data.records.size() == 1
+        response.data.records[0].belongEnterpriseName == "集团企业名称"
+    }
+
+    def "deprecated ListMemberRequest group fields should still serialize for compatibility"() {
+        given: "A mock success response"
+        def responseData = """{"records": [], "total": 0}"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create legacy request with deprecated group fields"
+        ListMemberRequest request = ListMemberRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(10)
+                .querySubCompany("1")
+                .nextToken("v1:legacy")
+                .build()
+
+        when: "Call legacy main-path API"
+        ListMemberApiReply response = apiClient.member().v1().listMember(request)
+
+        then: "Response should be successful (fields kept for compatibility)"
+        response != null
+        response.errno == 0
+
+        and: "Deprecated fields should still be passed on main path"
+        def params = getQueryParams(getLastRequest())
+        params["query_sub_company"] == "1"
+        URLDecoder.decode(params["next_token"], "UTF-8") == "v1:legacy"
     }
 }

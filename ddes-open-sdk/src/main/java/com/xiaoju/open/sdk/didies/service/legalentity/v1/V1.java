@@ -53,8 +53,18 @@ public class V1 extends BaseService {
     * @throws Exception if an error occurs while attempting to invoke the API
     */
     public UpdateLegalEntityApiReply updateLegalEntity(UpdateLegalEntityRequest updateLegalEntityRequest) throws Exception {
-        
+
         return doPost(updateLegalEntityRequest, "/river/LegalEntity/edit", UpdateLegalEntityApiReply.class, 0);
+    }
+    /**
+    * 公司主体查询（集团账户）
+    * 说明： * 集团账户【上级公司统一对接】专用路径，支持集团定位与下级公司数据查询、next_token 游标翻页。
+    * @param getLegalEntityGroupRequest  (required)
+    * @return GetLegalEntityGroupApiReply
+    * @throws Exception if an error occurs while attempting to invoke the API
+    */
+    public GetLegalEntityGroupApiReply getLegalEntityForGroup(GetLegalEntityGroupRequest getLegalEntityGroupRequest) throws Exception {
+        return doGet(getLegalEntityGroupRequest, "/open-apis/v2/legalEntity/get", GetLegalEntityGroupApiReply.class, 0);
     }
 }
 

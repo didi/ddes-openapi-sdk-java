@@ -2,6 +2,7 @@ package com.xiaoju.open.sdk.didies.service.budgetcenter.v1
 
 import com.xiaoju.open.sdk.didies.mock.BaseMockTest
 import com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model.*
+import java.net.URLDecoder
 import okhttp3.mockwebserver.RecordedRequest
 
 /**
@@ -881,5 +882,55 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         def data = response.data
         data != null
         data.records.size() == 1
+    }
+
+    def "getBudgetCenterForGroup - GET /open-apis/v2/budgetCenter/get"() {
+        given: "A mock group-envelope success response"
+        def responseData = """{
+            "records": [{
+                "id": "4503599676280147",
+                "name": "集团成本中心",
+                "belong_enterprise_name": "集团企业名称",
+                "type": "2",
+                "total_quota": "1000.00",
+                "available_quota": "800.00"
+            }],
+            "next_token": "",
+            "company_total": 1,
+            "company_list_has_change": true,
+            "progress": 1
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create group request"
+        GetBudgetCenterGroupRequest request = GetBudgetCenterGroupRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .belongEnterpriseName("集团企业名称")
+                .querySubCompany("1")
+                .build()
+
+        when: "Call group API"
+        GetBudgetCenterGroupApiReply response = apiClient.budgetcenter().v1().getBudgetCenterForGroup(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request should hit group path with group params"
+        RecordedRequest recordedRequest = getLastRequest()
+        verifyPath(recordedRequest, "/open-apis/v2/budgetCenter/get")
+        def params = getQueryParams(recordedRequest)
+        URLDecoder.decode(params["belong_enterprise_name"], "UTF-8") == "集团企业名称"
+        params["query_sub_company"] == "1"
+
+        and: "Envelope and records should be deserialized"
+        response.data.nextToken == ""
+        response.data.companyTotal == 1
+        response.data.companyListHasChange == true
+        response.data.records.size() == 1
+        response.data.records[0].belongEnterpriseName == "集团企业名称"
+        response.data.records[0].totalQuota == "1000.00"
     }
 }
