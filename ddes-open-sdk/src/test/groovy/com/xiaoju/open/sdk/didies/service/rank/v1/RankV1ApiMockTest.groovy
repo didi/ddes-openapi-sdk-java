@@ -231,4 +231,102 @@ class RankV1ApiMockTest extends BaseMockTest {
         response.errno == 400
         response.errmsg == "Invalid company_id"
     }
+
+    def "listRank should deserialize rank id via RankRecord"() {
+        given: "A mock success response with id field (doc field name)"
+        def responseData = """{
+            "total": 2,
+            "records": [
+                {"id": "rank_001", "name": "P5"},
+                {"id": "rank_002", "name": "P6"}
+            ]
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with group account params"
+        ListRankRequest request = ListRankRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        ListRankApiReply response = apiClient.rank().v1().listRank(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Group query params should be passed"
+        def params = getQueryParams(getLastRequest())
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+
+        and: "Rank id should be correctly deserialized (was always null via RankInfo)"
+        def data = response.data
+        data != null
+        data.records.size() == 2
+        data.records[0].id == "rank_001"
+        data.records[0].name == "P5"
+        data.records[1].id == "rank_002"
+    }
+
+    def "createRank should pass group account params"() {
+        given: "A mock success response"
+        def responseData = """{"id": "rank_001"}"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with group params"
+        def rankInfo = RankInfo.builder()
+                .name("P7")
+                .build()
+        CreateRankRequest request = CreateRankRequest.builder()
+                .companyId("company_001")
+                .paramJsonObj(rankInfo)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        CreateRankApiReply response = apiClient.rank().v1().createRank(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain group params"
+        def body = getRequestBody(getLastRequest())
+        body.contains("belong_enterprise_name")
+        body.contains("taxpayer_no")
+    }
+
+    def "delRank should pass group account params"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Delete request with group params"
+        def rankInfo = RankInfo.builder()
+                .rankId("rank_001")
+                .build()
+        DelRankRequest request = DelRankRequest.builder()
+                .companyId("company_001")
+                .paramJsonObj(rankInfo)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        DelRankApiReply response = apiClient.rank().v1().delRank(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain group params"
+        def body = getRequestBody(getLastRequest())
+        body.contains("belong_enterprise_name")
+        body.contains("taxpayer_no")
+    }
 }

@@ -84,9 +84,15 @@ public class LegalEntityRecord  {
     private String telephone;
     /**
      * 公司状态，0 停用，1 启用
-     * 
+     *
      */
     @JsonProperty("status")
     private Integer status;
+    /**
+     * 上级公司外部编号，上级公司主体业务编码
+     *
+     */
+    @JsonProperty("out_parent_id")
+    private String outParentId;
 }
 

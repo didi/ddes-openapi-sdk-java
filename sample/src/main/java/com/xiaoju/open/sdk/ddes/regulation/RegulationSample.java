@@ -55,4 +55,20 @@ public class RegulationSample {
     }
     System.out.println("request catch error");
   }
+
+  /**
+   * 制度详情（读取用车规则 car_rule）
+   */
+  public static void getRegulationCarRuleTest(ApiClient client) throws Exception {
+    GetRegulationRequest request = GetRegulationRequest.builder()
+        .companyId("替换成自己的companyId")
+        .regulationId("替换成制度ID")
+        .belongEnterpriseName("替换成归属企业名称")
+        .build();
+    GetRegulationApiReply response = client.regulation().v1().getRegulation(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("getRegulationCarRuleTest end");
+  }
 }

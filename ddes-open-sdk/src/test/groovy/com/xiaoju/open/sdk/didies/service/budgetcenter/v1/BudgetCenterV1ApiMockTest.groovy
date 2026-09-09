@@ -843,4 +843,47 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         (json["extend_field"] as String).contains("up_code")
         (json["extend_field"] as String).contains("up_value")
     }
+
+    def "getBudgetCenter should pass group account params and deserialize next_token"() {
+        given: "A mock success response with next_token (group account scenario)"
+        def responseData = """{
+            "total": 1,
+            "records": [{
+                "id": 1001,
+                "name": "测试成本中心",
+                "type": 2
+            }],
+            "next_token": "cursor_next_001"
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with group params"
+        GetBudgetCenterRequest request = GetBudgetCenterRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .querySubCompany("true")
+                .build()
+
+        when: "Call API"
+        GetBudgetCenterApiReply response = apiClient.budgetcenter().v1().getBudgetCenter(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Group query params should be passed"
+        def params = getQueryParams(getLastRequest())
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+        params["query_sub_company"] == "true"
+
+        and: "Response should contain next_token"
+        def data = response.data
+        data != null
+        data.nextToken == "cursor_next_001"
+        data.records.size() == 1
+    }
 }

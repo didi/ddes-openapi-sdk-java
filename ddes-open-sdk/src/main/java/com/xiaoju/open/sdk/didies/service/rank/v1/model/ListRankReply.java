@@ -26,9 +26,9 @@ public class ListRankReply  {
     private Integer total;
     /**
      * 职级数据集合
-     * 
+     *
      */
     @JsonProperty("records")
-    private List<RankInfo> records;
+    private List<RankRecord> records;
 }
 

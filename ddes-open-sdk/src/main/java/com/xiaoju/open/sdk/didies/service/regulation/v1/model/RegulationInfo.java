@@ -76,5 +76,23 @@ public class RegulationInfo  {
      */
     @JsonProperty("approval_type")
     private Integer approvalType;
+    /**
+     * 用车规则
+     *
+     */
+    @JsonProperty("car_rule")
+    private CarRule carRule;
+    /**
+     * 制度适用员工姓名（文档响应示例字段）
+     *
+     */
+    @JsonProperty("regulation_employee_name")
+    private String regulationEmployeeName;
+    /**
+     * 制度适用员工说明（文档响应示例字段）
+     *
+     */
+    @JsonProperty("regulation_employee_description")
+    private String regulationEmployeeDescription;
 }
 

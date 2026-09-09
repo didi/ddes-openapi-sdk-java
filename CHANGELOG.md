@@ -4,6 +4,31 @@
 
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased]
+
+### 💥 破坏性变更（Breaking Changes）
+
+- **`rank.ListRankReply.records` 元素类型由 `RankInfo` 变更为新增的 `RankRecord`**（字段 `id`/`name`）。原实现复用写请求模型 `RankInfo`（序列化名 `rank_id`），导致文档响应字段 `id` 恒反序列化为 null——本次为缺陷修复；受影响字段原值本就为 null，不存在有效依赖。
+- **`member.UpdateMemberApiReply.data` 类型由 `Object` 变更为新增的 `UpdateMemberReply`**（`member_id`/`phone`/`status`）。原先仅能以 raw Map 读取。
+
+### 🛠 缺陷修复
+
+- **`member.MemberInfo.residentsIds` 序列化名由 `redisents_ids` 修正为 `residents_ids`**（原拼写错误，服务端不识别该字段，员工常驻地 ID 从未生效；Java 字段名同步修正为 `residentsIds`）。
+
+### 🚀 新增功能（接口对齐 2025–2026 文档批次）
+
+- **legalentity**：`get` 请求新增 `outLegalEntityId`；`get` 响应 records 新增 `outParentId`；`add`/`edit` 请求新增 `outParentId`（2025.06.18 批次）。
+- **member**：请求新增 `residentsAdcode`、`homeAddress`（single/edit 共用）；`single` 响应新增 `memberId`/`status`（员工已存在场景，2025.11.17）；`detail` 响应新增 `otherCompaniesList`（一人多企业，保守建模 `List<Object>`）；`getQuota` 请求新增 `monthlyLimitOnlyQuery`（2026.02 限额升级）；`del` 请求新增 `employeePhone`/`employeeEmail` 及 `__obj__` 便捷字段（2025.06.18）。
+- **traveler**：`TravelerInfo` 新增 `type`（项目维度外部出行人，2026.06.23）。
+- **regulation**：detail 响应新增 `CarRule`（`callType`/`useScene`）及 `regulationEmployeeName`/`regulationEmployeeDescription`。
+- **集团账户「上级公司统一对接」参数**：18 个接口的请求模型新增 `belongEnterpriseName`/`taxpayerNo` 可选字段；4 个分页查询接口（legalentity/budgetcenter/member/regulation 的 get）新增 `querySubCompany` 请求参数及 legalentity/budgetcenter/member 响应 `nextToken`。
+- **Sample**：7 个服务域示例类新增上述字段的用法示例。
+
+### 📝 备注
+
+- `/open-apis/v2/...` 集团账户备用路径本次未实现（路径保持主路径），如需支持另行立项。
+- regulation get 集团场景响应 `next_token` 因文档未明确 data 结构（当前为数值）暂未建模，待文档澄清。
+
 ## [1.2.0] - 2026-08-03
 
 ### 💥 破坏性变更（Breaking Changes）

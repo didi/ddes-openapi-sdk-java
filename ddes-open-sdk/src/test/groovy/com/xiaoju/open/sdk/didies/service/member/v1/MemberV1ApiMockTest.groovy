@@ -90,7 +90,7 @@ class MemberV1ApiMockTest extends BaseMockTest {
     def "createMember - POST /river/Member/single"() {
         given: "A mock success response"
         def responseData = """{
-            "member_id": "mem_001",
+            "member_id": 987654,
             "phone": "13800138000",
             "realname": "John Doe"
         }"""
@@ -263,7 +263,7 @@ class MemberV1ApiMockTest extends BaseMockTest {
     def "createMember should handle email as unique identifier"() {
         given: "A mock success response"
         def responseData = """{
-            "member_id": "mem_002",
+            "member_id": 987655,
             "email": "jane@example.com",
             "realname": "Jane Doe"
         }"""
@@ -589,5 +589,288 @@ class MemberV1ApiMockTest extends BaseMockTest {
         data.records != null
         data.records.isEmpty()
         data.total == 0
+    }
+
+    def "createMember should serialize residents_ids with correct spelling"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Create request with residentsIds (bug fix: tag was redisents_ids)"
+        def memberInfo = MemberInfo.builder()
+                .phone("13800138000")
+                .realname("John Doe")
+                .residentsIds("100_101")
+                .residentsAdcode("110100")
+                .build()
+        CreateMemberRequest request = CreateMemberRequest.builder()
+                .companyId("company_001")
+                .dataObj(memberInfo)
+                .build()
+
+        when: "Call API"
+        CreateMemberApiReply response = apiClient.member().v1().createMember(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain correct residents_ids tag and no misspelled tag"
+        def body = getRequestBody(getLastRequest())
+        body.contains("residents_ids")
+        body.contains("residents_adcode")
+        !body.contains("redisents_ids")
+    }
+
+    def "updateMember should serialize residents_ids with correct spelling"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Update request with residentsIds"
+        def memberInfo = MemberInfo.builder()
+                .realname("Updated Name")
+                .residentsIds("200")
+                .build()
+        UpdateMemberRequest request = UpdateMemberRequest.builder()
+                .companyId("company_001")
+                .memberId(12345L)
+                .dataObj(memberInfo)
+                .build()
+
+        when: "Call API"
+        UpdateMemberApiReply response = apiClient.member().v1().updateMember(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain correct residents_ids tag"
+        def body = getRequestBody(getLastRequest())
+        body.contains("residents_ids")
+        !body.contains("redisents_ids")
+    }
+
+    def "createMember should serialize home_address list"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Create request with homeAddress"
+        def address = HomeAddressInfo.builder()
+                .city("北京")
+                .cityId(1)
+                .cityAdcode("110100")
+                .addressName("海淀区xx路")
+                .build()
+        def memberInfo = MemberInfo.builder()
+                .phone("13800138000")
+                .realname("John Doe")
+                .homeAddress([address])
+                .build()
+        CreateMemberRequest request = CreateMemberRequest.builder()
+                .companyId("company_001")
+                .dataObj(memberInfo)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        CreateMemberApiReply response = apiClient.member().v1().createMember(request)
+
+        then: "Response should be successful"
+        response.errno == 0
+
+        and: "Request body should contain home_address and group account params"
+        def body = getRequestBody(getLastRequest())
+        body.contains("home_address")
+        body.contains("海淀区xx路")
+        body.contains("belong_enterprise_name")
+        body.contains("enterprise_001")
+        body.contains("taxpayer_no")
+    }
+
+    def "createMember should deserialize member_id and status when member exists"() {
+        given: "A mock success response for existing member scenario"
+        def responseData = """{
+            "member_id": 987654,
+            "phone": "13800138000",
+            "status": 1
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        def memberInfo = MemberInfo.builder()
+                .phone("13800138000")
+                .realname("John Doe")
+                .build()
+        CreateMemberRequest request = CreateMemberRequest.builder()
+                .companyId("company_001")
+                .dataObj(memberInfo)
+                .build()
+
+        when: "Call API"
+        CreateMemberApiReply response = apiClient.member().v1().createMember(request)
+
+        then: "Response data should contain member_id and status"
+        response != null
+        response.errno == 0
+        response.data != null
+        response.data.memberId == 987654L
+        response.data.phone == "13800138000"
+        response.data.status == 1
+    }
+
+    def "updateMember should deserialize typed data with member_id phone status"() {
+        given: "A mock success response with typed data"
+        def responseData = """{
+            "member_id": 987654,
+            "phone": "13800138000",
+            "status": 0
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Update request"
+        UpdateMemberRequest request = UpdateMemberRequest.builder()
+                .companyId("company_001")
+                .memberId(12345L)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        UpdateMemberApiReply response = apiClient.member().v1().updateMember(request)
+
+        then: "Response data should be strongly typed"
+        response != null
+        response.errno == 0
+        response.data != null
+        response.data.memberId == 987654L
+        response.data.phone == "13800138000"
+        response.data.status == 0
+
+        and: "Group account params should be in request body"
+        def body = getRequestBody(getLastRequest())
+        body.contains("belong_enterprise_name")
+        body.contains("taxpayer_no")
+    }
+
+    def "getMemberDetail should deserialize other_companies_list"() {
+        given: "A mock success response with other companies list"
+        def responseData = """{
+            "member_id": "mem_001",
+            "realname": "John Doe",
+            "other_companies_list": [
+                {"company_name": "其他公司A", "member_id": 111},
+                {"company_name": "其他公司B", "member_id": 222}
+            ]
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        GetMemberDetailRequest request = GetMemberDetailRequest.builder()
+                .companyId("company_001")
+                .memberId("mem_001")
+                .build()
+
+        when: "Call API"
+        GetMemberDetailApiReply response = apiClient.member().v1().getMemberDetail(request)
+
+        then: "Response should deserialize other_companies_list without error"
+        response != null
+        response.errno == 0
+        response.data != null
+        response.data.otherCompaniesList != null
+        response.data.otherCompaniesList.size() == 2
+    }
+
+    def "getMemberQuota should pass monthly_limit_only_query and group account params"() {
+        given: "A mock success response"
+        def responseData = """{
+            "12345": [{
+                "quota_type": 1,
+                "quota_amount": 1000.00,
+                "used_amount": 500.00
+            }]
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with monthly_limit_only_query and group params"
+        GetMemberQuotaRequest request = GetMemberQuotaRequest.builder()
+                .companyId("company_001")
+                .memberIds("12345")
+                .startDate("2024-01-01")
+                .monthlyLimitOnlyQuery("2")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        GetMemberQuotaApiReply response = apiClient.member().v1().getMemberQuota(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Query params should contain new fields"
+        def params = getQueryParams(getLastRequest())
+        params["monthly_limit_only_query"] == "2"
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+    }
+
+    def "delMember should serialize employee_phone and employee_email as json string"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Create request with employee phone/email obj fields"
+        DelMemberRequest request = DelMemberRequest.builder()
+                .companyId("company_001")
+                .employeePhoneObj(["13800138000", "test_phone_002"])
+                .employeeEmailObj(["a@example.com", "b@example.com"])
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        DelMemberApiReply response = apiClient.member().v1().delMember(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain json-string employee_phone and employee_email"
+        def body = getRequestBody(getLastRequest())
+        body.contains("employee_phone")
+        body.contains("13800138000")
+        body.contains("employee_email")
+        body.contains("a@example.com")
+        body.contains("belong_enterprise_name")
+        body.contains("taxpayer_no")
+        !body.contains("employee_phone__obj__")
+        !body.contains("employee_email__obj__")
+    }
+
+    def "listMember should deserialize next_token from response data"() {
+        given: "A mock success response with next_token (group account scenario)"
+        def responseData = """{
+            "records": [],
+            "total": 100,
+            "next_token": "cursor_next_001"
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        ListMemberRequest request = ListMemberRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(100)
+                .build()
+
+        when: "Call API"
+        ListMemberApiReply response = apiClient.member().v1().listMember(request)
+
+        then: "Response should contain next_token"
+        response != null
+        response.errno == 0
+        response.data != null
+        response.data.nextToken == "cursor_next_001"
     }
 }

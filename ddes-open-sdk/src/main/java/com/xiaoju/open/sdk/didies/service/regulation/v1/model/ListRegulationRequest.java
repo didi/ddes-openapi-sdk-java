@@ -20,9 +20,27 @@ public class ListRegulationRequest extends BaseReq  {
 
     /**
      * companyId
-     * 
+     *
      */
     @JsonProperty("company_id")
     private String companyId;
+    /**
+     * 归属企业名称（查询参数），集团账户【上级公司统一对接】场景使用
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号（查询参数），集团账户【上级公司统一对接】场景使用，与belong_enterprise_name二选一
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
+    /**
+     * 是否查询下级公司数据（查询参数），集团账户【上级公司统一对接】场景使用，true：查询当前公司以及下级公司数据，false：仅查询当前公司数据（默认值）
+     *
+     */
+    @JsonProperty("query_sub_company")
+    private String querySubCompany;
 }
 

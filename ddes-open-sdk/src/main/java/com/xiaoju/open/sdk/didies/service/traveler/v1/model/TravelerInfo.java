@@ -84,5 +84,11 @@ public class TravelerInfo  {
      */
     @JsonProperty("force_clear_fields")
     private List<String> forceClearFields;
+    /**
+     * 外部出行人类型，枚举值数字 0：公司维护（默认），3：项目维度外部出行人（2026.06.23 新增）
+     *
+     */
+    @JsonProperty("type")
+    private Integer type;
 }
 

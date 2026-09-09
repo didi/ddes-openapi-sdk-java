@@ -193,4 +193,128 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         body.contains("out_legal_entity_id")
         body.contains("out_le_001")
     }
+
+    def "getLegalEntity should deserialize out_parent_id and next_token and pass group params"() {
+        given: "A mock success response with 2025.06 new fields"
+        def responseData = """{
+            "total": 1,
+            "records": [{
+                "legal_entity_id": 123456,
+                "name": "测试主体",
+                "parent_id": 112689,
+                "out_parent_id": "parent_out_001",
+                "out_legal_entity_id": "out_le_001"
+            }],
+            "next_token": "cursor_next_001"
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with group account params"
+        GetLegalEntityRequest request = GetLegalEntityRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(10)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .querySubCompany("true")
+                .build()
+
+        when: "Call API"
+        GetLegalEntityApiReply response = apiClient.legalentity().v1().getLegalEntity(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Group query params should be passed"
+        def params = getQueryParams(getLastRequest())
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+        params["query_sub_company"] == "true"
+
+        and: "Response records should contain out_parent_id"
+        def data = response.data
+        data != null
+        data.records.size() == 1
+        data.records[0].outParentId == "parent_out_001"
+
+        and: "Response should contain next_token"
+        data.nextToken == "cursor_next_001"
+    }
+
+    def "createLegalEntity should serialize out_parent_id and belong_enterprise_name"() {
+        given: "A mock success response"
+        def responseData = """{"legal_entity_id": 123456}"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with outParentId and group param"
+        CreateLegalEntityRequest request = CreateLegalEntityRequest.builder()
+                .companyId("company_001")
+                .name("测试主体")
+                .outParentId("parent_out_001")
+                .belongEnterpriseName("enterprise_001")
+                .build()
+
+        when: "Call API"
+        CreateLegalEntityApiReply response = apiClient.legalentity().v1().createLegalEntity(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain new fields"
+        def body = getRequestBody(getLastRequest())
+        body.contains("out_parent_id")
+        body.contains("parent_out_001")
+        body.contains("belong_enterprise_name")
+    }
+
+    def "updateLegalEntity should serialize out_parent_id"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Update request with outParentId"
+        UpdateLegalEntityRequest request = UpdateLegalEntityRequest.builder()
+                .companyId("company_001")
+                .legalEntityId("123456")
+                .outParentId("parent_out_002")
+                .build()
+
+        when: "Call API"
+        UpdateLegalEntityApiReply response = apiClient.legalentity().v1().updateLegalEntity(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain out_parent_id"
+        def body = getRequestBody(getLastRequest())
+        body.contains("out_parent_id")
+        body.contains("parent_out_002")
+    }
+
+    def "delLegalEntity should pass group account params"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Delete request with group params"
+        DelLegalEntityRequest request = DelLegalEntityRequest.builder()
+                .companyId("company_001")
+                .legalEntityId("123456")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        DelLegalEntityApiReply response = apiClient.legalentity().v1().delLegalEntity(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain group params"
+        def body = getRequestBody(getLastRequest())
+        body.contains("belong_enterprise_name")
+        body.contains("taxpayer_no")
+    }
 }

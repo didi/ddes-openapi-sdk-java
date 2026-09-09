@@ -33,4 +33,20 @@ public class RoleSample {
     }
     System.out.println("request catch error");
   }
+
+  /**
+   * 角色查询（集团账户参数）
+   */
+  public static void listRoleGroupTest(ApiClient client) throws Exception {
+    ListRoleRequest request = ListRoleRequest.builder()
+        .companyId("替换成自己的companyId")
+        .belongEnterpriseName("替换成归属企业名称")
+        .taxpayerNo("替换成纳税人识别号")
+        .build();
+    ListRoleApiReply response = client.role().v1().listRole(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("listRoleGroupTest end");
+  }
 }

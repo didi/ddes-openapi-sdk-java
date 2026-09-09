@@ -36,5 +36,17 @@ public class CreateRankRequest extends BaseReq  {
      */
     @JsonProperty("param_json__obj__")
     private RankInfo paramJsonObj;
+    /**
+     * 归属企业名称，集团账户【上级公司统一对接】场景使用
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号，集团账户【上级公司统一对接】场景使用，与belong_enterprise_name二选一
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
 }
 

@@ -122,4 +122,24 @@ public class TravelerSample {
     }
     System.out.println("request catch error");
   }
+
+  /**
+   * 出行人新增（项目维度外部出行人 type=3，2026.06 新增）
+   */
+  public static void createTravelerProjectTypeTest(ApiClient client) throws Exception {
+    CreateTravelerRequest request = CreateTravelerRequest.builder()
+        .companyId("替换成自己的companyId")
+        .paramJsonObj(TravelerInfo.builder()
+            .name("张三")
+            .phone("替换成出行人手机号")
+            .type(3)
+            .build())
+        .belongEnterpriseName("替换成归属企业名称")
+        .build();
+    CreateTravelerApiReply response = client.traveler().v1().createTraveler(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("createTravelerProjectTypeTest end");
+  }
 }

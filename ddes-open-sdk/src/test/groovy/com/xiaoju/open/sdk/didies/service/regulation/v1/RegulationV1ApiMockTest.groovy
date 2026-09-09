@@ -188,4 +188,104 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         response.errno == 404
         response.errmsg == "Regulation not found"
     }
+
+    def "getRegulation should deserialize car_rule nested structure"() {
+        given: "A mock success response with car_rule"
+        def responseData = """{
+            "regulation_id": "reg_001",
+            "regulation_name": "用车制度",
+            "regulation_status": "0",
+            "car_rule": {
+                "call_type": [1, 2],
+                "use_scene": [1, 2]
+            },
+            "regulation_employee_name": "全员",
+            "regulation_employee_description": "适用于全体员工"
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with group account params"
+        GetRegulationRequest request = GetRegulationRequest.builder()
+                .companyId("company_001")
+                .regulationId("reg_001")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        GetRegulationApiReply response = apiClient.regulation().v1().getRegulation(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Group query params should be passed"
+        def params = getQueryParams(getLastRequest())
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+
+        and: "car_rule should be deserialized"
+        def data = response.data
+        data != null
+        data.carRule != null
+        data.carRule.callType == [1, 2]
+        data.carRule.useScene == [1, 2]
+        data.regulationEmployeeName == "全员"
+        data.regulationEmployeeDescription == "适用于全体员工"
+    }
+
+    def "getRegulation should not fail when car_rule absent"() {
+        given: "A mock success response without car_rule"
+        def responseData = """{
+            "regulation_id": "reg_002",
+            "regulation_name": "无规则制度"
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        GetRegulationRequest request = GetRegulationRequest.builder()
+                .companyId("company_001")
+                .regulationId("reg_002")
+                .build()
+
+        when: "Call API"
+        GetRegulationApiReply response = apiClient.regulation().v1().getRegulation(request)
+
+        then: "Response should be successful and carRule null"
+        response != null
+        response.errno == 0
+        response.data != null
+        response.data.carRule == null
+    }
+
+    def "listRegulation should pass group account and query_sub_company params"() {
+        given: "A mock success response with array data"
+        def responseData = """[
+            {"regulation_id": "reg_001", "regulation_name": "制度一"}
+        ]"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with group params"
+        ListRegulationRequest request = ListRegulationRequest.builder()
+                .companyId("company_001")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .querySubCompany("true")
+                .build()
+
+        when: "Call API"
+        ListRegulationApiReply response = apiClient.regulation().v1().listRegulation(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+        response.data != null
+        response.data.size() == 1
+
+        and: "Group query params should be passed"
+        def params = getQueryParams(getLastRequest())
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+        params["query_sub_company"] == "true"
+    }
 }

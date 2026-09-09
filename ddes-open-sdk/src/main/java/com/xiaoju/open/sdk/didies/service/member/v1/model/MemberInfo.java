@@ -100,8 +100,8 @@ public class MemberInfo  {
      * 常驻地ID，不传不更新，传“”清空，多个使用“_”连接；
      * 
      */
-    @JsonProperty("redisents_ids")
-    private String redisentsIds;
+    @JsonProperty("residents_ids")
+    private String residentsIds;
     /**
      * 是否企业支付余额，枚举值数字 0 否，1 是
      * 
@@ -246,5 +246,17 @@ public class MemberInfo  {
      */
     @JsonProperty("cert_english_name")
     private String certEnglishName;
+    /**
+     * 常驻地行政区划代码
+     *
+     */
+    @JsonProperty("residents_adcode")
+    private String residentsAdcode;
+    /**
+     * 家庭住址信息，用于用车管控
+     *
+     */
+    @JsonProperty("home_address")
+    private List<HomeAddressInfo> homeAddress;
 }
 

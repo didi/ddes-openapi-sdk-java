@@ -86,9 +86,21 @@ public class UpdateLegalEntityRequest extends BaseReq  {
     private String openBank;
     /**
      * 开户行账号，纯数字
-     * 
+     *
      */
     @JsonProperty("bank_card_no")
     private String bankCardNo;
+    /**
+     * 上级公司外部编号，与parent_id二选一
+     *
+     */
+    @JsonProperty("out_parent_id")
+    private String outParentId;
+    /**
+     * 归属企业名称，集团账户【上级公司统一对接】场景使用；集团场景路由子公司的纳税人识别号复用已有 taxpayer_no 字段
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
 }
 

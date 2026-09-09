@@ -103,4 +103,21 @@ public class RankSample {
     }
     System.out.println("request catch error");
   }
+
+  /**
+   * 职级查询（集团账户参数 + 响应 id 字段读取）
+   */
+  public static void listRankGroupTest(ApiClient client) throws Exception {
+    ListRankRequest request = ListRankRequest.builder()
+        .companyId("替换成自己的companyId")
+        .offset(0)
+        .length(100)
+        .belongEnterpriseName("替换成归属企业名称")
+        .build();
+    ListRankApiReply response = client.rank().v1().listRank(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("listRankGroupTest end");
+  }
 }

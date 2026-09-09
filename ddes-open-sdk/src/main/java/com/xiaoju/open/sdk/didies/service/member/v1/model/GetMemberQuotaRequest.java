@@ -44,9 +44,27 @@ public class GetMemberQuotaRequest extends BaseReq  {
     private String employeeNumbers;
     /**
      * startDate
-     * 
+     *
      */
     @JsonProperty("start_date")
     private String startDate;
+    /**
+     * 限额查询类型，1：仅查月限额（默认），2：查询所有限额（2026.02 限额接口升级）
+     *
+     */
+    @JsonProperty("monthly_limit_only_query")
+    private String monthlyLimitOnlyQuery;
+    /**
+     * 归属企业名称（查询参数），集团账户【上级公司统一对接】场景使用
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号（查询参数），集团账户【上级公司统一对接】场景使用，与belong_enterprise_name二选一
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
 }
 

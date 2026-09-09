@@ -20,9 +20,9 @@ public class UpdateMemberApiReply extends BaseResp  {
 
     /**
      * data
-     * 
+     *
      */
     @JsonProperty("data")
-    private Object data;
+    private UpdateMemberReply data;
 }
 

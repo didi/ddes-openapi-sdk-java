@@ -111,4 +111,41 @@ public class LegalEntitySample {
     System.out.println("getAdjustBillDataResultTest end");
   }
 
+
+  /**
+   * 公司主体查询（集团账户 + 外部编号，展示 2025.06 新增字段）
+   */
+  public static void getLegalEntityNewFieldsTest(ApiClient client) throws Exception {
+    GetLegalEntityRequest request = GetLegalEntityRequest.builder()
+        .companyId("替换成自己的companyId")
+        .offset(0)
+        .length(10)
+        .outLegalEntityId("替换成自己的公司主体外部编号")
+        .belongEnterpriseName("替换成归属企业名称")
+        .querySubCompany("true")
+        .build();
+    GetLegalEntityApiReply response = client.legalentity().v1().getLegalEntity(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+      System.out.println("nextToken: " + response.getData().getNextToken());
+    }
+    System.out.println("getLegalEntityNewFieldsTest end");
+  }
+
+  /**
+   * 公司主体新增（使用外部编号指定上级公司，2025.06 新增）
+   */
+  public static void createLegalEntityOutParentTest(ApiClient client) throws Exception {
+    CreateLegalEntityRequest request = CreateLegalEntityRequest.builder()
+        .companyId("替换成自己的companyId")
+        .name("测试主体")
+        .outParentId("替换成上级公司外部编号")
+        .belongEnterpriseName("替换成归属企业名称")
+        .build();
+    CreateLegalEntityApiReply response = client.legalentity().v1().createLegalEntity(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("createLegalEntityOutParentTest end");
+  }
 }

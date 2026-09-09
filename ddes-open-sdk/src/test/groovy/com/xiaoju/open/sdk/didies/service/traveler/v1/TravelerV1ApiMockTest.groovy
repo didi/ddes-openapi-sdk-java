@@ -195,4 +195,92 @@ class TravelerV1ApiMockTest extends BaseMockTest {
         body.contains("param_json")
         body.contains("out_traveler_001")
     }
+
+    def "createTraveler should serialize type for project-dimension traveler"() {
+        given: "A mock success response"
+        def responseData = """{"id": 12345}"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with type=3 (project dimension)"
+        def travelerInfo = TravelerInfo.builder()
+                .name("张三")
+                .phone("13800138000")
+                .type(3)
+                .build()
+        CreateTravelerRequest request = CreateTravelerRequest.builder()
+                .companyId("company_001")
+                .paramJsonObj(travelerInfo)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        CreateTravelerApiReply response = apiClient.traveler().v1().createTraveler(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "param_json should contain type and group params in body"
+        def body = getRequestBody(getLastRequest())
+        body.contains("belong_enterprise_name")
+        body.contains("taxpayer_no")
+        def json = groovy.json.JsonSlurper.newInstance().parseText(body)
+        def paramJson = groovy.json.JsonSlurper.newInstance().parseText(json["param_json"])
+        paramJson["type"] == 3
+    }
+
+    def "createTraveler should not serialize type when absent"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Create request without type"
+        def travelerInfo = TravelerInfo.builder()
+                .name("张三")
+                .phone("13800138000")
+                .build()
+        CreateTravelerRequest request = CreateTravelerRequest.builder()
+                .companyId("company_001")
+                .paramJsonObj(travelerInfo)
+                .build()
+
+        when: "Call API"
+        CreateTravelerApiReply response = apiClient.traveler().v1().createTraveler(request)
+
+        then: "Response should be successful"
+        response.errno == 0
+
+        and: "param_json should not contain type field"
+        def json = groovy.json.JsonSlurper.newInstance().parseText(getRequestBody(getLastRequest()))
+        def paramJson = groovy.json.JsonSlurper.newInstance().parseText(json["param_json"])
+        !paramJson.containsKey("type")
+    }
+
+    def "delTraveler should pass group account params"() {
+        given: "A mock success response"
+        enqueueSuccess(createBaseResponse(0, "success"))
+
+        and: "Delete request with group params"
+        def travelerInfo = TravelerInfo.builder()
+                .travelerId("12345")
+                .build()
+        DelTravelerRequest request = DelTravelerRequest.builder()
+                .companyId("company_001")
+                .paramJsonObj(travelerInfo)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        DelTravelerApiReply response = apiClient.traveler().v1().delTraveler(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Request body should contain group params"
+        def body = getRequestBody(getLastRequest())
+        body.contains("belong_enterprise_name")
+        body.contains("taxpayer_no")
+    }
 }

@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 
 
 
@@ -36,5 +38,41 @@ public class DelMemberRequest extends BaseReq  {
      */
     @JsonProperty("employee_number")
     private String employeeNumber;
+    /**
+     * 员工手机号列表，json 字符串（一次最多删除100条），集团账户【上级公司统一对接】及批量删除场景使用
+     *
+     */
+    @JsonProperty("employee_phone")
+    private String employeePhone;
+    /**
+     * employeePhoneObj，SDK 便捷字段，自动序列化为 employee_phone json 字符串
+     *
+     */
+    @JsonProperty("employee_phone__obj__")
+    private List<String> employeePhoneObj;
+    /**
+     * 员工邮箱列表，json 字符串（一次最多删除100条），集团账户【上级公司统一对接】及批量删除场景使用
+     *
+     */
+    @JsonProperty("employee_email")
+    private String employeeEmail;
+    /**
+     * employeeEmailObj，SDK 便捷字段，自动序列化为 employee_email json 字符串
+     *
+     */
+    @JsonProperty("employee_email__obj__")
+    private List<String> employeeEmailObj;
+    /**
+     * 归属企业名称，集团账户【上级公司统一对接】场景使用
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号，集团账户【上级公司统一对接】场景使用，与belong_enterprise_name二选一
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
 }
 

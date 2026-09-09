@@ -270,5 +270,11 @@ public class GetMemberDetailReply  {
      */
     @JsonProperty("home_address")
     private List<HomeAddressInfo> homeAddress;
+    /**
+     * 其他公司人员信息列表（一人多企业场景）；文档暂未提供字段表，保守建模避免反序列化失败
+     *
+     */
+    @JsonProperty("other_companies_list")
+    private List<Object> otherCompaniesList;
 }
 

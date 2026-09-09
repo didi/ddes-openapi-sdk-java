@@ -139,4 +139,31 @@ class RoleV1ApiMockTest extends BaseMockTest {
         response.errno == 400
         response.errmsg == "Invalid company_id"
     }
+
+    def "listRole should pass group account params"() {
+        given: "A mock success response"
+        def responseData = """[
+            {"id": "role_001", "name": "管理员", "alias": "admin"}
+        ]"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request with group params"
+        ListRoleRequest request = ListRoleRequest.builder()
+                .companyId("company_001")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
+                .build()
+
+        when: "Call API"
+        ListRoleApiReply response = apiClient.role().v1().listRole(request)
+
+        then: "Response should be successful"
+        response != null
+        response.errno == 0
+
+        and: "Group query params should be passed"
+        def params = getQueryParams(getLastRequest())
+        params["belong_enterprise_name"] == "enterprise_001"
+        params["taxpayer_no"] == "tax_001"
+    }
 }

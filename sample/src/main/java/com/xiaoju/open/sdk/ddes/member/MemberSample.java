@@ -155,4 +155,66 @@ public class MemberSample {
     }
     System.out.println("request catch error");
   }
+
+  /**
+   * 员工单个新增（展示常驻地 adcode、家庭住址、集团账户参数等新字段）
+   */
+  public static void createMemberNewFieldsTest(ApiClient client) throws Exception {
+    HomeAddressInfo address = HomeAddressInfo.builder()
+        .city("北京市")
+        .cityId(1)
+        .cityAdcode("110100")
+        .addressName("海淀区xx路")
+        .build();
+    CreateMemberRequest request = CreateMemberRequest.builder()
+        .companyId("替换成自己的companyId")
+        .dataObj(MemberInfo.builder()
+            .phone("替换成员工手机号")
+            .realname("测试")
+            .residentsAdcode("110100")
+            .homeAddress(java.util.Collections.singletonList(address))
+            .build())
+        .belongEnterpriseName("替换成归属企业名称")
+        .build();
+    CreateMemberApiReply response = client.member().v1().createMember(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("createMemberNewFieldsTest end");
+  }
+
+  /**
+   * 员工删除（按手机号/邮箱批量删除，2025.06 新增）
+   */
+  public static void delMemberByPhoneOrEmailTest(ApiClient client) throws Exception {
+    DelMemberRequest request = DelMemberRequest.builder()
+        .companyId("替换成自己的companyId")
+        .employeePhoneObj(java.util.Arrays.asList("替换成员工手机号"))
+        .employeeEmailObj(java.util.Arrays.asList("替换成员工邮箱"))
+        .belongEnterpriseName("替换成归属企业名称")
+        .build();
+    DelMemberApiReply response = client.member().v1().delMember(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("delMemberByPhoneOrEmailTest end");
+  }
+
+  /**
+   * 员工限额查询（monthly_limit_only_query，2026.02 限额接口升级）
+   */
+  public static void getMemberQuotaMonthlyLimitTest(ApiClient client) throws Exception {
+    GetMemberQuotaRequest request = GetMemberQuotaRequest.builder()
+        .companyId("替换成自己的companyId")
+        .memberIds("替换成员工ID")
+        .startDate("2026-09-01")
+        .monthlyLimitOnlyQuery("2")
+        .belongEnterpriseName("替换成归属企业名称")
+        .build();
+    GetMemberQuotaApiReply response = client.member().v1().getMemberQuota(request);
+    if (response != null) {
+      System.out.println(JacksonUtils.toJson(response));
+    }
+    System.out.println("getMemberQuotaMonthlyLimitTest end");
+  }
 }
