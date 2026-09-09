@@ -4,8 +4,8 @@ import com.xiaoju.open.sdk.didies.mock.BaseMockTest
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationApiReply
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationRequest
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationApiReply
-import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationGroupApiReply
-import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationGroupRequest
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationV2ApiReply
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationV2Request
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationRequest
 import okhttp3.mockwebserver.RecordedRequest
 
@@ -289,7 +289,7 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         params["taxpayer_no"] == "tax_001"
     }
 
-    def "listRegulationForGroup - GET /open-apis/v2/regulation/get"() {
+    def "listRegulationV2 - GET /open-apis/v2/regulation/get"() {
         given: "A mock group-envelope success response"
         def responseData = """{
             "records": [{
@@ -314,7 +314,7 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         enqueueSuccess(createSuccessResponse(responseData))
 
         and: "Create group request"
-        ListRegulationGroupRequest request = ListRegulationGroupRequest.builder()
+        ListRegulationV2Request request = ListRegulationV2Request.builder()
                 .companyId("company_001")
                 .offset(0)
                 .length(100)
@@ -323,7 +323,7 @@ class RegulationV1ApiMockTest extends BaseMockTest {
                 .build()
 
         when: "Call group API"
-        ListRegulationGroupApiReply response = apiClient.regulation().v1().listRegulationForGroup(request)
+        ListRegulationV2ApiReply response = apiClient.regulation().v1().listRegulationV2(request)
 
         then: "Response should be successful"
         response != null

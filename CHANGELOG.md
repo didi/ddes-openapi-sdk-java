@@ -27,13 +27,13 @@
 ### 🚀 新增功能（集团账户专用路径）
 
 - **新增 4 个集团账户查询方法**（【上级公司统一对接】备用路径 `/open-apis/v2/...`）：
-  - `legalentity.v1.getLegalEntityForGroup` → `/open-apis/v2/legalEntity/get`
-  - `budgetcenter.v1.getBudgetCenterForGroup` → `/open-apis/v2/budgetCenter/get`
-  - `member.v1.listMemberForGroup` → `/open-apis/v2/member/get`
-  - `regulation.v1.listRegulationForGroup` → `/open-apis/v2/regulation/get`
+  - `legalentity.v1.getLegalEntityV2` → `/open-apis/v2/legalEntity/get`
+  - `budgetcenter.v1.getBudgetCenterV2` → `/open-apis/v2/budgetCenter/get`
+  - `member.v1.listMemberV2` → `/open-apis/v2/member/get`
+  - `regulation.v1.listRegulationV2` → `/open-apis/v2/regulation/get`
 - 响应为统一信封（`records`/`nextToken`/`companyTotal`/`companyListHasChange`/`progress`，后三者为实测补充字段、文档暂未声明）；各域集团 Record 独立建模（legalentity 集团返回 `legal_entity_id` 为字符串）。
 - **注意**：`query_sub_company` 服务端按整数解析，请传 `"1"/"0"`（文档标注 boolean 有误，传 `"true"` 会报错）。
-- **废弃标记**：`member.ListMemberRequest.querySubCompany`/`nextToken` 标注 `@Deprecated`（主路径不生效），集团场景请迁移至 `listMemberForGroup`。
+- **废弃标记**：`member.ListMemberRequest.querySubCompany`/`nextToken` 标注 `@Deprecated`（主路径不生效），集团场景请迁移至 `listMemberV2`。
 
 ### 📝 备注
 

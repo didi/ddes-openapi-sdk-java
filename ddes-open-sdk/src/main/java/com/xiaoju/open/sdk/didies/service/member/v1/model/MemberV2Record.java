@@ -16,7 +16,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberGroupRecord  {
+public class MemberV2Record  {
 
     /**
      * 员工在滴滴侧的 ID

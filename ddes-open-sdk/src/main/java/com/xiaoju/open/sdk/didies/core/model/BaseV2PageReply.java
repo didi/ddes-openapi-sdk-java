@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseGroupPageReply  {
+public class BaseV2PageReply  {
 
     /**
      * 下一页的token，集团账户【上级公司统一对接】分页使用，为空字符串或null说明没有下一页

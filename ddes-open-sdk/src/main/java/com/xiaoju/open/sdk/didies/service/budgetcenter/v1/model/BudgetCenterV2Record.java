@@ -16,7 +16,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BudgetCenterGroupRecord  {
+public class BudgetCenterV2Record  {
 
     /**
      * 成本中心/项目 ID

@@ -1,4 +1,4 @@
-package com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model;
+package com.xiaoju.open.sdk.didies.service.legalentity.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xiaoju.open.sdk.didies.core.model.BaseReq;
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetBudgetCenterGroupRequest extends BaseReq  {
+public class GetLegalEntityV2Request extends BaseReq  {
 
     /**
      * companyId
@@ -25,35 +25,23 @@ public class GetBudgetCenterGroupRequest extends BaseReq  {
     @JsonProperty("company_id")
     private String companyId;
     /**
-     * 成本中心/项目 ID 精准查询
+     * keyword，模糊查询条件，可使用 out_legal_entity_id 或 name 查询
      *
      */
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("keyword")
+    private String keyword;
     /**
-     * 外部成本中心/项目编号精准查询
+     * legal_entity_id，滴滴侧公司主体 id 精准查询
      *
      */
-    @JsonProperty("out_budget_id")
-    private String outBudgetId;
+    @JsonProperty("legal_entity_id")
+    private String legalEntityId;
     /**
-     * 成本中心/项目类型精准查询
+     * out_legal_entity_id，公司主体外部编号精准查询
      *
      */
-    @JsonProperty("type")
-    private Integer type;
-    /**
-     * 名称精确匹配查询
-     *
-     */
-    @JsonProperty("is_exact_name")
-    private Integer isExactName;
-    /**
-     * 名称模糊查询
-     *
-     */
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("out_legal_entity_id")
+    private String outLegalEntityId;
     /**
      * 数据开始位置，集团路径下必填
      *

@@ -1,7 +1,7 @@
-package com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model;
+package com.xiaoju.open.sdk.didies.service.regulation.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.xiaoju.open.sdk.didies.core.model.BaseGroupPageReply;
+import com.xiaoju.open.sdk.didies.core.model.BaseV2PageReply;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,12 +18,12 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetBudgetCenterGroupReply extends BaseGroupPageReply  {
+public class ListRegulationV2Reply extends BaseV2PageReply  {
 
     /**
-     * 成本中心/项目列表
+     * 制度列表
      *
      */
     @JsonProperty("records")
-    private List<BudgetCenterGroupRecord> records;
+    private List<RegulationV2Record> records;
 }

@@ -16,12 +16,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetLegalEntityGroupApiReply extends BaseResp  {
+public class GetLegalEntityV2ApiReply extends BaseResp  {
 
     /**
      * data
      *
      */
     @JsonProperty("data")
-    private GetLegalEntityGroupReply data;
+    private GetLegalEntityV2Reply data;
 }

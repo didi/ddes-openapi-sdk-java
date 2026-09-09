@@ -6,8 +6,8 @@ import com.xiaoju.open.sdk.didies.service.BaseService;
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationApiReply;
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.GetRegulationRequest;
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationApiReply;
-import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationGroupApiReply;
-import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationGroupRequest;
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationV2ApiReply;
+import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationV2Request;
 import com.xiaoju.open.sdk.didies.service.regulation.v1.model.ListRegulationRequest;
 
 public class V1 extends BaseService {
@@ -43,12 +43,12 @@ public class V1 extends BaseService {
     /**
     * 制度列表查询（集团账户）
     * 说明： * 集团账户【上级公司统一对接】专用路径，支持集团定位与下级公司数据查询、next_token 游标翻页。
-    * @param listRegulationGroupRequest  (required)
-    * @return ListRegulationGroupApiReply
+    * @param listRegulationV2Request  (required)
+    * @return ListRegulationV2ApiReply
     * @throws Exception if an error occurs while attempting to invoke the API
     */
-    public ListRegulationGroupApiReply listRegulationForGroup(ListRegulationGroupRequest listRegulationGroupRequest) throws Exception {
-        return doGet(listRegulationGroupRequest, "/open-apis/v2/regulation/get", ListRegulationGroupApiReply.class, 0);
+    public ListRegulationV2ApiReply listRegulationV2(ListRegulationV2Request listRegulationV2Request) throws Exception {
+        return doGet(listRegulationV2Request, "/open-apis/v2/regulation/get", ListRegulationV2ApiReply.class, 0);
     }
 }
 

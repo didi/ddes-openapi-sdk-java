@@ -1,4 +1,4 @@
-package com.xiaoju.open.sdk.didies.service.regulation.v1.model;
+package com.xiaoju.open.sdk.didies.service.budgetcenter.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xiaoju.open.sdk.didies.core.model.BaseResp;
@@ -16,12 +16,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListRegulationGroupApiReply extends BaseResp  {
+public class GetBudgetCenterV2ApiReply extends BaseResp  {
 
     /**
      * data
      *
      */
     @JsonProperty("data")
-    private ListRegulationGroupReply data;
+    private GetBudgetCenterV2Reply data;
 }

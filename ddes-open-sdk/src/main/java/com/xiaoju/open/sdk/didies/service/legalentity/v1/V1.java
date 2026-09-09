@@ -59,12 +59,12 @@ public class V1 extends BaseService {
     /**
     * 公司主体查询（集团账户）
     * 说明： * 集团账户【上级公司统一对接】专用路径，支持集团定位与下级公司数据查询、next_token 游标翻页。
-    * @param getLegalEntityGroupRequest  (required)
-    * @return GetLegalEntityGroupApiReply
+    * @param getLegalEntityV2Request  (required)
+    * @return GetLegalEntityV2ApiReply
     * @throws Exception if an error occurs while attempting to invoke the API
     */
-    public GetLegalEntityGroupApiReply getLegalEntityForGroup(GetLegalEntityGroupRequest getLegalEntityGroupRequest) throws Exception {
-        return doGet(getLegalEntityGroupRequest, "/open-apis/v2/legalEntity/get", GetLegalEntityGroupApiReply.class, 0);
+    public GetLegalEntityV2ApiReply getLegalEntityV2(GetLegalEntityV2Request getLegalEntityV2Request) throws Exception {
+        return doGet(getLegalEntityV2Request, "/open-apis/v2/legalEntity/get", GetLegalEntityV2ApiReply.class, 0);
     }
 }
 

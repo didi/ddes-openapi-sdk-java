@@ -82,12 +82,12 @@ public class V1 extends BaseService {
     /**
     * 员工列表查询（集团账户）
     * 说明： * 集团账户【上级公司统一对接】专用路径，支持集团定位与下级公司数据查询、next_token 游标翻页。
-    * @param listMemberGroupRequest  (required)
-    * @return ListMemberGroupApiReply
+    * @param listMemberV2Request  (required)
+    * @return ListMemberV2ApiReply
     * @throws Exception if an error occurs while attempting to invoke the API
     */
-    public ListMemberGroupApiReply listMemberForGroup(ListMemberGroupRequest listMemberGroupRequest) throws Exception {
-        return doGet(listMemberGroupRequest, "/open-apis/v2/member/get", ListMemberGroupApiReply.class, 0);
+    public ListMemberV2ApiReply listMemberV2(ListMemberV2Request listMemberV2Request) throws Exception {
+        return doGet(listMemberV2Request, "/open-apis/v2/member/get", ListMemberV2ApiReply.class, 0);
     }
 }
 

@@ -87,7 +87,7 @@ public class ListMemberRequest extends BaseReq  {
     /**
      * 是否查询子公司（查询参数）
      *
-     * @deprecated 集团账户请使用 {@link com.xiaoju.open.sdk.didies.service.member.v1.V1#listMemberForGroup(ListMemberGroupRequest)}，
+     * @deprecated 集团账户请使用 {@link com.xiaoju.open.sdk.didies.service.member.v1.V1#listMemberV2(ListMemberV2Request)}，
      *             该字段仅在集团备用路径下生效，主路径不生效。
      */
     @Deprecated
@@ -96,7 +96,7 @@ public class ListMemberRequest extends BaseReq  {
     /**
      * 下一页token（查询参数）
      *
-     * @deprecated 集团账户请使用 {@link com.xiaoju.open.sdk.didies.service.member.v1.V1#listMemberForGroup(ListMemberGroupRequest)}，
+     * @deprecated 集团账户请使用 {@link com.xiaoju.open.sdk.didies.service.member.v1.V1#listMemberV2(ListMemberV2Request)}，
      *             该字段仅在集团备用路径下生效，主路径不生效。
      */
     @Deprecated

@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LegalEntityGroupRecord  {
+public class LegalEntityV2Record  {
 
     /**
      * 滴滴侧公司主体 id（集团路径返回为字符串）

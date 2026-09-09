@@ -16,12 +16,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListMemberGroupApiReply extends BaseResp  {
+public class ListMemberV2ApiReply extends BaseResp  {
 
     /**
      * data
      *
      */
     @JsonProperty("data")
-    private ListMemberGroupReply data;
+    private ListMemberV2Reply data;
 }

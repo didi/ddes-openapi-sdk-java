@@ -884,7 +884,7 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         data.records.size() == 1
     }
 
-    def "getBudgetCenterForGroup - GET /open-apis/v2/budgetCenter/get"() {
+    def "getBudgetCenterV2 - GET /open-apis/v2/budgetCenter/get"() {
         given: "A mock group-envelope success response"
         def responseData = """{
             "records": [{
@@ -903,7 +903,7 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         enqueueSuccess(createSuccessResponse(responseData))
 
         and: "Create group request"
-        GetBudgetCenterGroupRequest request = GetBudgetCenterGroupRequest.builder()
+        GetBudgetCenterV2Request request = GetBudgetCenterV2Request.builder()
                 .companyId("company_001")
                 .offset(0)
                 .length(100)
@@ -912,7 +912,7 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
                 .build()
 
         when: "Call group API"
-        GetBudgetCenterGroupApiReply response = apiClient.budgetcenter().v1().getBudgetCenterForGroup(request)
+        GetBudgetCenterV2ApiReply response = apiClient.budgetcenter().v1().getBudgetCenterV2(request)
 
         then: "Response should be successful"
         response != null

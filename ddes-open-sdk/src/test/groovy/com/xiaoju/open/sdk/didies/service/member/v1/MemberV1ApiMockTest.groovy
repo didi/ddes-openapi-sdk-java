@@ -849,7 +849,7 @@ class MemberV1ApiMockTest extends BaseMockTest {
         !body.contains("employee_email__obj__")
     }
 
-    def "listMemberForGroup - GET /open-apis/v2/member/get"() {
+    def "listMemberV2 - GET /open-apis/v2/member/get"() {
         given: "A mock group-envelope success response"
         def responseData = """{
             "records": [{
@@ -866,7 +866,7 @@ class MemberV1ApiMockTest extends BaseMockTest {
         enqueueSuccess(createSuccessResponse(responseData))
 
         and: "Create group request"
-        ListMemberGroupRequest request = ListMemberGroupRequest.builder()
+        ListMemberV2Request request = ListMemberV2Request.builder()
                 .companyId("company_001")
                 .offset(0)
                 .length(100)
@@ -875,7 +875,7 @@ class MemberV1ApiMockTest extends BaseMockTest {
                 .build()
 
         when: "Call group API"
-        ListMemberGroupApiReply response = apiClient.member().v1().listMemberForGroup(request)
+        ListMemberV2ApiReply response = apiClient.member().v1().listMemberV2(request)
 
         then: "Response should be successful"
         response != null

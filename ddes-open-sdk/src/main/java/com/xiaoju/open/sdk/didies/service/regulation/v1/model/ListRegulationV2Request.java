@@ -1,4 +1,4 @@
-package com.xiaoju.open.sdk.didies.service.member.v1.model;
+package com.xiaoju.open.sdk.didies.service.regulation.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xiaoju.open.sdk.didies.core.model.BaseReq;
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListMemberGroupRequest extends BaseReq  {
+public class ListRegulationV2Request extends BaseReq  {
 
     /**
      * companyId

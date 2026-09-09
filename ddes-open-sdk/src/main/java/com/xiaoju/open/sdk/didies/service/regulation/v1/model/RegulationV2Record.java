@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegulationGroupRecord  {
+public class RegulationV2Record  {
 
     /**
      * 制度 id

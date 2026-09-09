@@ -1,7 +1,7 @@
-package com.xiaoju.open.sdk.didies.service.regulation.v1.model;
+package com.xiaoju.open.sdk.didies.service.legalentity.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.xiaoju.open.sdk.didies.core.model.BaseGroupPageReply;
+import com.xiaoju.open.sdk.didies.core.model.BaseV2PageReply;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,12 +18,12 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListRegulationGroupReply extends BaseGroupPageReply  {
+public class GetLegalEntityV2Reply extends BaseV2PageReply  {
 
     /**
-     * 制度列表
+     * 公司列表
      *
      */
     @JsonProperty("records")
-    private List<RegulationGroupRecord> records;
+    private List<LegalEntityV2Record> records;
 }

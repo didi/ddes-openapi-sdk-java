@@ -313,7 +313,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         body.contains("taxpayer_no")
     }
 
-    def "getLegalEntityForGroup - GET /open-apis/v2/legalEntity/get"() {
+    def "getLegalEntityV2 - GET /open-apis/v2/legalEntity/get"() {
         given: "A mock group-envelope success response"
         def responseData = """{
             "records": [{
@@ -333,7 +333,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         enqueueSuccess(createSuccessResponse(responseData))
 
         and: "Create group request with group params and pagination"
-        GetLegalEntityGroupRequest request = GetLegalEntityGroupRequest.builder()
+        GetLegalEntityV2Request request = GetLegalEntityV2Request.builder()
                 .companyId("company_001")
                 .offset(0)
                 .length(10)
@@ -342,7 +342,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
                 .build()
 
         when: "Call group API"
-        GetLegalEntityGroupApiReply response = apiClient.legalentity().v1().getLegalEntityForGroup(request)
+        GetLegalEntityV2ApiReply response = apiClient.legalentity().v1().getLegalEntityV2(request)
 
         then: "Response should be successful"
         response != null
@@ -371,7 +371,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         record.belongEnterpriseName == "集团企业名称"
     }
 
-    def "getLegalEntityForGroup should support next_token pagination and empty token means no more"() {
+    def "getLegalEntityV2 should support next_token pagination and empty token means no more"() {
         given: "A mock group response with empty next_token"
         def responseData = """{
             "records": [],
@@ -382,7 +382,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         enqueueSuccess(createSuccessResponse(responseData))
 
         and: "Create group request with next_token from previous page"
-        GetLegalEntityGroupRequest request = GetLegalEntityGroupRequest.builder()
+        GetLegalEntityV2Request request = GetLegalEntityV2Request.builder()
                 .companyId("company_001")
                 .offset(10)
                 .length(10)
@@ -391,7 +391,7 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
                 .build()
 
         when: "Call group API"
-        GetLegalEntityGroupApiReply response = apiClient.legalentity().v1().getLegalEntityForGroup(request)
+        GetLegalEntityV2ApiReply response = apiClient.legalentity().v1().getLegalEntityV2(request)
 
         then: "Response should be successful with empty next_token"
         response != null
