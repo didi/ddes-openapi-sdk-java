@@ -273,20 +273,20 @@ class RankV1ApiMockTest extends BaseMockTest {
         data.records[1].id == "rank_002"
     }
 
-    def "createRank should pass group account params"() {
+    def "createRank should pass group account params inside param_json"() {
         given: "A mock success response"
         def responseData = """{"id": "rank_001"}"""
         enqueueSuccess(createSuccessResponse(responseData))
 
-        and: "Create request with group params"
+        and: "Create request with group params in RankInfo (param_json payload)"
         def rankInfo = RankInfo.builder()
                 .name("P7")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
                 .build()
         CreateRankRequest request = CreateRankRequest.builder()
                 .companyId("company_001")
                 .paramJsonObj(rankInfo)
-                .belongEnterpriseName("enterprise_001")
-                .taxpayerNo("tax_001")
                 .build()
 
         when: "Call API"
@@ -296,25 +296,28 @@ class RankV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Request body should contain group params"
-        def body = getRequestBody(getLastRequest())
-        body.contains("belong_enterprise_name")
-        body.contains("taxpayer_no")
+        and: "Group params should be inside param_json, not at request top level"
+        def json = groovy.json.JsonSlurper.newInstance().parseText(getRequestBody(getLastRequest()))
+        def paramJson = groovy.json.JsonSlurper.newInstance().parseText(json["param_json"])
+        paramJson["belong_enterprise_name"] == "enterprise_001"
+        paramJson["taxpayer_no"] == "tax_001"
+        !json.containsKey("belong_enterprise_name")
+        !json.containsKey("taxpayer_no")
     }
 
-    def "delRank should pass group account params"() {
+    def "delRank should pass group account params inside param_json"() {
         given: "A mock success response"
         enqueueSuccess(createBaseResponse(0, "success"))
 
-        and: "Delete request with group params"
+        and: "Delete request with group params in RankInfo (param_json payload)"
         def rankInfo = RankInfo.builder()
                 .rankId("rank_001")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
                 .build()
         DelRankRequest request = DelRankRequest.builder()
                 .companyId("company_001")
                 .paramJsonObj(rankInfo)
-                .belongEnterpriseName("enterprise_001")
-                .taxpayerNo("tax_001")
                 .build()
 
         when: "Call API"
@@ -324,9 +327,12 @@ class RankV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Request body should contain group params"
-        def body = getRequestBody(getLastRequest())
-        body.contains("belong_enterprise_name")
-        body.contains("taxpayer_no")
+        and: "Group params should be inside param_json, not at request top level"
+        def json = groovy.json.JsonSlurper.newInstance().parseText(getRequestBody(getLastRequest()))
+        def paramJson = groovy.json.JsonSlurper.newInstance().parseText(json["param_json"])
+        paramJson["belong_enterprise_name"] == "enterprise_001"
+        paramJson["taxpayer_no"] == "tax_001"
+        !json.containsKey("belong_enterprise_name")
+        !json.containsKey("taxpayer_no")
     }
 }
