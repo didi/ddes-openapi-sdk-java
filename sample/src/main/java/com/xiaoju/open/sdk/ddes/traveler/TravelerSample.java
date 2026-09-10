@@ -133,8 +133,8 @@ public class TravelerSample {
             .name("张三")
             .phone("替换成出行人手机号")
             .type(3)
+            .belongEnterpriseName("替换成归属企业名称")
             .build())
-        .belongEnterpriseName("替换成归属企业名称")
         .build();
     CreateTravelerApiReply response = client.traveler().v1().createTraveler(request);
     if (response != null) {

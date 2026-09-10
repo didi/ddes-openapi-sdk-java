@@ -206,12 +206,12 @@ class TravelerV1ApiMockTest extends BaseMockTest {
                 .name("张三")
                 .phone("13800138000")
                 .type(3)
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
                 .build()
         CreateTravelerRequest request = CreateTravelerRequest.builder()
                 .companyId("company_001")
                 .paramJsonObj(travelerInfo)
-                .belongEnterpriseName("enterprise_001")
-                .taxpayerNo("tax_001")
                 .build()
 
         when: "Call API"
@@ -221,13 +221,14 @@ class TravelerV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "param_json should contain type and group params in body"
-        def body = getRequestBody(getLastRequest())
-        body.contains("belong_enterprise_name")
-        body.contains("taxpayer_no")
-        def json = groovy.json.JsonSlurper.newInstance().parseText(body)
+        and: "Group params and type should be inside param_json, not at request top level"
+        def json = groovy.json.JsonSlurper.newInstance().parseText(getRequestBody(getLastRequest()))
         def paramJson = groovy.json.JsonSlurper.newInstance().parseText(json["param_json"])
         paramJson["type"] == 3
+        paramJson["belong_enterprise_name"] == "enterprise_001"
+        paramJson["taxpayer_no"] == "tax_001"
+        !json.containsKey("belong_enterprise_name")
+        !json.containsKey("taxpayer_no")
     }
 
     def "createTraveler should not serialize type when absent"() {
@@ -256,19 +257,19 @@ class TravelerV1ApiMockTest extends BaseMockTest {
         !paramJson.containsKey("type")
     }
 
-    def "delTraveler should pass group account params"() {
+    def "delTraveler should pass group account params inside param_json"() {
         given: "A mock success response"
         enqueueSuccess(createBaseResponse(0, "success"))
 
-        and: "Delete request with group params"
+        and: "Delete request with group params in TravelerInfo (param_json payload)"
         def travelerInfo = TravelerInfo.builder()
                 .travelerId("12345")
+                .belongEnterpriseName("enterprise_001")
+                .taxpayerNo("tax_001")
                 .build()
         DelTravelerRequest request = DelTravelerRequest.builder()
                 .companyId("company_001")
                 .paramJsonObj(travelerInfo)
-                .belongEnterpriseName("enterprise_001")
-                .taxpayerNo("tax_001")
                 .build()
 
         when: "Call API"
@@ -278,9 +279,12 @@ class TravelerV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Request body should contain group params"
-        def body = getRequestBody(getLastRequest())
-        body.contains("belong_enterprise_name")
-        body.contains("taxpayer_no")
+        and: "Group params should be inside param_json, not at request top level"
+        def json = groovy.json.JsonSlurper.newInstance().parseText(getRequestBody(getLastRequest()))
+        def paramJson = groovy.json.JsonSlurper.newInstance().parseText(json["param_json"])
+        paramJson["belong_enterprise_name"] == "enterprise_001"
+        paramJson["taxpayer_no"] == "tax_001"
+        !json.containsKey("belong_enterprise_name")
+        !json.containsKey("taxpayer_no")
     }
 }

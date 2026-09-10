@@ -21,7 +21,7 @@
 - **member**：请求新增 `residentsAdcode`、`homeAddress`（single/edit 共用）；`single` 响应新增 `memberId`/`status`（员工已存在场景，2025.11.17）；`detail` 响应新增 `otherCompaniesList`（一人多企业，保守建模 `List<Object>`）；`getQuota` 请求新增 `monthlyLimitOnlyQuery`（2026.02 限额升级）；`del` 请求新增 `employeePhone`/`employeeEmail` 及 `__obj__` 便捷字段（2025.06.18）。
 - **traveler**：`TravelerInfo` 新增 `type`（项目维度外部出行人，2026.06.23）。
 - **regulation**：detail 响应新增 `CarRule`（`callType`/`useScene`）及 `regulationEmployeeName`/`regulationEmployeeDescription`。
-- **集团账户「上级公司统一对接」参数**：18 个接口的请求模型新增 `belongEnterpriseName`/`taxpayerNo` 可选字段（其中 rank create/update/del 三个接口的这两个参数随 `param_json` 内嵌提交，位于 `RankInfo`，与 Go SDK 契约对齐）。`query_sub_company`/`next_token` 属 `/open-apis/v2/...` 备用路径专属参数，主路径不生效，本次未提供（member get 请求侧既有字段保持不动）。
+- **集团账户「上级公司统一对接」参数**：18 个接口的请求模型新增 `belongEnterpriseName`/`taxpayerNo` 可选字段（其中 rank create/update/del 与 traveler create/update/del 六个接口的这两个参数随 `param_json` 内嵌提交，分别位于 `RankInfo`/`TravelerInfo`，param_json 形态接口服务端不读请求体顶层，与 Go SDK 契约对齐）。`query_sub_company`/`next_token` 属 `/open-apis/v2/...` 备用路径专属参数，主路径不生效，本次未提供（member get 请求侧既有字段保持不动）。
 - **Sample**：7 个服务域示例类新增上述字段的用法示例。
 
 ### 🚀 新增功能（集团账户专用路径）

@@ -90,5 +90,17 @@ public class TravelerInfo  {
      */
     @JsonProperty("type")
     private Integer type;
+    /**
+     * 归属企业名称，集团账户【上级公司统一对接】场景使用，随 param_json 提交
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
+    /**
+     * 纳税人识别号，集团账户【上级公司统一对接】场景使用，与belong_enterprise_name二选一，随 param_json 提交
+     *
+     */
+    @JsonProperty("taxpayer_no")
+    private String taxpayerNo;
 }
 
