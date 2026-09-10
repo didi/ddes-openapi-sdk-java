@@ -21,7 +21,7 @@
 - **member**：请求新增 `residentsAdcode`、`homeAddress`（single/edit 共用）；`single` 响应新增 `memberId`/`status`（员工已存在场景，2025.11.17）；`detail` 响应新增 `otherCompaniesList`（一人多企业，保守建模 `List<Object>`）；`getQuota` 请求新增 `monthlyLimitOnlyQuery`（2026.02 限额升级）；`del` 请求新增 `employeePhone`/`employeeEmail` 及 `__obj__` 便捷字段（2025.06.18）。
 - **traveler**：`TravelerInfo` 新增 `type`（项目维度外部出行人，2026.06.23）。
 - **regulation**：detail 响应新增 `CarRule`（`callType`/`useScene`）及 `regulationEmployeeName`/`regulationEmployeeDescription`。
-- **集团账户「上级公司统一对接」参数**：18 个接口的请求模型新增 `belongEnterpriseName`/`taxpayerNo` 可选字段（其中 rank create/update/del 与 traveler create/update/del 六个接口的这两个参数随 `param_json` 内嵌提交，分别位于 `RankInfo`/`TravelerInfo`，param_json 形态接口服务端不读请求体顶层，与 Go SDK 契约对齐）。`query_sub_company`/`next_token` 属 `/open-apis/v2/...` 备用路径专属参数，主路径不生效，本次未提供（member get 请求侧既有字段保持不动）。
+- **集团账户「上级公司统一对接」参数**：为 19 个接口补齐 `belongEnterpriseName`/`taxpayerNo` 可选参数（budgetcenter add/edit/del、member get/detail、project 等在 1.2.0 已支持，本批不涉及）：legalentity add/edit/del 与 member single/edit/del 为 POST body 顶层字段；legalentity get、budgetcenter get、member getQuota、regulation get/list、role get、rank getRanks 为 GET query 参数；rank create/update/del 与 traveler create/update/del 随 `param_json` 内嵌提交，位于 `RankInfo`/`TravelerInfo`（param_json 形态接口服务端不读请求体顶层，与 Go SDK 契约对齐）。`query_sub_company`/`next_token` 属 `/open-apis/v2/...` 备用路径专属参数，主路径不生效，本次未提供（member get 请求侧既有字段保持不动）。
 - **Sample**：7 个服务域示例类新增上述字段的用法示例。
 
 ### 🚀 新增功能（集团账户专用路径）
@@ -38,7 +38,7 @@
 ### 📝 备注
 
 - 集团账户备用路径已随 1.3.0 落地（见上方"集团账户专用路径"）；信封中 `company_total`/`company_list_has_change`/`progress` 为实测补充字段，官方语义待文档补全。
-- Go SDK 侧集团路径与 bug 修复未同步，另立 change。
+- Go SDK 侧 2025-2026 文档对齐字段待同步，另立 change（Go 的集团路径与集团参数已先行落地；Go 的 `residents_ids` 拼写本就正确，无需修复）。
 
 ## [1.2.0] - 2026-08-03
 
