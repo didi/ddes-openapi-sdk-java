@@ -276,5 +276,11 @@ public class GetMemberDetailReply  {
      */
     @JsonProperty("other_companies_list")
     private List<Object> otherCompaniesList;
+    /**
+     * 归属企业名称（一人多企业场景，主对象与 other_companies_list 元素均携带；服务端 IDL + PHP Member/Detail.php 佐证）
+     *
+     */
+    @JsonProperty("belong_enterprise_name")
+    private String belongEnterpriseName;
 }
 

@@ -10,6 +10,11 @@
 
 - **`rank.ListRankReply.records` 元素类型由 `RankInfo` 变更为新增的 `RankRecord`**（字段 `id`/`name`）。原实现复用写请求模型 `RankInfo`（序列化名 `rank_id`），导致文档响应字段 `id` 恒反序列化为 null——本次为缺陷修复；受影响字段原值本就为 null，不存在有效依赖。
 - **`member.UpdateMemberApiReply.data` 类型由 `Object` 变更为新增的 `UpdateMemberReply`**（`member_id`/`phone`/`status`）。原先仅能以 raw Map 读取。
+- **对齐 Go SDK（`097910a` 基线）的类型修正**——以下变更全部位于本版本新增的类/字段，对已发布版本（≤1.2.0）无存量影响：
+  - `core.BaseV2PageReply.progress` 由 `Integer` 改为 `Double`：服务端 IDL 定义为 float64，原类型在小数形态下反序列化直接失败（4 个 V2 信封共用）；
+  - `member.MemberV2Record.regulationId` 由 `String` 改为 `List<String>`：缺陷修复，v1 `MemberRecord` 同名字段两侧均为数组，原类型收到数组响应时整个 listMemberV2 解析失败；
+  - `member.CreateMemberReply.memberId` / `UpdateMemberReply.memberId` 由 `Long` 改为 `String`：member_id 真实流量 number/string 混存，沿用 ID 字符串化口径；
+  - 4 个 V2 请求模型（legalEntity / budgetCenter / member / regulation 的 get）移除 `offset` 字段：分页口径对齐 Go（`length` + `next_token` 游标），`offset` 翻页方式废弃。
 
 ### 🛠 缺陷修复
 
@@ -35,10 +40,18 @@
 - **注意**：`query_sub_company` 服务端按整数解析，请传 `"1"/"0"`（文档标注 boolean 有误，传 `"true"` 会报错）。
 - **废弃标记**：`member.ListMemberRequest.querySubCompany`/`nextToken` 标注 `@Deprecated`（主路径不生效），集团场景请迁移至 `listMemberV2`。
 
+### 🚀 新增功能（对齐 Go SDK 097910a 基线）
+
+- **budgetcenter**：V2 get 请求（`GetBudgetCenterV2Request`）新增 `isNeedLimitRule`（与 v1 get 同名同型，真机验证参数透传至下游 zeus 服务）；`BudgetCenterV2Record` 新增 `companyId`（`company_id`，服务端 IDL 佐证，真机实测集团 records 均返回该字段且为字符串）。
+- **member**：V2 get 请求（`ListMemberV2Request`）新增 `email`/`employeeNumber`/`phone`/`status` 过滤字段（与 v1 get 同名同型；文档未声明 v2 支持，真机实测 email/employee_number/status 过滤均生效）；`GetMemberDetailReply` 新增 `belongEnterpriseName`（一人多企业场景，主对象与 `otherCompaniesList` 元素均携带；非该场景缺失时为 null）。
+- **rank**：`RankRecord` 新增 `outRankId`（`out_rank_id`，实测补充字段、文档暂未声明；真机实测 osim 租户 4 条职级记录均返回该字段）。
+- **V2 分页口径**：4 个 V2 请求移除 `offset` 后真机复验通过（不带 offset 返回 errno=0，此前「必填」实测结论过时）；member V2 真机实测 `regulation_id` 确以数组返回（佐证 `List<String>` 修复）；regulation V2 真机实测响应为嵌套信封（data 为对象），现行建模正确。
+- **有意保留、不跟随 Go 的差异**：v1 get 集团参数（`belongEnterpriseName`/`taxpayerNo`，以文档为更高基准）；`ResidentsListInfo.id` 维持 `Long`（1.2.0 已发布存量字段，避免真实破坏性更新；97000 条真实流量回放验证数字形态零失败）；member getQuota 金额字段维持 `BigDecimal`（优于 Go 的 float32）；`GetMemberDetailReply.otherCompaniesList` 维持 `List<Object>` 保守建模；`monthlyLimitOnlyQuery` 维持 `String`。
+
 ### 📝 备注
 
 - 集团账户备用路径已随 1.3.0 落地（见上方"集团账户专用路径"）；信封中 `company_total`/`company_list_has_change`/`progress` 为实测补充字段，官方语义待文档补全。
-- Go SDK 侧 2025-2026 文档对齐字段待同步，另立 change（Go 的集团路径与集团参数已先行落地；Go 的 `residents_ids` 拼写本就正确，无需修复）。
+- Go SDK 已于 2026-09-14（`097910a`）完成 V2 集团接口参数口径收敛与字段审计，Java 侧本次对齐以该版本为基准；Go 侧遗留缺口（v1 get 缺集团参数、core 加密与 `__obj__` 替换顺序缺陷）不在 Java 仓库范围，已反馈 Go 侧跟进。
 
 ## [1.2.0] - 2026-08-03
 

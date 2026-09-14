@@ -153,7 +153,6 @@ public class LegalEntitySample {
   public static void getLegalEntityV2Test(ApiClient client) throws Exception {
     GetLegalEntityV2Request request = GetLegalEntityV2Request.builder()
         .companyId("替换成集团companyId")
-        .offset(0)
         .length(100)
         .belongEnterpriseName("替换成归属企业名称")
         .querySubCompany("1")

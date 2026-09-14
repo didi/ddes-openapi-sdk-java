@@ -328,14 +328,13 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
             "next_token": "v1:cursor_abc",
             "company_total": 1,
             "company_list_has_change": false,
-            "progress": 1
+            "progress": 0.35
         }"""
         enqueueSuccess(createSuccessResponse(responseData))
 
         and: "Create group request with group params and pagination"
         GetLegalEntityV2Request request = GetLegalEntityV2Request.builder()
                 .companyId("company_001")
-                .offset(0)
                 .length(10)
                 .belongEnterpriseName("集团企业名称")
                 .querySubCompany("1")
@@ -354,14 +353,14 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         def params = getQueryParams(recordedRequest)
         URLDecoder.decode(params["belong_enterprise_name"], "UTF-8") == "集团企业名称"
         params["query_sub_company"] == "1"
-        params["offset"] == "0"
+        params.containsKey("offset") == false
         params["length"] == "10"
 
         and: "Envelope fields should be deserialized"
         response.data.nextToken == "v1:cursor_abc"
         response.data.companyTotal == 1
         response.data.companyListHasChange == false
-        response.data.progress == 1
+        response.data.progress == 0.35
 
         and: "Record should use String legal_entity_id without precision loss"
         response.data.records.size() == 1
@@ -384,7 +383,6 @@ class LegalEntityV1ApiMockTest extends BaseMockTest {
         and: "Create group request with next_token from previous page"
         GetLegalEntityV2Request request = GetLegalEntityV2Request.builder()
                 .companyId("company_001")
-                .offset(10)
                 .length(10)
                 .taxpayerNo("tax_001")
                 .nextToken("v1:cursor_prev")

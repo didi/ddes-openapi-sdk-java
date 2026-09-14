@@ -55,11 +55,11 @@ public class GetBudgetCenterV2Request extends BaseReq  {
     @JsonProperty("name")
     private String name;
     /**
-     * 数据开始位置，集团路径下必填
+     * 是否返回部门/项目限额规则列表，枚举值数字：0=不返回，1=返回，默认1
      *
      */
-    @JsonProperty("offset")
-    private Integer offset;
+    @JsonProperty("is_need_limit_rule")
+    private Integer isNeedLimitRule;
     /**
      * 数据条数（最大100条），集团路径下必填
      *

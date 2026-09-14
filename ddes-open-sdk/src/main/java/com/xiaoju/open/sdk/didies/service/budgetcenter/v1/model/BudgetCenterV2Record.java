@@ -37,6 +37,12 @@ public class BudgetCenterV2Record  {
     @JsonProperty("belong_enterprise_name")
     private String belongEnterpriseName;
     /**
+     * 公司 ID（集团路径返回字段，ID 字符串化口径，服务端 IDL 佐证）
+     *
+     */
+    @JsonProperty("company_id")
+    private String companyId;
+    /**
      * 类型（2 项目，3 部门）
      *
      */

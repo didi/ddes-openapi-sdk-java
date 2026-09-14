@@ -17,11 +17,11 @@ import lombok.experimental.SuperBuilder;
 public class UpdateMemberReply  {
 
     /**
-     * 更新结果涉及员工的滴滴侧 ID
+     * 更新结果涉及员工的滴滴侧 ID（真实流量 number/string 混存，ID 字符串化口径）
      *
      */
     @JsonProperty("member_id")
-    private Long memberId;
+    private String memberId;
     /**
      * 员工手机号
      *

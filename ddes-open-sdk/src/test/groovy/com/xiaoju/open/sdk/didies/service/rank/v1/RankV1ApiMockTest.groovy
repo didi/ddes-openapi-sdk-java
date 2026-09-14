@@ -122,6 +122,38 @@ class RankV1ApiMockTest extends BaseMockTest {
         verifyRequiredHeaders(recordedRequest)
     }
 
+    def "listRank should deserialize records with out_rank_id"() {
+        given: "A mock success response with records envelope"
+        def responseData = """{
+            "records": [
+                {"id": "rank_001", "name": "Manager", "out_rank_id": "out_001"},
+                {"id": "rank_002", "name": "Director"}
+            ],
+            "total": 2
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        ListRankRequest request = ListRankRequest.builder()
+                .companyId("company_001")
+                .offset(0)
+                .length(20)
+                .build()
+
+        when: "Call API"
+        ListRankApiReply response = apiClient.rank().v1().listRank(request)
+
+        then: "records should map to RankRecord with out_rank_id when present, null when absent"
+        response != null
+        response.errno == 0
+        response.data.records.size() == 2
+        response.data.records[0].id == "rank_001"
+        response.data.records[0].name == "Manager"
+        response.data.records[0].outRankId == "out_001"
+        response.data.records[1].id == "rank_002"
+        response.data.records[1].outRankId == null
+    }
+
     def "updateRank - POST /open-apis/v1/rank/update"() {
         given: "A mock success response"
         enqueueSuccess(createBaseResponse(0, "success"))

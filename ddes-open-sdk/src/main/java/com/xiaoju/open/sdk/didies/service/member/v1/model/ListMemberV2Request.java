@@ -25,11 +25,29 @@ public class ListMemberV2Request extends BaseReq  {
     @JsonProperty("company_id")
     private String companyId;
     /**
-     * 数据开始位置，集团路径下必填
+     * phone
      *
      */
-    @JsonProperty("offset")
-    private Integer offset;
+    @JsonProperty("phone")
+    private String phone;
+    /**
+     * employeeNumber
+     *
+     */
+    @JsonProperty("employee_number")
+    private String employeeNumber;
+    /**
+     * email
+     *
+     */
+    @JsonProperty("email")
+    private String email;
+    /**
+     * status
+     *
+     */
+    @JsonProperty("status")
+    private String status;
     /**
      * 数据条数（最大100条），集团路径下必填
      *

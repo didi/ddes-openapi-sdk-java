@@ -25,12 +25,6 @@ public class ListRegulationV2Request extends BaseReq  {
     @JsonProperty("company_id")
     private String companyId;
     /**
-     * 数据开始位置，集团路径下必填
-     *
-     */
-    @JsonProperty("offset")
-    private Integer offset;
-    /**
      * 数据条数（最大100条），集团路径下必填
      *
      */

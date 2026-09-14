@@ -28,4 +28,10 @@ public class RankRecord  {
      */
     @JsonProperty("name")
     private String name;
+    /**
+     * 外部职级编号（实测补充字段，文档暂未声明）
+     *
+     */
+    @JsonProperty("out_rank_id")
+    private String outRankId;
 }

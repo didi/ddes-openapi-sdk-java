@@ -43,12 +43,6 @@ public class GetLegalEntityV2Request extends BaseReq  {
     @JsonProperty("out_legal_entity_id")
     private String outLegalEntityId;
     /**
-     * 数据开始位置，集团路径下必填
-     *
-     */
-    @JsonProperty("offset")
-    private Integer offset;
-    /**
      * 数据条数（最大100条），集团路径下必填
      *
      */

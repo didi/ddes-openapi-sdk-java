@@ -710,13 +710,41 @@ class MemberV1ApiMockTest extends BaseMockTest {
         when: "Call API"
         CreateMemberApiReply response = apiClient.member().v1().createMember(request)
 
-        then: "Response data should contain member_id and status"
+        then: "Response data should contain member_id and status (number form coerced to String)"
         response != null
         response.errno == 0
         response.data != null
-        response.data.memberId == 987654L
+        response.data.memberId == "987654"
+        response.data.memberId instanceof String
         response.data.phone == "13800138000"
         response.data.status == 1
+    }
+
+    def "createMember should deserialize member_id string form without error"() {
+        given: "A mock success response with member_id as string (mixed traffic form)"
+        def responseData = """{
+            "member_id": "987654012345678901",
+            "phone": "13800138000",
+            "status": 1
+        }"""
+        enqueueSuccess(createSuccessResponse(responseData))
+
+        and: "Create request"
+        def memberInfo = MemberInfo.builder()
+                .phone("13800138000")
+                .realname("John Doe")
+                .build()
+        CreateMemberRequest request = CreateMemberRequest.builder()
+                .companyId("company_001")
+                .dataObj(memberInfo)
+                .build()
+
+        when: "Call API"
+        CreateMemberApiReply response = apiClient.member().v1().createMember(request)
+
+        then: "String member_id should parse as-is"
+        response.errno == 0
+        response.data.memberId == "987654012345678901"
     }
 
     def "updateMember should deserialize typed data with member_id phone status"() {
@@ -739,11 +767,11 @@ class MemberV1ApiMockTest extends BaseMockTest {
         when: "Call API"
         UpdateMemberApiReply response = apiClient.member().v1().updateMember(request)
 
-        then: "Response data should be strongly typed"
+        then: "Response data should be strongly typed (member_id number form coerced to String)"
         response != null
         response.errno == 0
         response.data != null
-        response.data.memberId == 987654L
+        response.data.memberId == "987654"
         response.data.phone == "13800138000"
         response.data.status == 0
 
@@ -758,9 +786,10 @@ class MemberV1ApiMockTest extends BaseMockTest {
         def responseData = """{
             "member_id": "mem_001",
             "realname": "John Doe",
+            "belong_enterprise_name": "集团企业名称",
             "other_companies_list": [
-                {"company_name": "其他公司A", "member_id": 111},
-                {"company_name": "其他公司B", "member_id": 222}
+                {"company_name": "其他公司A", "member_id": 111, "belong_enterprise_name": "集团企业名称"},
+                {"company_name": "其他公司B", "member_id": 222, "belong_enterprise_name": "集团企业名称"}
             ]
         }"""
         enqueueSuccess(createSuccessResponse(responseData))
@@ -780,6 +809,9 @@ class MemberV1ApiMockTest extends BaseMockTest {
         response.data != null
         response.data.otherCompaniesList != null
         response.data.otherCompaniesList.size() == 2
+
+        and: "belong_enterprise_name should be deserialized on main object"
+        response.data.belongEnterpriseName == "集团企业名称"
     }
 
     def "getMemberQuota should pass monthly_limit_only_query and group account params"() {
@@ -856,7 +888,8 @@ class MemberV1ApiMockTest extends BaseMockTest {
                 "id": "mem_group_001",
                 "realname": "集团员工",
                 "belong_enterprise_name": "集团企业名称",
-                "status": 1
+                "status": 1,
+                "regulation_id": ["reg_001", "reg_002"]
             }],
             "next_token": "v1:cursor_next",
             "company_total": 3,
@@ -865,10 +898,13 @@ class MemberV1ApiMockTest extends BaseMockTest {
         }"""
         enqueueSuccess(createSuccessResponse(responseData))
 
-        and: "Create group request"
+        and: "Create group request with filter fields"
         ListMemberV2Request request = ListMemberV2Request.builder()
                 .companyId("company_001")
-                .offset(0)
+                .email("test@example.com")
+                .employeeNumber("emp_001")
+                .phone("13800000000")
+                .status("1")
                 .length(100)
                 .belongEnterpriseName("集团企业名称")
                 .querySubCompany("1")
@@ -881,18 +917,45 @@ class MemberV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Request should hit group path with group params"
+        and: "Request should hit group path with group params and filter fields"
         RecordedRequest recordedRequest = getLastRequest()
         verifyPath(recordedRequest, "/open-apis/v2/member/get")
         def params = getQueryParams(recordedRequest)
         URLDecoder.decode(params["belong_enterprise_name"], "UTF-8") == "集团企业名称"
         params["query_sub_company"] == "1"
+        URLDecoder.decode(params["email"], "UTF-8") == "test@example.com"
+        params["employee_number"] == "emp_001"
+        params["phone"] == "13800000000"
+        params["status"] == "1"
+        params.containsKey("offset") == false
 
         and: "Envelope and records should be deserialized"
         response.data.nextToken == "v1:cursor_next"
         response.data.companyTotal == 3
         response.data.records.size() == 1
         response.data.records[0].belongEnterpriseName == "集团企业名称"
+        response.data.records[0].regulationId == ["reg_001", "reg_002"]
+        response.data.records[0].regulationId instanceof List
+    }
+
+    def "listMemberV2 without filter fields should omit the params"() {
+        given: "A mock group-envelope success response"
+        enqueueSuccess(createSuccessResponse("""{"records": [], "next_token": "", "progress": 1}"""))
+
+        and: "Create group request without optional filter fields"
+        ListMemberV2Request request = ListMemberV2Request.builder()
+                .companyId("company_001")
+                .length(10)
+                .build()
+
+        when: "Call group API"
+        ListMemberV2ApiReply response = apiClient.member().v1().listMemberV2(request)
+
+        then: "Optional filter params are omitted from query"
+        response.errno == 0
+        def params = getQueryParams(getLastRequest())
+        ["email", "employee_number", "phone", "status", "offset"].every { params.containsKey(it) == false }
+        params["length"] == "10"
     }
 
     def "deprecated ListMemberRequest group fields should still serialize for compatibility"() {

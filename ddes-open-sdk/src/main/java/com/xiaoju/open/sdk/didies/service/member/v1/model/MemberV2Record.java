@@ -157,11 +157,11 @@ public class MemberV2Record  {
     @JsonProperty("out_rank_id")
     private String outRankId;
     /**
-     * 用车制度 ID
+     * 用车制度 ID 列表（与 v1 MemberRecord 同构；原 String 建模在服务端返回数组时反序列化失败）
      *
      */
     @JsonProperty("regulation_id")
-    private String regulationId;
+    private List<String> regulationId;
     /**
      * 是否企业支付余额，0 否，1 是
      *

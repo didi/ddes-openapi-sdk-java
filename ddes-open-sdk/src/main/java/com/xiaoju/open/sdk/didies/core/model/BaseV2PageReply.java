@@ -34,9 +34,9 @@ public class BaseV2PageReply  {
     @JsonProperty("company_list_has_change")
     private Boolean companyListHasChange;
     /**
-     * 进度标记（实测补充字段，文档暂未声明，语义以官方后续文档为准）
+     * 进度标记（实测补充字段，文档暂未声明，语义以官方后续文档为准；服务端 IDL 定义为 float64）
      *
      */
     @JsonProperty("progress")
-    private Integer progress;
+    private Double progress;
 }

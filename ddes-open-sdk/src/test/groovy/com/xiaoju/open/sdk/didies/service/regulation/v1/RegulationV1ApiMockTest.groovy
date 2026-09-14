@@ -316,7 +316,6 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         and: "Create group request"
         ListRegulationV2Request request = ListRegulationV2Request.builder()
                 .companyId("company_001")
-                .offset(0)
                 .length(100)
                 .taxpayerNo("9653242523MQ46574")
                 .querySubCompany("1")
@@ -335,6 +334,7 @@ class RegulationV1ApiMockTest extends BaseMockTest {
         def params = getQueryParams(recordedRequest)
         params["taxpayer_no"] == "9653242523MQ46574"
         params["query_sub_company"] == "1"
+        params.containsKey("offset") == false
 
         and: "Envelope and records should be deserialized"
         response.data.companyTotal == 1

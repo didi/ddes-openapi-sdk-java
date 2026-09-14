@@ -891,6 +891,7 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
                 "id": "4503599676280147",
                 "name": "集团成本中心",
                 "belong_enterprise_name": "集团企业名称",
+                "company_id": "1092345678",
                 "type": "2",
                 "total_quota": "1000.00",
                 "available_quota": "800.00"
@@ -902,11 +903,11 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         }"""
         enqueueSuccess(createSuccessResponse(responseData))
 
-        and: "Create group request"
+        and: "Create group request with limit-rule switch"
         GetBudgetCenterV2Request request = GetBudgetCenterV2Request.builder()
                 .companyId("company_001")
-                .offset(0)
                 .length(100)
+                .isNeedLimitRule(1)
                 .belongEnterpriseName("集团企业名称")
                 .querySubCompany("1")
                 .build()
@@ -918,12 +919,14 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Request should hit group path with group params"
+        and: "Request should hit group path with group params and limit-rule switch"
         RecordedRequest recordedRequest = getLastRequest()
         verifyPath(recordedRequest, "/open-apis/v2/budgetCenter/get")
         def params = getQueryParams(recordedRequest)
         URLDecoder.decode(params["belong_enterprise_name"], "UTF-8") == "集团企业名称"
         params["query_sub_company"] == "1"
+        params["is_need_limit_rule"] == "1"
+        params.containsKey("offset") == false
 
         and: "Envelope and records should be deserialized"
         response.data.nextToken == ""
@@ -931,6 +934,28 @@ class BudgetCenterV1ApiMockTest extends BaseMockTest {
         response.data.companyListHasChange == true
         response.data.records.size() == 1
         response.data.records[0].belongEnterpriseName == "集团企业名称"
+        response.data.records[0].companyId == "1092345678"
         response.data.records[0].totalQuota == "1000.00"
+    }
+
+    def "getBudgetCenterV2 without isNeedLimitRule should omit the param"() {
+        given: "A mock group-envelope success response"
+        enqueueSuccess(createSuccessResponse("""{"records": [], "next_token": "", "progress": 1}"""))
+
+        and: "Create group request without optional filter fields"
+        GetBudgetCenterV2Request request = GetBudgetCenterV2Request.builder()
+                .companyId("company_001")
+                .length(10)
+                .build()
+
+        when: "Call group API"
+        GetBudgetCenterV2ApiReply response = apiClient.budgetcenter().v1().getBudgetCenterV2(request)
+
+        then: "Optional params are omitted from query"
+        response.errno == 0
+        def params = getQueryParams(getLastRequest())
+        params.containsKey("is_need_limit_rule") == false
+        params.containsKey("offset") == false
+        params["length"] == "10"
     }
 }
