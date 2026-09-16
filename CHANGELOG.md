@@ -6,11 +6,6 @@
 
 ## [1.3.0] - 2026-09-09
 
-### 💥 破坏性变更（Breaking Changes）
-
-- **`rank.ListRankReply.records` 元素类型由 `RankInfo` 变更为新增的 `RankRecord`**（字段 `id`/`name`）。原实现复用写请求模型 `RankInfo`（序列化名 `rank_id`），导致文档响应字段 `id` 恒反序列化为 null——本次为缺陷修复；受影响字段原值本就为 null，不存在有效依赖。
-- **`member.UpdateMemberApiReply.data` 类型由 `Object` 变更为新增的 `UpdateMemberReply`**（`member_id`/`phone`/`status`）。原先仅能以 raw Map 读取。
-
 ### 🛠 缺陷修复
 
 - **`member.MemberInfo.residentsIds` 序列化名由 `redisents_ids` 修正为 `residents_ids`**（原拼写错误，服务端不识别该字段，员工常驻地 ID 从未生效；Java 字段名同步修正为 `residentsIds`）。
@@ -39,7 +34,6 @@
 
 - **budgetcenter**：V2 get 请求（`GetBudgetCenterV2Request`）新增 `isNeedLimitRule`（与 v1 get 同名同型，真机验证参数透传至下游 zeus 服务）；`BudgetCenterV2Record` 新增 `companyId`（`company_id`，服务端 IDL 佐证，真机实测集团 records 均返回该字段且为字符串）。
 - **member**：V2 get 请求（`ListMemberV2Request`）新增 `email`/`employeeNumber`/`phone`/`status` 过滤字段（与 v1 get 同名同型；文档未声明 v2 支持，真机实测 email/employee_number/status 过滤均生效）；`GetMemberDetailReply` 新增 `belongEnterpriseName`（一人多企业场景，主对象与 `otherCompaniesList` 元素均携带；非该场景缺失时为 null）。
-- **rank**：`RankRecord` 新增 `outRankId`（`out_rank_id`，实测补充字段、文档暂未声明；真机实测 osim 租户 4 条职级记录均返回该字段）。
 - **V2 分页口径**：4 个 V2 请求采用游标分页（`length` + `next_token`），不设 `offset`，真机复验通过（不带 offset 返回 errno=0，此前「必填」实测结论过时）；member V2 真机实测 `regulation_id` 确以数组返回（佐证 `List<String>` 建模正确）；regulation V2 真机实测响应为嵌套信封（data 为对象），现行建模正确。
 - **有意保留、不跟随 Go 的差异**：v1 get 集团参数（`belongEnterpriseName`/`taxpayerNo`，以文档为更高基准）；`ResidentsListInfo.id` 维持 `Long`（1.2.0 已发布存量字段，避免真实破坏性更新；97000 条真实流量回放验证数字形态零失败）；member getQuota 金额字段维持 `BigDecimal`（优于 Go 的 float32）；`GetMemberDetailReply.otherCompaniesList` 维持 `List<Object>` 保守建模；`monthlyLimitOnlyQuery` 维持 `String`。
 

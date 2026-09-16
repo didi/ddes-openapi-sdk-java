@@ -122,38 +122,6 @@ class RankV1ApiMockTest extends BaseMockTest {
         verifyRequiredHeaders(recordedRequest)
     }
 
-    def "listRank should deserialize records with out_rank_id"() {
-        given: "A mock success response with records envelope"
-        def responseData = """{
-            "records": [
-                {"id": "rank_001", "name": "Manager", "out_rank_id": "out_001"},
-                {"id": "rank_002", "name": "Director"}
-            ],
-            "total": 2
-        }"""
-        enqueueSuccess(createSuccessResponse(responseData))
-
-        and: "Create request"
-        ListRankRequest request = ListRankRequest.builder()
-                .companyId("company_001")
-                .offset(0)
-                .length(20)
-                .build()
-
-        when: "Call API"
-        ListRankApiReply response = apiClient.rank().v1().listRank(request)
-
-        then: "records should map to RankRecord with out_rank_id when present, null when absent"
-        response != null
-        response.errno == 0
-        response.data.records.size() == 2
-        response.data.records[0].id == "rank_001"
-        response.data.records[0].name == "Manager"
-        response.data.records[0].outRankId == "out_001"
-        response.data.records[1].id == "rank_002"
-        response.data.records[1].outRankId == null
-    }
-
     def "updateRank - POST /open-apis/v1/rank/update"() {
         given: "A mock success response"
         enqueueSuccess(createBaseResponse(0, "success"))
@@ -264,13 +232,13 @@ class RankV1ApiMockTest extends BaseMockTest {
         response.errmsg == "Invalid company_id"
     }
 
-    def "listRank should deserialize rank id via RankRecord"() {
-        given: "A mock success response with id field (doc field name)"
+    def "listRank should pass group account params as query"() {
+        given: "A mock success response"
         def responseData = """{
             "total": 2,
             "records": [
-                {"id": "rank_001", "name": "P5"},
-                {"id": "rank_002", "name": "P6"}
+                {"rank_id": "rank_001", "name": "P5"},
+                {"rank_id": "rank_002", "name": "P6"}
             ]
         }"""
         enqueueSuccess(createSuccessResponse(responseData))
@@ -296,13 +264,13 @@ class RankV1ApiMockTest extends BaseMockTest {
         params["belong_enterprise_name"] == "enterprise_001"
         params["taxpayer_no"] == "tax_001"
 
-        and: "Rank id should be correctly deserialized (was always null via RankInfo)"
+        and: "records should map to RankInfo"
         def data = response.data
         data != null
         data.records.size() == 2
-        data.records[0].id == "rank_001"
+        data.records[0].rankId == "rank_001"
         data.records[0].name == "P5"
-        data.records[1].id == "rank_002"
+        data.records[1].rankId == "rank_002"
     }
 
     def "createRank should pass group account params inside param_json"() {

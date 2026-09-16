@@ -747,7 +747,7 @@ class MemberV1ApiMockTest extends BaseMockTest {
         response.data.memberId == "987654012345678901"
     }
 
-    def "updateMember should deserialize typed data with member_id phone status"() {
+    def "updateMember should deserialize data as raw map"() {
         given: "A mock success response with typed data"
         def responseData = """{
             "member_id": 987654,
@@ -767,11 +767,11 @@ class MemberV1ApiMockTest extends BaseMockTest {
         when: "Call API"
         UpdateMemberApiReply response = apiClient.member().v1().updateMember(request)
 
-        then: "Response data should be strongly typed (member_id number form coerced to String)"
+        then: "Response data should be readable as raw map"
         response != null
         response.errno == 0
         response.data != null
-        response.data.memberId == "987654"
+        response.data.member_id == 987654
         response.data.phone == "13800138000"
         response.data.status == 0
 

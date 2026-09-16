@@ -29,6 +29,6 @@ public class ListRankReply  {
      *
      */
     @JsonProperty("records")
-    private List<RankRecord> records;
+    private List<RankInfo> records;
 }
 
