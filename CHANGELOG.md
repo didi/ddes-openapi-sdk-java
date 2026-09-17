@@ -6,10 +6,6 @@
 
 ## [1.3.0] - 2026-09-09
 
-### 🛠 缺陷修复
-
-- **`member.MemberInfo.residentsIds` 序列化名由 `redisents_ids` 修正为 `residents_ids`**（原拼写错误，服务端不识别该字段，员工常驻地 ID 从未生效；Java 字段名同步修正为 `residentsIds`）。
-
 ### 🚀 新增功能（接口对齐 2025–2026 文档批次）
 
 - **legalentity**：`get` 请求新增 `outLegalEntityId`；`get` 响应 records 新增 `outParentId`；`add`/`edit` 请求新增 `outParentId`（2025.06.18 批次）。

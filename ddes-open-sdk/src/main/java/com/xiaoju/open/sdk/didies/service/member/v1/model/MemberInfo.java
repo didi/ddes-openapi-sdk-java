@@ -100,8 +100,8 @@ public class MemberInfo  {
      * 常驻地ID，不传不更新，传“”清空，多个使用“_”连接；
      * 
      */
-    @JsonProperty("residents_ids")
-    private String residentsIds;
+    @JsonProperty("redisents_ids")
+    private String redisentsIds;
     /**
      * 是否企业支付余额，枚举值数字 0 否，1 是
      * 

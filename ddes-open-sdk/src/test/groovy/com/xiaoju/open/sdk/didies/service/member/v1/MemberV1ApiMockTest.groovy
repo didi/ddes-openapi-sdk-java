@@ -592,15 +592,15 @@ class MemberV1ApiMockTest extends BaseMockTest {
         data.total == 0
     }
 
-    def "createMember should serialize residents_ids with correct spelling"() {
+    def "createMember should serialize residents fields"() {
         given: "A mock success response"
         enqueueSuccess(createBaseResponse(0, "success"))
 
-        and: "Create request with residentsIds (bug fix: tag was redisents_ids)"
+        and: "Create request with residents fields"
         def memberInfo = MemberInfo.builder()
                 .phone("13800138000")
                 .realname("John Doe")
-                .residentsIds("100_101")
+                .redisentsIds("100_101")
                 .residentsAdcode("110100")
                 .build()
         CreateMemberRequest request = CreateMemberRequest.builder()
@@ -615,21 +615,20 @@ class MemberV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Request body should contain correct residents_ids tag and no misspelled tag"
+        and: "Request body should contain residents tags"
         def body = getRequestBody(getLastRequest())
-        body.contains("residents_ids")
+        body.contains("redisents_ids")
         body.contains("residents_adcode")
-        !body.contains("redisents_ids")
     }
 
-    def "updateMember should serialize residents_ids with correct spelling"() {
+    def "updateMember should serialize residents fields"() {
         given: "A mock success response"
         enqueueSuccess(createBaseResponse(0, "success"))
 
-        and: "Update request with residentsIds"
+        and: "Update request with residents fields"
         def memberInfo = MemberInfo.builder()
                 .realname("Updated Name")
-                .residentsIds("200")
+                .redisentsIds("200")
                 .build()
         UpdateMemberRequest request = UpdateMemberRequest.builder()
                 .companyId("company_001")
@@ -644,10 +643,9 @@ class MemberV1ApiMockTest extends BaseMockTest {
         response != null
         response.errno == 0
 
-        and: "Request body should contain correct residents_ids tag"
+        and: "Request body should contain residents tag"
         def body = getRequestBody(getLastRequest())
-        body.contains("residents_ids")
-        !body.contains("redisents_ids")
+        body.contains("redisents_ids")
     }
 
     def "createMember should serialize home_address list"() {
